@@ -1,0 +1,12 @@
+C:\Project.net\pitNik\Core\bin\Debug\net8.0\Core.deps.json
+C:\Project.net\pitNik\Core\bin\Debug\net8.0\Core.dll
+C:\Project.net\pitNik\Core\bin\Debug\net8.0\Core.pdb
+C:\Project.net\pitNik\Core\obj\Debug\net8.0\Core.csproj.AssemblyReference.cache
+C:\Project.net\pitNik\Core\obj\Debug\net8.0\Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Project.net\pitNik\Core\obj\Debug\net8.0\Core.AssemblyInfoInputs.cache
+C:\Project.net\pitNik\Core\obj\Debug\net8.0\Core.AssemblyInfo.cs
+C:\Project.net\pitNik\Core\obj\Debug\net8.0\Core.csproj.CoreCompileInputs.cache
+C:\Project.net\pitNik\Core\obj\Debug\net8.0\Core.dll
+C:\Project.net\pitNik\Core\obj\Debug\net8.0\refint\Core.dll
+C:\Project.net\pitNik\Core\obj\Debug\net8.0\Core.pdb
+C:\Project.net\pitNik\Core\obj\Debug\net8.0\ref\Core.dll

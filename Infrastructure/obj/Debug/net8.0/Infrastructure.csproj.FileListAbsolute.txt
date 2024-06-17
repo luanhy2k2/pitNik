@@ -1,0 +1,17 @@
+C:\Project.net\pitNik\Infrastructure\bin\Debug\net8.0\Infrastructure.deps.json
+C:\Project.net\pitNik\Infrastructure\bin\Debug\net8.0\Infrastructure.runtimeconfig.json
+C:\Project.net\pitNik\Infrastructure\bin\Debug\net8.0\Infrastructure.dll
+C:\Project.net\pitNik\Infrastructure\bin\Debug\net8.0\Infrastructure.pdb
+C:\Project.net\pitNik\Infrastructure\bin\Debug\net8.0\Core.dll
+C:\Project.net\pitNik\Infrastructure\bin\Debug\net8.0\Core.pdb
+C:\Project.net\pitNik\Infrastructure\obj\Debug\net8.0\Infrastructure.csproj.AssemblyReference.cache
+C:\Project.net\pitNik\Infrastructure\obj\Debug\net8.0\Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Project.net\pitNik\Infrastructure\obj\Debug\net8.0\Infrastructure.AssemblyInfoInputs.cache
+C:\Project.net\pitNik\Infrastructure\obj\Debug\net8.0\Infrastructure.AssemblyInfo.cs
+C:\Project.net\pitNik\Infrastructure\obj\Debug\net8.0\Infrastructure.csproj.CoreCompileInputs.cache
+C:\Project.net\pitNik\Infrastructure\obj\Debug\net8.0\Infrastr.15EFFBFE.Up2Date
+C:\Project.net\pitNik\Infrastructure\obj\Debug\net8.0\Infrastructure.dll
+C:\Project.net\pitNik\Infrastructure\obj\Debug\net8.0\refint\Infrastructure.dll
+C:\Project.net\pitNik\Infrastructure\obj\Debug\net8.0\Infrastructure.pdb
+C:\Project.net\pitNik\Infrastructure\obj\Debug\net8.0\Infrastructure.genruntimeconfig.cache
+C:\Project.net\pitNik\Infrastructure\obj\Debug\net8.0\ref\Infrastructure.dll
