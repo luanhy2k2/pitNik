@@ -1,5 +1,7 @@
-﻿using Core.Interface;
+﻿using Core.Interface.Infrastructure;
+using Core.Interface.Persistence;
 using Core.Model;
+using Infrastructure.ExternalService;
 using Infrastructure.Persistence.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -36,18 +38,18 @@ namespace Infrastructure.Persistence
                 o.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ClockSkew = TimeSpan.Zero,
-                    ValidIssuer = configuration["JwtSettings:Issuer"],
-                    ValidAudience = configuration["JwtSettings:Audience"],
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                 
+                
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"]))
                 };
             });
-            services.AddScoped<IAccountRepository, AccountRepository>();
-            services.AddScoped<IPostRepository, PostRepository>();
-            services.AddScoped<IImagePostRepository, ImagePostRepository>();
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddScoped<IPitNikRepositoryWrapper, PitNikRepositoryWrapper>();
+            services.AddScoped(typeof(INotificationService<>), typeof(SignalRNotificationService<>));
+            //services.AddScoped<IPostRepository, PostRepository>();
+            //services.AddScoped<IImagePostRepository, ImagePostRepository>();
             return services;
         }
     }

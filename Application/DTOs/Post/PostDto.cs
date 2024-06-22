@@ -14,7 +14,9 @@ namespace Application.DTOs.Post
     public class PostDto:BaseDto
     {
         public string UserId { get; set; }
+        public string NameUser { get; set; }
         public string Content { get; set; }
+        public List<string> Image {  get; set; }
        
 
     }

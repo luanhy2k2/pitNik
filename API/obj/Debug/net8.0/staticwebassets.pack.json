@@ -1,0 +1,37 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Project.net\\pitNik\\API\\wwwroot\\Users\\tải xuống.jfif",
+      "PackagePath": "staticwebassets\\Users\\tải xuống.jfif"
+    },
+    {
+      "Id": "C:\\Project.net\\pitNik\\API\\wwwroot\\uploads\\album1.jpg",
+      "PackagePath": "staticwebassets\\uploads\\album1.jpg"
+    },
+    {
+      "Id": "C:\\Project.net\\pitNik\\API\\wwwroot\\uploads\\album11.jpg",
+      "PackagePath": "staticwebassets\\uploads\\album11.jpg"
+    },
+    {
+      "Id": "C:\\Project.net\\pitNik\\API\\wwwroot\\uploads\\images.jfif",
+      "PackagePath": "staticwebassets\\uploads\\images.jfif"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.API.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.API.props",
+      "PackagePath": "build\\API.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.API.props",
+      "PackagePath": "buildMultiTargeting\\API.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.API.props",
+      "PackagePath": "buildTransitive\\API.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

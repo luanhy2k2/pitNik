@@ -17,3 +17,4 @@ C:\Project.net\pitNik\Application\obj\Debug\net8.0\Application.pdb
 C:\Project.net\pitNik\Application\obj\Debug\net8.0\ref\Application.dll
 C:\Project.net\pitNik\Application\bin\Debug\net8.0\Application.runtimeconfig.json
 C:\Project.net\pitNik\Application\obj\Debug\net8.0\Application.genruntimeconfig.cache
+C:\Project.net\pitNik\Application\obj\Debug\net8.0\Application.sourcelink.json

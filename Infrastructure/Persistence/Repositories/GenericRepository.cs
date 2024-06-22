@@ -1,5 +1,5 @@
 ﻿using Core.Common;
-using Core.Interface;
+using Core.Interface.Persistence;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -50,6 +50,10 @@ namespace Infrastructure.Persistence.Repositories
             _context.Entry(entity).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return entity;
+        }
+        public IQueryable<T> GetAllQueryable()
+        {
+            return _context.Set<T>();
         }
     }
 }

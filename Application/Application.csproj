@@ -7,8 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Post\Handles\Queries\" />
-    <Folder Include="Features\Post\Requests\Queries\" />
     <Folder Include="Services\" />
   </ItemGroup>
 

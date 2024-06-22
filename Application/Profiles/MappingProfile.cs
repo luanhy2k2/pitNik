@@ -18,6 +18,7 @@ namespace Application.Profiles
             CreateMap<ApplicationUser, AccountDto>().ReverseMap();
 
             CreateMap<CreatePostDto, Post>().ReverseMap();
+            CreateMap<PostDto, Post>().ReverseMap();
         }
     }
 }

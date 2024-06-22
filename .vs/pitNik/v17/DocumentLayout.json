@@ -3,28 +3,20 @@
   "WorkspaceRootPath": "C:\\Project.net\\pitNik\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{35FA9027-6F5C-4529-8152-B2D243E9918B}|Client\\Client.esproj|c:\\project.net\\pitnik\\client\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}",
-      "RelativeMoniker": "D:0:0:{35FA9027-6F5C-4529-8152-B2D243E9918B}|Client\\Client.esproj|solutionrelative:client\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}"
+      "AbsoluteMoniker": "D:0:0:{E58E86E4-4674-4EA6-9AD8-E9278AE07C74}|API\\API.csproj|c:\\project.net\\pitnik\\api\\controllers\\postcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E58E86E4-4674-4EA6-9AD8-E9278AE07C74}|API\\API.csproj|solutionrelative:api\\controllers\\postcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|c:\\project.net\\pitnik\\application\\features\\post\\handles\\commands\\createpostcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|solutionrelative:application\\features\\post\\handles\\commands\\createpostcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E58E86E4-4674-4EA6-9AD8-E9278AE07C74}|API\\API.csproj|c:\\project.net\\pitnik\\api\\controllers\\postcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E58E86E4-4674-4EA6-9AD8-E9278AE07C74}|API\\API.csproj|solutionrelative:api\\controllers\\postcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{AA0A6693-623F-43B9-94D6-810D4CCA29AF}|Infrastructure\\Infrastructure.csproj|c:\\project.net\\pitnik\\infrastructure\\externalservice\\signalrnotificationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AA0A6693-623F-43B9-94D6-810D4CCA29AF}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\externalservice\\signalrnotificationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E58E86E4-4674-4EA6-9AD8-E9278AE07C74}|API\\API.csproj|c:\\project.net\\pitnik\\api\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E58E86E4-4674-4EA6-9AD8-E9278AE07C74}|API\\API.csproj|solutionrelative:api\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|c:\\project.net\\pitnik\\application\\profiles\\mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|solutionrelative:application\\profiles\\mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|c:\\project.net\\pitnik\\application\\features\\account\\handles\\queries\\getaccountrequesthandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|solutionrelative:application\\features\\account\\handles\\queries\\getaccountrequesthandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{83021804-351B-49E9-A7AF-61AD9C39C5D6}|Core\\Core.csproj|c:\\project.net\\pitnik\\core\\interface\\infrastructure\\inotificationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{83021804-351B-49E9-A7AF-61AD9C39C5D6}|Core\\Core.csproj|solutionrelative:core\\interface\\infrastructure\\inotificationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -39,51 +31,41 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": ".gitignore",
-              "DocumentMoniker": "C:\\Project.net\\pitNik\\Client\\.gitignore",
-              "RelativeDocumentMoniker": "Client\\.gitignore",
-              "ToolTip": "C:\\Project.net\\pitNik\\Client\\.gitignore",
-              "RelativeToolTip": "Client\\.gitignore",
-              "ViewState": "AQIAABIAAAAAAAAAAAAAABYAAAAAAAAA",
-              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAF8SURBVDhPjVNLTgJBEG1lwpoFB3GNK9fieA48hD8iwT/ihwgSDAIHgAGXXsEV18CNzL/LquqZdsYM6kteXqcy3fWqpmpNRBgOhyABBEgpAFVKPIMUcYzUyOU\u002BXM/b2qtU3vkSfRjjZTCAMAw1A2LwzdFoBPP5HNqdzuL27n4juibWI\u002BUshBA1DIkhEx9iEorFotgslQqGYbxxAGFEqt1MxmPWJLbLZdZ\u002Bv89q5PMFPiTR6z2zdaxR0fXA0XTBcVywkb4fwHXjRteecIDNQ7UmExVYAdPcxYaqclN46na5WenMKjtlVnTYwcXlVYaDqImW9beD5N/TeGy32QHXm6hZ03ZgiSQHp2fnWQ4oBmJqWSqwAqZpZjt4aLXAD4J0VqyZsmoubfB8H2r1eoaD6NXZ9HcHO\u002BSA3f4AjifXl8rItOETM8ckB9WTWpYD9RdeZ1PWVWAHWXPQaDb59f/w8LiqHeh1pvGkCaP6qB8yXusoxmuNZ7XmII4O9vGuEF86osuDYRkpYQAAAABJRU5ErkJggg==",
-              "WhenOpened": "2024-06-17T16:23:29.614Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "MappingProfile.cs",
-              "DocumentMoniker": "C:\\Project.net\\pitNik\\Application\\Profiles\\MappingProfile.cs",
-              "RelativeDocumentMoniker": "Application\\Profiles\\MappingProfile.cs",
-              "ToolTip": "C:\\Project.net\\pitNik\\Application\\Profiles\\MappingProfile.cs",
-              "RelativeToolTip": "Application\\Profiles\\MappingProfile.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-17T16:08:13.258Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "AccountController.cs",
-              "DocumentMoniker": "C:\\Project.net\\pitNik\\API\\Controllers\\AccountController.cs",
-              "RelativeDocumentMoniker": "API\\Controllers\\AccountController.cs",
-              "ToolTip": "C:\\Project.net\\pitNik\\API\\Controllers\\AccountController.cs",
-              "RelativeToolTip": "API\\Controllers\\AccountController.cs",
-              "ViewState": "AQIAAAYAAAAAAAAAAAAAAA4AAAAzAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-17T15:57:52.038Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
               "Title": "PostController.cs",
               "DocumentMoniker": "C:\\Project.net\\pitNik\\API\\Controllers\\PostController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\PostController.cs",
               "ToolTip": "C:\\Project.net\\pitNik\\API\\Controllers\\PostController.cs",
               "RelativeToolTip": "API\\Controllers\\PostController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAtAAAA",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAABYAAAAHAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-17T15:57:36.909Z"
+              "WhenOpened": "2024-06-22T14:28:50.14Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "INotificationService.cs",
+              "DocumentMoniker": "C:\\Project.net\\pitNik\\Core\\Interface\\Infrastructure\\INotificationService.cs",
+              "RelativeDocumentMoniker": "Core\\Interface\\Infrastructure\\INotificationService.cs",
+              "ToolTip": "C:\\Project.net\\pitNik\\Core\\Interface\\Infrastructure\\INotificationService.cs",
+              "RelativeToolTip": "Core\\Interface\\Infrastructure\\INotificationService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-22T13:59:43.348Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "SignalRNotificationService.cs",
+              "DocumentMoniker": "C:\\Project.net\\pitNik\\Infrastructure\\ExternalService\\SignalRNotificationService.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\ExternalService\\SignalRNotificationService.cs",
+              "ToolTip": "C:\\Project.net\\pitNik\\Infrastructure\\ExternalService\\SignalRNotificationService.cs",
+              "RelativeToolTip": "Infrastructure\\ExternalService\\SignalRNotificationService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-22T13:56:11.572Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -93,21 +75,10 @@
               "RelativeDocumentMoniker": "Application\\Features\\Post\\Handles\\Commands\\CreatePostCommandHandler.cs",
               "ToolTip": "C:\\Project.net\\pitNik\\Application\\Features\\Post\\Handles\\Commands\\CreatePostCommandHandler.cs",
               "RelativeToolTip": "Application\\Features\\Post\\Handles\\Commands\\CreatePostCommandHandler.cs",
-              "ViewState": "AQIAAB0AAAAAAAAAAAAjwDMAAAA0AAAA",
+              "ViewState": "AQIAACAAAAAAAAAAAAAmwCQAAABHAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-17T15:32:06.192Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "GetAccountRequestHandler.cs",
-              "DocumentMoniker": "C:\\Project.net\\pitNik\\Application\\Features\\Account\\Handles\\Queries\\GetAccountRequestHandler.cs",
-              "RelativeDocumentMoniker": "Application\\Features\\Account\\Handles\\Queries\\GetAccountRequestHandler.cs",
-              "ToolTip": "C:\\Project.net\\pitNik\\Application\\Features\\Account\\Handles\\Queries\\GetAccountRequestHandler.cs",
-              "RelativeToolTip": "Application\\Features\\Account\\Handles\\Queries\\GetAccountRequestHandler.cs",
-              "ViewState": "AQIAAAkAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-17T16:08:50.883Z"
+              "WhenOpened": "2024-06-21T15:39:52.08Z",
+              "EditorCaption": ""
             }
           ]
         }

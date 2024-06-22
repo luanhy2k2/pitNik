@@ -1,4 +1,4 @@
-﻿using Core.Interface;
+﻿using Core.Interface.Persistence;
 using Core.Model;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;

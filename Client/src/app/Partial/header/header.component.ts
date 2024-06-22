@@ -6,5 +6,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-
+  isHidden: boolean = true;
+  chatMessages:any;
+  message:any
+  toggleDiv() {
+    this.isHidden = !this.isHidden;
+  }
+  sendNewMessage(){
+    
+  }
 }

@@ -20,9 +20,15 @@ namespace API.Controllers
             _mediator = mediator;
         }
         [HttpPost("register")]
-        public async Task<ActionResult<BaseCommandResponse>> Register(CreateAccountDto model)
+        public async Task<ActionResult<BaseCommandResponse>> Register([FromForm] CreateAccountDto model)
         {
             var result = await _mediator.Send(new RegisterCommand { Register = model });
+            return Ok(result);
+        }
+        [HttpPost("Login")]
+        public async Task<ActionResult> Login(LoginRequest req)
+        {
+            var result = await _mediator.Send(new LoginRequest { Password = req.Password, UserName = req.UserName });
             return Ok(result);
         }
         [HttpGet("GetAll")]

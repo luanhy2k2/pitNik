@@ -2,7 +2,7 @@
 using Application.Features.Account.Requests.Queries;
 using AutoMapper;
 using Core.Common;
-using Core.Interface;
+using Core.Interface.Persistence;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -13,18 +13,16 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Account.Handles.Queries
 {
-    public class GetAccountRequestHandler : IRequestHandler<GetAccountRequest, BaseQuerieResponse<AccountDto>>
+    public class GetAccountRequestHandler : BaseFeatures, IRequestHandler<GetAccountRequest, BaseQuerieResponse<AccountDto>>
     {
-        private readonly IMapper _mapper;
-        private readonly IAccountRepository _repository;
-        public GetAccountRequestHandler(IMapper mapper, IAccountRepository repository)
+        private readonly IMapper _mapper; 
+        public GetAccountRequestHandler(IMapper mapper, IPitNikRepositoryWrapper pitNikRepo):base(pitNikRepo)
         {
             _mapper = mapper;
-            _repository = repository;
         }
         public async Task<BaseQuerieResponse<AccountDto>> Handle(GetAccountRequest request, CancellationToken cancellationToken)
         {
-            var lstAcount = await _repository.GetAll(request.PageIndex, request.PageSize, 
+            var lstAcount = await _pitNikRepo.Account.GetAll(request.PageIndex, request.PageSize, 
                 x => (string.IsNullOrEmpty(request.Keyword) || x.UserName.Contains(request.Keyword)));
             var result = _mapper.Map<List<AccountDto>>(lstAcount.Items);
             return new BaseQuerieResponse<AccountDto>

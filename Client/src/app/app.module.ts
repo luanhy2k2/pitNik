@@ -10,6 +10,9 @@ import { AccountSettingComponent } from './Modules/account-setting/account-setti
 import { AboutComponent } from './Modules/about/about.component';
 import { FriendComponent } from './Modules/friend/friend.component';
 import { UserProfileComponent } from './Partial/user-profile/user-profile.component';
+import { LoginComponent } from './Modules/login/login.component';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -22,10 +25,13 @@ import { UserProfileComponent } from './Partial/user-profile/user-profile.compon
     AboutComponent,
     FriendComponent,
     UserProfileComponent,
+    LoginComponent,
    
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    HttpClientModule,
     AppRoutingModule
   ],
   providers: [],

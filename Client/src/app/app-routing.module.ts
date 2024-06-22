@@ -4,6 +4,7 @@ import { IndexComponent } from './Modules/index/index.component';
 import { AccountSettingComponent } from './Modules/account-setting/account-setting.component';
 import { AboutComponent } from './Modules/about/about.component';
 import { FriendComponent } from './Modules/friend/friend.component';
+import { LoginComponent } from './Modules/login/login.component';
 
 const routes: Routes = [
   {
@@ -25,6 +26,11 @@ const routes: Routes = [
     path: 'friends',
     component: FriendComponent,
     title: 'friends'
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+    title: 'login'
   },
 ]
 

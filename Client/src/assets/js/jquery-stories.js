@@ -87,15 +87,15 @@ function createSelectorBtns()
 
 function createProgBarTimeline()
 {
-	tl = new TimelineMax();
-	for(var i=0; i<numSlides-1; i++)
-	{
-		var label = "index"+i;
-		tl.to(progBars[i], 5, {width:"100%", ease:Linear.easeNone}, label);
-	}
-	//add a label at the end for easy reference (tween to label)
-	var lastLabel = "index"+(numSlides-1);
-	tl.addLabel(lastLabel);
+	// tl = new TimelineMax();
+	// for(var i=0; i<numSlides-1; i++)
+	// {
+	// 	var label = "index"+i;
+	// 	tl.to(progBars[i], 5, {width:"100%", ease:Linear.easeNone}, label);
+	// }
+	// //add a label at the end for easy reference (tween to label)
+	// var lastLabel = "index"+(numSlides-1);
+	// tl.addLabel(lastLabel);
 }
 
 /*==END of initialising==*/
@@ -106,16 +106,16 @@ function createProgBarTimeline()
 
 function updateProgBars()
 {	
-	if(target==0 && !onDemand)
-	{
-		//empty ALL after 5 sec
-		emptyProgBarsTimer = setTimeout(emptyAllProgBars, 5000);
-	}
-	else if(target!=numSlides)
-	{
-		var targetLabel = "index"+target;
-		tl.tweenTo(targetLabel, {onComplete: changeSlide});
-	}
+	// if(target==0 && !onDemand)
+	// {
+	// 	//empty ALL after 5 sec
+	// 	emptyProgBarsTimer = setTimeout(emptyAllProgBars, 5000);
+	// }
+	// else if(target!=numSlides)
+	// {
+	// 	var targetLabel = "index"+target;
+	// 	tl.tweenTo(targetLabel, {onComplete: changeSlide});
+	// }
 }
 
 

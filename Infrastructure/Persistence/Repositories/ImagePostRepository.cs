@@ -1,5 +1,5 @@
 ﻿using Core.Entities;
-using Core.Interface;
+using Core.Interface.Persistence;
 using System;
 using System.Collections.Generic;
 using System.Linq;
