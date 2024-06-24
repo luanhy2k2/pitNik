@@ -25,6 +25,12 @@ namespace API.Controllers
             var result = await _mediator.Send(new RegisterCommand { Register = model });
             return Ok(result);
         }
+        [HttpPost("Update")]
+        public async Task<ActionResult<BaseCommandResponse>> Update([FromForm] UpdateAccountDto model)
+        {
+            var result = await _mediator.Send(new UpdateAccountCommand {UpdateAccountDto = model });
+            return Ok(result);
+        }
         [HttpPost("Login")]
         public async Task<ActionResult> Login(LoginRequest req)
         {

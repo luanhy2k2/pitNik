@@ -9,6 +9,6 @@ namespace Core.Common
     public abstract class BaseCoreEntity
     {
         public int Id { get; set; }
-        public DateTime ?Created {  get; set; }
+        public DateTime Created {  get; set; }
     }
 }

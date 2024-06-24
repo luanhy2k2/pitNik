@@ -31,10 +31,15 @@ namespace Application.Features.Post.Handles.Queries
                         select new PostDto
                         {
                             Id = p.Id,
+                            UserId = us.Id,
+                            ImageUser = us.Image,
                             NameUser = us.Name,
                             Content = p.Content,
-                            Created = p.Created,
+                            Created = p.Created.ToString(),
                             Image = _pitNikRepo.ImagePost.GetAllQueryable().Where(x=>x.PostId == p.Id).Select(x=>x.Image).ToList(),
+                            TotalReactions = _pitNikRepo.Interactions.GetAllQueryable().Where(x=>x.PostId == p.Id).Count(),
+                            TotalComment = _pitNikRepo.Comment.GetAllQueryable().Where(x=>x.PostId == p.Id).Count(),
+                            IsReact = _pitNikRepo.Interactions.GetAllQueryable().Any(x=>x.User.UserName == request.UserName && x.PostId == p.Id)
                         };
             var result = await query.Skip((request.PageIndex - 1) * request.PageSize).Take(request.PageSize)
                 .ToListAsync();

@@ -23,15 +23,14 @@ namespace Application.Features.Post.Handles.Commands
     {
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _environment;
-        private readonly IMediator _mediator;
         private readonly INotificationService<CreatePostDto> _notificationService;
        
-        public CreatePostCommandHandler(IPitNikRepositoryWrapper pitNikRepo, INotificationService<CreatePostDto> notificationService, IMediator mediator, IMapper mapper, IWebHostEnvironment webHostEnvironment):base(pitNikRepo)
+        public CreatePostCommandHandler(IPitNikRepositoryWrapper pitNikRepo, INotificationService<CreatePostDto> notificationService, IMapper mapper, IWebHostEnvironment webHostEnvironment):base(pitNikRepo)
         {
             _mapper = mapper;
             _notificationService = notificationService;
             _environment = webHostEnvironment;
-            _mediator = mediator;
+           
         }
 
         public async Task<BaseCommandResponse> Handle(CreatePostCommand request, CancellationToken cancellationToken)

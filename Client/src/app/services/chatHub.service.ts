@@ -3,6 +3,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import * as signalR from '@microsoft/signalr';
 import { UserService } from './User.service';
+import { CreateComment } from '../Models/Comment/create-comment.entity';
+import { Comment } from '../Models/Comment/comment.entity';
+import { CreateFriendShip } from '../Models/FriendShip/CreateFriendShip.entity';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +21,7 @@ export class ChatHubService {
       .build();
     return this.connection.start().catch(err => console.error('Error while starting connection: ' + err));;
   }
-   stopConnection = () => {
+  stopConnection = () => {
     if (this.connection) {
       this.connection.stop();
       console.log('Đã ngắt kết nối');
@@ -44,6 +47,15 @@ export class ChatHubService {
   }
   async addPostListener(callback: (post: any) => void) {
     this.connection.on("newPost", callback);
+  }
+  async addReactListener(callback: (react: any) => void) {
+    this.connection.on("addReact", callback);
+  }
+  async addCommentLister(callback: (comment: Comment) => void) {
+    this.connection.on("addComment", callback);
+  }
+  async addFriendPendingLister(callback: (FriendPending: CreateFriendShip) => void) {
+    this.connection.on("addFriendship", callback);
   }
   async joinRoom(roomName: string) {
     try {

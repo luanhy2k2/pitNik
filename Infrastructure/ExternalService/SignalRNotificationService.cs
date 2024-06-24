@@ -16,9 +16,9 @@ namespace Infrastructure.ExternalService
         public SignalRNotificationService(IHubContext<ChatHub> hubContext) { _hubContext = hubContext; }
         public async Task SendAll(string method, T EventObject)
         {
+           
             await _hubContext.Clients.All.SendAsync(method, EventObject);
         }
-
         public async Task SendTo(string to,string method, T EventObject)
         {
             await _hubContext.Clients.User(to).SendAsync(method, EventObject);

@@ -12,16 +12,13 @@ namespace Core.Entities
 {
     public class Friendship:BaseCoreEntity
     {
-        
-
-        
         public string SenderId { get; set; }
 
         public string ReceiverId { get; set; }
 
         public FriendshipStatus Status { get; set; } = FriendshipStatus.Pending;
 
-        public DateTime RequestedAt { get; set; } = DateTime.UtcNow;
+        public DateTime RequestedAt { get; set; } = DateTime.Now;
 
         // Navigation properties
         [ForeignKey("SenderId")]

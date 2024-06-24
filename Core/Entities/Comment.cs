@@ -12,12 +12,7 @@ namespace Core.Entities
 {
     public class Comment:BaseCoreEntity
     {
-       
-
-        
         public int PostId { get; set; }
-
-        
         public string UserId { get; set; }
 
         [Required]

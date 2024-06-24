@@ -248,7 +248,7 @@
                                     </figure>
                                     <div class="newpst-input">
                                         <div>
-                                            <input rows="2" placeholder="Share some what you are thinking?" [(ngModel)]="CreatePost.content" name="messageContent" />
+                                            <textarea rows="2" placeholder="Share some what you are thinking?" [(ngModel)]="CreatePost.content" name="messageContent" ></textarea>
                                             <div *ngIf="imageSrcs.length > 0" style="margin-top: 10px">
                                                 <img *ngFor="let imageSrc of imageSrcs" [src]="imageSrc" style="max-width: 100%; margin-top: 10px; margin-right: 10px;" />
                                             </div>
@@ -425,11 +425,11 @@
                                 </div>
                             </div><!-- top stories -->
                             <div class="loadMore">
-                                <div *ngFor="let post of Posts" class="central-meta item">
+                                <div *ngFor="let post of Posts.items" class="central-meta item">
                                     <div class="user-post">
                                         <div class="friend-info">
                                             <figure>
-                                                <img src="./assets/images/resources/nearly1.jpg" alt="">
+                                                <img src="https://localhost:7261/Users/{{post.imageUser}}" alt="">
                                             </figure>
                                             <div class="friend-name">
                                                 <div class="more">
@@ -455,37 +455,13 @@
                                                 <figure>
                                                     <div class="img-bunch">
                                                         <div class="row">
-                                                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                                                <figure>
+                                                            <!-- <div class="col-lg-6 col-md-6 col-sm-6"> -->
+                                                            <div style="display: flex; width: 100%;">
+                                                                <figure *ngFor=" let x of post.image">
                                                                     <a href="#" title="" data-toggle="modal" data-target="#img-comt">
-                                                                    <img src="./assets/images/resources/album1.jpg" alt="">
+                                                                    <img src="https://localhost:7261/Uploads/{{x}}" alt="">
                                                                     </a>
-                                                                </figure>
-                                                                <figure>
-                                                                    <a href="#" title="" data-toggle="modal" data-target="#img-comt">
-                                                                    <img src="./assets/images/resources/album2.jpg" alt="">
-                                                                    </a>
-                                                                </figure>
-                                                            </div>
-                                                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                                                <figure>
-                                                                    <a href="#" title="" data-toggle="modal" data-target="#img-comt">
-                                                                    <img src="./assets/images/resources/album6.jpg" alt="">
-                                                                    </a>
-                                                                </figure>
-                                                                <figure>
-                                                                    <a href="#" title="" data-toggle="modal" data-target="#img-comt">
-                                                                    <img src="./assets/images/resources/album5.jpg" alt="">
-                                                                    </a>
-                                                                </figure>
-                                                                <figure>
-                                                                    <a href="#" title="" data-toggle="modal" data-target="#img-comt">
-                                                                    <img src="./assets/images/resources/album4.jpg" alt="">
-                                                                    </a>
-                                                                    <div class="more-photos">
-                                                                        <span>+15</span>
-                                                                    </div>
-                                                                </figure>
+                                                                </figure> 
                                                             </div>
                                                         </div>
                                                     </div>	
@@ -497,19 +473,19 @@
                                                 </figure>	
                                                 <div class="we-video-info">
                                                     <ul>
-                                                        <li>
+                                                        <li (click)="React(post.id, 3)">
                                                             <span class="views" title="views">
-                                                                <i class="fa fa-eye"></i>
-                                                                <ins>1.2k</ins>
+                                                                <i [class.isReact]="post.isReact" class="fa fa-thumbs-up"></i>
+                                                                <ins>{{post.totalReactions}}</ins>
                                                             </span>
                                                         </li>
-                                                        <li>
+                                                        <!-- <li>
                                                             <div class="likes heart" title="Like/Dislike">❤ <span>2K</span></div>
-                                                        </li>
-                                                        <li>
+                                                        </li> -->
+                                                        <li (click)="LoadComment(post.id)">
                                                             <span class="comment" title="Comments">
                                                                 <i class="fa fa-commenting"></i>
-                                                                <ins>52</ins>
+                                                                <ins>{{post.totalComment}}</ins>
                                                             </span>
                                                         </li>
 
@@ -542,17 +518,17 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="coment-area" style="display: block;">
+                                            <div class="coment-area">
                                                 <ul class="we-comet">
-                                                    <li>
+                                                    <li *ngFor="let comment of post.comment">
                                                         <div class="comet-avatar">
                                                             <img src="./assets/images/resources/nearly3.jpg" alt="">
                                                         </div>
                                                         <div class="we-comment">
-                                                            <h5><a href="time-line.html" title="">Jason borne</a></h5>
-                                                            <p>we are working for the dance and sing songs. this video is very awesome for the youngster. please vote this video and like our channel</p>
+                                                            <h5><a href="time-line.html" title="">{{comment.nameUser}}</a></h5>
+                                                            <p>{{comment.content}}</p>
                                                             <div class="inline-itms">
-                                                                <span>1 year ago</span>
+                                                                <span>{{comment.created}}</span>
                                                                 <a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>
                                                                 <a href="#" title=""><i class="fa fa-heart"></i><span>20</span></a>
                                                             </div>
@@ -560,57 +536,41 @@
 
                                                     </li>
                                                     <li>
-                                                        <div class="comet-avatar">
-                                                            <img src="./assets/images/resources/comet-4.jpg" alt="">
-                                                        </div>
-                                                        <div class="we-comment">
-                                                            <h5><a href="time-line.html" title="">Sophia</a></h5>
-                                                            <p>we are working for the dance and sing songs. this video is very awesome for the youngster.
-                                                                <i class="em em-smiley"></i>
-                                                            </p>
-                                                            <div class="inline-itms">
-                                                                <span>1 year ago</span>
-                                                                <a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>
-                                                                <a href="#" title=""><i class="fa fa-heart"></i><span>20</span></a>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" title="" class="showmore underline">more comments+</a>
+                                                        <a class="showmore underline" title="" (click)="LoadMoreComment(post.id)">more comments+</a>
                                                     </li>
                                                     <li class="post-comment">
                                                         <div class="comet-avatar">
                                                             <img src="./assets/images/resources/nearly1.jpg" alt="">
                                                         </div>
                                                         <div class="post-comt-box">
-                                                            <form method="post">
-                                                                <textarea placeholder="Post your comment"></textarea>
+                                                            <form #commentForm="ngForm" (ngSubmit)="AddComment(post.id)">
+                                                                <textarea name="content" [(ngModel)]="CreateComment.content" placeholder="Post your comment"></textarea>
                                                                 <div class="add-smiles">
-                                                                    <div class="uploadimage">
-                                                                        <i class="fa fa-image"></i>
-                                                                        <label class="fileContainer">
-                                                                            <input type="file">
-                                                                        </label>
-                                                                    </div>
-                                                                    <span class="em em-expressionless" title="add icon"></span>
-                                                                    <div class="smiles-bunch">
-                                                                        <i class="em em---1"></i>
-                                                                        <i class="em em-smiley"></i>
-                                                                        <i class="em em-anguished"></i>
-                                                                        <i class="em em-laughing"></i>
-                                                                        <i class="em em-angry"></i>
-                                                                        <i class="em em-astonished"></i>
-                                                                        <i class="em em-blush"></i>
-                                                                        <i class="em em-disappointed"></i>
-                                                                        <i class="em em-worried"></i>
-                                                                        <i class="em em-kissing_heart"></i>
-                                                                        <i class="em em-rage"></i>
-                                                                        <i class="em em-stuck_out_tongue"></i>
-                                                                    </div>
+                                                                  <div class="uploadimage">
+                                                                    <i class="fa fa-image"></i>
+                                                                    <label class="fileContainer">
+                                                                      <input type="file" />
+                                                                    </label>
+                                                                  </div>
+                                                                  <span class="em em-expressionless" title="add icon"></span>
+                                                                  <div class="smiles-bunch">
+                                                                    <i class="em em---1"></i>
+                                                                    <i class="em em-smiley"></i>
+                                                                    <i class="em em-anguished"></i>
+                                                                    <i class="em em-laughing"></i>
+                                                                    <i class="em em-angry"></i>
+                                                                    <i class="em em-astonished"></i>
+                                                                    <i class="em em-blush"></i>
+                                                                    <i class="em em-disappointed"></i>
+                                                                    <i class="em em-worried"></i>
+                                                                    <i class="em em-kissing_heart"></i>
+                                                                    <i class="em em-rage"></i>
+                                                                    <i class="em em-stuck_out_tongue"></i>
+                                                                  </div>
                                                                 </div>
-
-                                                                <button type="submit"></button>
-                                                            </form>	
+                                                                <button type="submit">Post Comment</button>
+                                                              </form>
+                                                                  
                                                         </div>
                                                     </li>
                                                 </ul>
@@ -1028,163 +988,3 @@
     </div>
 </div><!-- send message popup -->
 
-<div class="modal fade" id="img-comt">
-    <div class="modal-dialog">
-      <div class="modal-content">
-
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">×</button>
-        </div>
-
-        <!-- Modal body -->
-        <div class="modal-body">
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="pop-image">
-                        <div class="pop-item">
-                            <figure><img src="./assets/images/resources/blog-detail.jpg" alt=""></figure>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="user">
-                        <figure><img src="./assets/images/resources/user1.jpg" alt=""></figure>
-                        <div class="user-information">
-                            <h4><a href="#" title="">Danile Walker</a></h4>
-                            <span>2 hours ago</span>
-                        </div>
-                        <a href="#" title="Follow" data-ripple="">Follow</a>
-                    </div>
-                    <div class="we-video-info">
-                        <ul>
-                            <li>
-                                <div title="Like/Dislike" class="likes heart">❤ <span>2K</span></div>
-                            </li>
-                            <li>
-                                <span title="Comments" class="comment">
-                                    <i class="fa fa-commenting"></i>
-                                    <ins>52</ins>
-                                </span>
-                            </li>
-
-                            <li>
-                                <span>
-                                    <a title="Share" href="#" class="">
-                                        <i class="fa fa-share-alt"></i>
-                                    </a>
-                                    <ins>20</ins>
-                                </span>	
-                            </li>
-                        </ul>
-                        <div class="users-thumb-list">
-                            <a href="#" title="" data-toggle="tooltip" data-original-title="Anderw">
-                                <img src="./assets/images/resources/userlist-1.jpg" alt="">  
-                            </a>
-                            <a href="#" title="" data-toggle="tooltip" data-original-title="frank">
-                                <img src="./assets/images/resources/userlist-2.jpg" alt="">  
-                            </a>
-                            <a href="#" title="" data-toggle="tooltip" data-original-title="Sara">
-                                <img src="./assets/images/resources/userlist-3.jpg" alt="">  
-                            </a>
-                            <a href="#" title="" data-toggle="tooltip" data-original-title="Amy">
-                                <img src="./assets/images/resources/userlist-4.jpg" alt="">  
-                            </a>
-                            <span><strong>You</strong>, <b>Sarah</b> and <a title="" href="#">24+ more</a> liked</span>
-                        </div>
-                    </div>
-                    <div style="display: block;" class="coment-area">
-                        <ul class="we-comet">
-                            <li>
-                                <div class="comet-avatar">
-                                    <img alt="" src="./assets/images/resources/nearly3.jpg">
-                                </div>
-                                <div class="we-comment">
-                                    <h5><a title="" href="time-line.html">Jason borne</a></h5>
-                                    <p>we are working for the dance and sing songs. this video is very awesome for the youngster. please vote this video and like our channel</p>
-                                    <div class="inline-itms">
-                                        <span>1 year ago</span>
-                                        <a title="Reply" href="#" class="we-reply"><i class="fa fa-reply"></i></a>
-                                        <a title="" href="#"><i class="fa fa-heart"></i><span>20</span></a>
-                                    </div>
-                                </div>
-
-                            </li>
-                            <li>
-                                <div class="comet-avatar">
-                                    <img alt="" src="./assets/images/resources/comet-4.jpg">
-                                </div>
-                                <div class="we-comment">
-                                    <h5><a title="" href="time-line.html">Sophia</a></h5>
-                                    <p>we are working for the dance and sing songs. this video is very awesome for the youngster.
-                                        <i class="em em-smiley"></i>
-                                    </p>
-                                    <div class="inline-itms">
-                                        <span>1 year ago</span>
-                                        <a title="Reply" href="#" class="we-reply"><i class="fa fa-reply"></i></a>
-                                        <a title="" href="#"><i class="fa fa-heart"></i><span>20</span></a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="comet-avatar">
-                                    <img alt="" src="./assets/images/resources/comet-4.jpg">
-                                </div>
-                                <div class="we-comment">
-                                    <h5><a title="" href="time-line.html">Sophia</a></h5>
-                                    <p>we are working for the dance and sing songs. this video is very awesome for the youngster.
-                                        <i class="em em-smiley"></i>
-                                    </p>
-                                    <div class="inline-itms">
-                                        <span>1 year ago</span>
-                                        <a title="Reply" href="#" class="we-reply"><i class="fa fa-reply"></i></a>
-                                        <a title="" href="#"><i class="fa fa-heart"></i><span>20</span></a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <a class="showmore underline" title="" href="#">more comments+</a>
-                            </li>
-                            <li class="post-comment">
-                                <div class="comet-avatar">
-                                    <img alt="" src="./assets/images/resources/nearly1.jpg">
-                                </div>
-                                <div class="post-comt-box">
-                                    <form method="post">
-                                        <textarea placeholder="Post your comment"></textarea>
-                                        <div class="add-smiles">
-                                            <div class="uploadimage">
-                                                <i class="fa fa-image"></i>
-                                                <label class="fileContainer">
-                                                    <input type="file">
-                                                </label>
-                                            </div>
-                                            <span title="add icon" class="em em-expressionless"></span>
-                                            <div class="smiles-bunch">
-                                                <i class="em em---1"></i>
-                                                <i class="em em-smiley"></i>
-                                                <i class="em em-anguished"></i>
-                                                <i class="em em-laughing"></i>
-                                                <i class="em em-angry"></i>
-                                                <i class="em em-astonished"></i>
-                                                <i class="em em-blush"></i>
-                                                <i class="em em-disappointed"></i>
-                                                <i class="em em-worried"></i>
-                                                <i class="em em-kissing_heart"></i>
-                                                <i class="em em-rage"></i>
-                                                <i class="em em-stuck_out_tongue"></i>
-                                            </div>
-                                        </div>
-
-                                        <button type="submit"></button>
-                                    </form>	
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-      </div>
-    </div>
-</div><!-- The Scrolling Modal image with comment -->

@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Features\FriendShip\Handlers\Queries\" />
+    <Folder Include="Features\FriendShip\Request\Queries\" />
+    <Folder Include="Features\Interactions\Handlers\Queries\" />
+    <Folder Include="Features\Interactions\Request\Queries\" />
     <Folder Include="Services\" />
   </ItemGroup>
 

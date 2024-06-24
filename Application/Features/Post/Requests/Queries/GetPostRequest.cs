@@ -12,5 +12,6 @@ namespace Application.Features.Post.Requests.Queries
 {
     public class GetPostRequest:BasePagingDto,IRequest<BaseQuerieResponse<PostDto>>
     {
+        public string UserName {  get; set; }
     }
 }

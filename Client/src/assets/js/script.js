@@ -7,6 +7,11 @@ $(window).load(function(){
 jQuery(document).ready(function($) {
 	
 	"use strict";
+	// show comments	
+	
+	$(document).on('click', '.comment', function () {
+        $(this).parents(".post-meta").siblings(".coment-area").slideToggle("slow");
+    });
 	
 //----- popup display on window load	
 		function delay(){
@@ -51,11 +56,6 @@ jQuery(document).ready(function($) {
 	$('.main-menu > span').on('click', function () {
 		$('.nav-list').slideToggle(300);
 		
-	});
-	
-// show comments	
-	$('.comment').on('click', function () {
-		$(this).parents(".post-meta").siblings(".coment-area").slideToggle("slow");
 	});
 	
 // add / post location	

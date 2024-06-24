@@ -18,10 +18,16 @@ namespace Core.Common
             Message = message;
             Success = true;
         }
-
-        public BaseCommandResponse(string message, List<string> errors, bool success)
+        public BaseCommandResponse(string message,bool success)
         {
-            Errors = errors;
+            Errors = new List<string>();
+            Message = message;
+            Success = success;
+        }
+
+        public BaseCommandResponse(string message, List<string> errors = null, bool success = false)
+        {
+            Errors = errors ?? new List<string>();
             Message = message;
             Success = success;
         }

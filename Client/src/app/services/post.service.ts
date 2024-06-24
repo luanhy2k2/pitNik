@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { BasePaging } from '../Models/Paging.entity';
 import { UserService } from './User.service';
 import { CreatePost } from '../Models/Post/CreatePost.entity';
+import { BaseQueriesResponse } from '../Models/Common/BaseQueriesResponse.entity';
+import { Post } from '../Models/Post/Post.entity';
 
 @Injectable({
   providedIn: 'root'
@@ -11,20 +13,20 @@ import { CreatePost } from '../Models/Post/CreatePost.entity';
 export class PostService {
   private apiUrl = "https://localhost:7261";
   constructor(private readonly httpClient: HttpClient,private readonly userService:UserService) { }
-  getPagedData(pagingDto: BasePaging): Observable<any> {
+  getPagedData(pageIndex:number,pageSize:number,keyword:string): Observable<BaseQueriesResponse<Post>> {
     let params = new HttpParams()
-      .set('PageIndex', pagingDto.pageIndex.toString())
-      .set('PageSize', pagingDto.pageSize.toString());
-    if (pagingDto.keyword) {
-      params = params.set('Keyword', pagingDto.keyword);
+      .set('PageIndex', pageIndex.toString())
+      .set('PageSize', pageSize.toString());
+    if (keyword) {
+      params = params.set('Keyword', keyword);
     }
-    return this.httpClient.get<any>(`${this.apiUrl}/api/Post/GetAll`, { params,headers: this.userService.addHeaderToken()});
+    return this.httpClient.get<BaseQueriesResponse<Post>>(`${this.apiUrl}/api/Post/GetAll`, { params,headers: this.userService.addHeaderToken()});
   }
   createPost(post: CreatePost): Observable<any> {
     const formData: FormData = new FormData();
     formData.append('Id', post.id.toString());
     formData.append('Created', post.created.toISOString());
-    formData.append('UserId', post.userId);
+    formData.append('UserId', this.userService.getUser().id);
     formData.append('Content', post.content);
     
     post.files.forEach(file => formData.append('Files', file, file.name));

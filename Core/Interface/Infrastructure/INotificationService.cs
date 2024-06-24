@@ -10,5 +10,6 @@ namespace Core.Interface.Infrastructure
     {
         Task SendAll(string method,T EventObject);
         Task SendTo(string to,string method, T EventObject);
+       
     }
 }

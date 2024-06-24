@@ -67,7 +67,6 @@ C:\Project.net\pitNik\API\obj\Debug\net8.0\refint\API.dll
 C:\Project.net\pitNik\API\obj\Debug\net8.0\API.pdb
 C:\Project.net\pitNik\API\obj\Debug\net8.0\API.genruntimeconfig.cache
 C:\Project.net\pitNik\API\obj\Debug\net8.0\ref\API.dll
-C:\Project.net\pitNik\API\obj\Debug\net8.0\API.MvcApplicationPartsAssemblyInfo.cs
 C:\Project.net\pitNik\API\bin\Debug\net8.0\AutoMapper.dll
 C:\Project.net\pitNik\API\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Project.net\pitNik\API\bin\Debug\net8.0\MediatR.dll

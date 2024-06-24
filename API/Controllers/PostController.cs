@@ -28,7 +28,7 @@ namespace API.Controllers
         [HttpGet("GetAll")]
         public async Task<ActionResult> GetAll([FromQuery] BasePagingDto model)
         {
-            var result = await _mediator.Send(new GetPostRequest { Keyword = model.Keyword, PageIndex = model.PageIndex,PageSize = model.PageSize });
+            var result = await _mediator.Send(new GetPostRequest { Keyword = model.Keyword, UserName = User.Identity.Name, PageIndex = model.PageIndex,PageSize = model.PageSize });
             return Ok(result);
         }
     }

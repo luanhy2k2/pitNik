@@ -1,0 +1,1 @@
+C:\Project.net\pitNik\Client\obj\Debug\Client.esproj.CoreCompileInputs.cache
