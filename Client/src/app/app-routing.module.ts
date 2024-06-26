@@ -5,6 +5,7 @@ import { AccountSettingComponent } from './Modules/account-setting/account-setti
 import { AboutComponent } from './Modules/about/about.component';
 import { FriendComponent } from './Modules/friend/friend.component';
 import { LoginComponent } from './Modules/login/login.component';
+import { SearchComponent } from './Modules/search/search.component';
 
 const routes: Routes = [
   {
@@ -15,22 +16,22 @@ const routes: Routes = [
   {
     path: 'setting',
     component: AccountSettingComponent,
-    title: 'setting'
   },
   {
     path: 'about',
     component: AboutComponent,
-    title: 'about'
   },
   {
     path: 'friends',
     component: FriendComponent,
-    title: 'friends'
   },
   {
     path: 'login',
     component: LoginComponent,
-    title: 'login'
+  },
+  {
+    path: 'search',
+    component: SearchComponent,
   },
 ]
 

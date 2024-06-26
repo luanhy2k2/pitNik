@@ -1,6 +1,9 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { BaseQueriesResponse } from "../Models/Common/BaseQueriesResponse.entity";
+import { Post } from "../Models/Post/Post.entity";
+import { Account } from "../Models/Account/Account.entity";
 const host = "https://localhost:7261"
 @Injectable({
     providedIn: 'root'
@@ -27,27 +30,29 @@ export class UserService {
     login(userName: string, password: string): Observable<any> {
         return this.httpClient.post<any>(`${host}/api/Account/Login`, { userName, password })
     }
-    uploadFile(file: File): Observable<string> {
-        const formData: FormData = new FormData();
-        formData.append('file', file);
-        return this.httpClient.post("https://localhost:7261/api/product/uploadFile", formData,{headers:this.addHeaderToken(), responseType: 'text' });
-    }
+    
     getUser() {
         var userString = localStorage.getItem('user');
         return userString ? JSON.parse(userString) : null;
     }
-    getAllAccount(pageIndex: number): Observable<any> {
-        return this.httpClient.get<any>(`${host}/api/staff/getAll/${pageIndex}/8`)
-    }
+    getPagedData(pageIndex:number,pageSize:number,keyword:string): Observable<BaseQueriesResponse<Account>> {
+        let params = new HttpParams()
+          .set('PageIndex', pageIndex.toString())
+          .set('PageSize', pageSize.toString());
+        if (keyword) {
+          params = params.set('Keyword', keyword);
+        }
+        return this.httpClient.get<BaseQueriesResponse<Account>>(`${host}/api/Account/GetAll`, { params,headers: this.addHeaderToken()});
+      }
     getUserById(id: any): Observable<any> {
-        return this.httpClient.get<any>(`${host}/api/staff/getById/${id}`)
+        return this.httpClient.get<any>(`${host}/api/Account/getById/${id}`)
     }
     deleteAccountById(id: number): Observable<any> {
-        return this.httpClient.delete<any>(`${host}/api/staff/delete/${id}`)
+        return this.httpClient.delete<any>(`${host}/api/Account/delete/${id}`)
     }
     
     updateAccount(account: any): Observable<any> {
-        return this.httpClient.post<any>(`${host}/api/staff/updateUser`, account, {headers:this.addHeaderToken()})
+        return this.httpClient.post<any>(`${host}/api/Account/updateUser`, account, {headers:this.addHeaderToken()})
     }
     addHeaderToken() {
         const user = this.getUser();

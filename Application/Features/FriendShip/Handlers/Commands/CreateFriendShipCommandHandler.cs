@@ -47,10 +47,11 @@ namespace Application.Features.FriendShip.Handlers.Commands
                     RequestedAt = DateTime.Now,
                     Created = DateTime.Now,
                 };
-               
-                var result = await _pitNikRepo.FriendShip.Create(friendShip);
-                await _notificationService.SendTo(sender.Id, "addFriendship", request.CreateFriendShipDto);
-                await _notificationService.SendTo(receiver.Id, "addFriendship", request.CreateFriendShipDto);
+
+
+                //await _notificationService.SendTo(sender.UserName, "addFriendship", request.CreateFriendShipDto);
+                //await _notificationService.SendTo(receiver.UserName, "addFriendship", request.CreateFriendShipDto);
+                await _notificationService.SendAll("addFriendship", request.CreateFriendShipDto);
                 return new BaseCommandResponse("Gửi lời mời kết bạn thành công");
 
             }

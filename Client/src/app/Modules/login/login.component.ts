@@ -10,16 +10,13 @@ import { ChatHubService } from 'src/app/services/chatHub.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  constructor(private readonly UserService:UserService, private readonly route:Router, private readonly chatHubService:ChatHubService){}
+  constructor(private readonly UserService:UserService, private readonly route:Router){}
   userName:string = "";
   passWord:string = "";
   Login(){
     this.UserService.login(this.userName,this.passWord).subscribe(
       res =>{
         alert("Đăng nhập thành công!");
-        this.chatHubService.startConnection().then(() =>{
-          console.log('SignalR Started...');
-        });
         localStorage.setItem("user", JSON.stringify(res));
         this.route.navigate(['/']);
       },

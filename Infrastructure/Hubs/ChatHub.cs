@@ -33,7 +33,6 @@ namespace Infrastructure.Hubs
                 if (user != null)
                 {
                     await Groups.AddToGroupAsync(Context.ConnectionId, roomName);
-                    //user.CurrentRoom = roomName;
                     await Clients.OthersInGroup(roomName).SendAsync("addUser", user);
                 }
             }
@@ -47,8 +46,6 @@ namespace Infrastructure.Hubs
             try
             {
                 var user = _context.Users.Where(u => u.UserName == IdentityName).FirstOrDefault();
-                //var userViewModel = _mapper.Map<ApplicationUser, AccountDto>(user);
-                //userViewModel.CurrentRoom = "";
                 if (!_connections.Any(u => u.UserName == IdentityName))
                 {
                     _connections.Add(user);
@@ -56,7 +53,6 @@ namespace Infrastructure.Hubs
                     Clients.All.SendAsync("addUserConnected", user.Id);
                 }
                 Clients.Caller.SendAsync("getProfileInfo", user.Name);
-                //Clients.Caller.SendAsync("getProfileInfo", user.hoTen, user.Avartar);
             }
             catch (Exception ex)
             {
@@ -88,5 +84,8 @@ namespace Infrastructure.Hubs
         {
             return _connections.ToList();
         }
+
+        public  static IReadOnlyDictionary<string, string> ConnectionMap => _connectionMap;
     }
 }
+

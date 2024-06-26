@@ -23,7 +23,7 @@ namespace Application.Features.Account.Handles.Queries
         public async Task<BaseQuerieResponse<AccountDto>> Handle(GetAccountRequest request, CancellationToken cancellationToken)
         {
             var lstAcount = await _pitNikRepo.Account.GetAll(request.PageIndex, request.PageSize, 
-                x => (string.IsNullOrEmpty(request.Keyword) || x.UserName.Contains(request.Keyword)));
+                x => (string.IsNullOrEmpty(request.Keyword) || x.Name.Contains(request.Keyword)));
             var result = _mapper.Map<List<AccountDto>>(lstAcount.Items);
             return new BaseQuerieResponse<AccountDto>
             {

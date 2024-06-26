@@ -11,52 +11,60 @@ import { CreateFriendShip } from '../Models/FriendShip/CreateFriendShip.entity';
   providedIn: 'root'
 })
 export class ChatHubService {
-  private connection!: signalR.HubConnection;
-  constructor(private userService: UserService) { }
-  startConnection() {
-    this.connection = new signalR.HubConnectionBuilder()
-      .withUrl("https://localhost:7261/chatHub", {
-        accessTokenFactory: () =>{ return this.userService.getUser().token}
-      }).withAutomaticReconnect().configureLogging(signalR.LogLevel.Information)
-      .build();
-    return this.connection.start().catch(err => console.error('Error while starting connection: ' + err));;
+  private connection: signalR.HubConnection = new signalR.HubConnectionBuilder()
+  .withUrl("https://localhost:7261/chatHub", {
+    accessTokenFactory: () => this.userService.getUser().token,
+    transport: signalR.HttpTransportType.LongPolling
+  })
+  .withAutomaticReconnect()
+  .configureLogging(signalR.LogLevel.Information)
+  .build();;
+
+  constructor(private userService: UserService) {
+    this.startConnection();
   }
-  stopConnection = () => {
+
+  private startConnection() {
+    this.connection
+      .start()
+      .then(() => console.log('SignalR connected'))
+      .catch(err => console.error('Error while starting connection: ' + err));
+  }
+  stopConnection() {
     if (this.connection) {
       this.connection.stop();
-      console.log('Đã ngắt kết nối');
+      console.log('Disconnected from SignalR');
     }
   }
+
   addNewMessageListener(callback: (messageView: any) => void) {
     this.connection.on("newMessage", callback);
   }
-  async addProfileInfoListener(callback: (displayName: any) => void) {
+
+  addProfileInfoListener(callback: (displayName: any) => void) {
     this.connection.on("getProfileInfo", callback);
   }
-  async addUserConnectedListener(callback: (id: any) => void) {
+
+  addUserConnectedListener(callback: (id: any) => void) {
     this.connection.on("addUserConnected", callback);
   }
-  async addRemoveUserListener(callback: (user: any) => void) {
-    this.connection.on("removeUser", callback);
-  }
-  async addAddUserListener(callback: (user: any) => void) {
-    this.connection.on("addUser", callback);
-  }
-  async addChatRoomListener(callback: (room: any) => void) {
-    this.connection.on("addChatRoom", callback);
-  }
-  async addPostListener(callback: (post: any) => void) {
+
+  addPostListener(callback: (post: any) => void) {
     this.connection.on("newPost", callback);
   }
-  async addReactListener(callback: (react: any) => void) {
+
+  addReactListener(callback: (react: any) => void) {
     this.connection.on("addReact", callback);
   }
-  async addCommentLister(callback: (comment: Comment) => void) {
+
+  addCommentLister(callback: (comment: any) => void) {
     this.connection.on("addComment", callback);
   }
-  async addFriendPendingLister(callback: (FriendPending: CreateFriendShip) => void) {
+
+  addFriendPendingLister(callback: (createFriendShipDto: any) => void) {
     this.connection.on("addFriendship", callback);
   }
+
   async joinRoom(roomName: string) {
     try {
       return await this.connection.invoke("Join", roomName);
@@ -65,22 +73,22 @@ export class ChatHubService {
       throw err; // Re-throw the error to be handled by the caller if necessary
     }
   }
-  async Leave(roomName: string) {
+
+  async leaveRoom(roomName: string) {
     try {
       return await this.connection.invoke("Leave", roomName);
-      console.log("leave success!", roomName)
     } catch (err) {
       console.error('Error while leaving room:', err);
       throw err; // Re-throw the error to be handled by the caller if necessary
     }
   }
+
   async getUserList() {
     try {
       return await this.connection.invoke("GetUsers");
     } catch (err) {
-      console.error('Error while get usser:', err);
+      console.error('Error while getting users:', err);
       throw err; // Re-throw the error to be handled by the caller if necessary
     }
   }
-  
 }

@@ -65,18 +65,18 @@ export class IndexComponent {
 
   ngOnInit() {
     this.LoadPost();
-    this.chatHubService.startConnection().then(() => {
-      this.chatHubService.addPostListener((post: any) => {
-        this.LoadPost();
-      });
-      this.chatHubService.addReactListener((react: any) => {
-        this.LoadPost();
-      });
-      this.chatHubService.addCommentLister((comment: Comment) => {
-        this.Comments.push(comment);
-      });
+    this.chatHubService.addPostListener((post: any) => {
+      this.LoadPost();
     });
-  }
+    this.chatHubService.addReactListener((react: any) => {
+      this.LoadPost();
+    });
+    this.chatHubService.addCommentLister((comment: Comment) => {
+      this.Comments.push(comment);
+    });
+
+  };
+
   LoadPost() {
     this.postService.getPagedData(this.Posts.pageIndex, this.Posts.pageSize, this.Posts.keyword).subscribe(
       res => {

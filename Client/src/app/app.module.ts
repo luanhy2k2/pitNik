@@ -13,6 +13,7 @@ import { UserProfileComponent } from './Partial/user-profile/user-profile.compon
 import { LoginComponent } from './Modules/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { SearchComponent } from './Modules/search/search.component';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { HttpClientModule } from '@angular/common/http';
     FriendComponent,
     UserProfileComponent,
     LoginComponent,
+    SearchComponent,
    
   ],
   imports: [
