@@ -47,8 +47,8 @@
                                 <span>sign in now and meet the awesome Friends around the world.</span>
                             </div>
                             <div class="we-form" method="post">
-                                <input [(ngModel)] = "userName" type="text" placeholder="Email">
-                                <input [(ngModel)] = "passWord" type="password" placeholder="Password">
+                                <input [(ngModel)] = "userName" name="userName" type="text" placeholder="Email">
+                                <input [(ngModel)] = "passWord" name="passWord" type="password" placeholder="Password">
                                 <input type="checkbox"><label>remember me</label>
                                 <button (click)="Login()" type="submit" data-ripple="">sign in</button>
                                 <a class="forgot underline" href="#" title="">forgot password?</a>

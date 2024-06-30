@@ -3,28 +3,28 @@
   "WorkspaceRootPath": "C:\\Project.net\\pitNik\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|c:\\project.net\\pitnik\\application\\features\\account\\handlers\\queries\\getaccountrequesthandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|solutionrelative:application\\features\\account\\handlers\\queries\\getaccountrequesthandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|c:\\project.net\\pitnik\\application\\features\\conversation\\handler\\queries\\getconversationrequesthandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|solutionrelative:application\\features\\conversation\\handler\\queries\\getconversationrequesthandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|c:\\project.net\\pitnik\\application\\features\\friendship\\handlers\\commands\\createfriendshipcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|solutionrelative:application\\features\\friendship\\handlers\\commands\\createfriendshipcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|c:\\project.net\\pitnik\\application\\dtos\\message\\messagedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|solutionrelative:application\\dtos\\message\\messagedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{83021804-351B-49E9-A7AF-61AD9C39C5D6}|Core\\Core.csproj|c:\\project.net\\pitnik\\core\\interface\\infrastructure\\inotificationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{83021804-351B-49E9-A7AF-61AD9C39C5D6}|Core\\Core.csproj|solutionrelative:core\\interface\\infrastructure\\inotificationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|c:\\project.net\\pitnik\\application\\features\\message\\handlers\\queries\\getmessagerequesthandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|solutionrelative:application\\features\\message\\handlers\\queries\\getmessagerequesthandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{AA0A6693-623F-43B9-94D6-810D4CCA29AF}|Infrastructure\\Infrastructure.csproj|c:\\project.net\\pitnik\\infrastructure\\externalservice\\signalrnotificationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AA0A6693-623F-43B9-94D6-810D4CCA29AF}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\externalservice\\signalrnotificationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E58E86E4-4674-4EA6-9AD8-E9278AE07C74}|API\\API.csproj|c:\\project.net\\pitnik\\api\\controllers\\conversationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E58E86E4-4674-4EA6-9AD8-E9278AE07C74}|API\\API.csproj|solutionrelative:api\\controllers\\conversationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{AA0A6693-623F-43B9-94D6-810D4CCA29AF}|Infrastructure\\Infrastructure.csproj|c:\\project.net\\pitnik\\infrastructure\\hubs\\chathub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AA0A6693-623F-43B9-94D6-810D4CCA29AF}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\hubs\\chathub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|c:\\project.net\\pitnik\\application\\features\\message\\handlers\\command\\createmessagecommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|solutionrelative:application\\features\\message\\handlers\\command\\createmessagecommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E58E86E4-4674-4EA6-9AD8-E9278AE07C74}|API\\API.csproj|c:\\project.net\\pitnik\\api\\controllers\\friendshipcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E58E86E4-4674-4EA6-9AD8-E9278AE07C74}|API\\API.csproj|solutionrelative:api\\controllers\\friendshipcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E58E86E4-4674-4EA6-9AD8-E9278AE07C74}|API\\API.csproj|c:\\project.net\\pitnik\\api\\controllers\\messagecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E58E86E4-4674-4EA6-9AD8-E9278AE07C74}|API\\API.csproj|solutionrelative:api\\controllers\\messagecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,84 +34,85 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "GetAccountRequestHandler.cs",
-              "DocumentMoniker": "C:\\Project.net\\pitNik\\Application\\Features\\Account\\Handlers\\Queries\\GetAccountRequestHandler.cs",
-              "RelativeDocumentMoniker": "Application\\Features\\Account\\Handlers\\Queries\\GetAccountRequestHandler.cs",
-              "ToolTip": "C:\\Project.net\\pitNik\\Application\\Features\\Account\\Handlers\\Queries\\GetAccountRequestHandler.cs",
-              "RelativeToolTip": "Application\\Features\\Account\\Handlers\\Queries\\GetAccountRequestHandler.cs",
-              "ViewState": "AQIAAAwAAAAAAAAAAAAAABcAAAAIAAAA",
+              "DocumentIndex": 1,
+              "Title": "MessageDto.cs",
+              "DocumentMoniker": "C:\\Project.net\\pitNik\\Application\\DTOs\\Message\\MessageDto.cs",
+              "RelativeDocumentMoniker": "Application\\DTOs\\Message\\MessageDto.cs",
+              "ToolTip": "C:\\Project.net\\pitNik\\Application\\DTOs\\Message\\MessageDto.cs",
+              "RelativeToolTip": "Application\\DTOs\\Message\\MessageDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAqwAwAAAAvAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-26T17:46:33.102Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "INotificationService.cs",
-              "DocumentMoniker": "C:\\Project.net\\pitNik\\Core\\Interface\\Infrastructure\\INotificationService.cs",
-              "RelativeDocumentMoniker": "Core\\Interface\\Infrastructure\\INotificationService.cs",
-              "ToolTip": "C:\\Project.net\\pitNik\\Core\\Interface\\Infrastructure\\INotificationService.cs",
-              "RelativeToolTip": "Core\\Interface\\Infrastructure\\INotificationService.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAqwA0AAAAFAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-26T14:27:00.512Z",
+              "WhenOpened": "2024-06-30T17:48:54.882Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "SignalRNotificationService.cs",
-              "DocumentMoniker": "C:\\Project.net\\pitNik\\Infrastructure\\ExternalService\\SignalRNotificationService.cs",
-              "RelativeDocumentMoniker": "Infrastructure\\ExternalService\\SignalRNotificationService.cs",
-              "ToolTip": "C:\\Project.net\\pitNik\\Infrastructure\\ExternalService\\SignalRNotificationService.cs",
-              "RelativeToolTip": "Infrastructure\\ExternalService\\SignalRNotificationService.cs",
-              "ViewState": "AQIAAAYAAAAAAAAAAAAAABUAAAAgAAAA",
+              "Title": "ConversationController.cs",
+              "DocumentMoniker": "C:\\Project.net\\pitNik\\API\\Controllers\\ConversationController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\ConversationController.cs",
+              "ToolTip": "C:\\Project.net\\pitNik\\API\\Controllers\\ConversationController.cs",
+              "RelativeToolTip": "API\\Controllers\\ConversationController.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAACEAAAAFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-24T19:08:50.804Z",
+              "WhenOpened": "2024-06-30T16:08:31.822Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "ChatHub.cs",
-              "DocumentMoniker": "C:\\Project.net\\pitNik\\Infrastructure\\Hubs\\ChatHub.cs",
-              "RelativeDocumentMoniker": "Infrastructure\\Hubs\\ChatHub.cs",
-              "ToolTip": "C:\\Project.net\\pitNik\\Infrastructure\\Hubs\\ChatHub.cs",
-              "RelativeToolTip": "Infrastructure\\Hubs\\ChatHub.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAFAAAA",
+              "DocumentIndex": 0,
+              "Title": "GetConversationRequestHandler.cs",
+              "DocumentMoniker": "C:\\Project.net\\pitNik\\Application\\Features\\Conversation\\Handler\\Queries\\GetConversationRequestHandler.cs",
+              "RelativeDocumentMoniker": "Application\\Features\\Conversation\\Handler\\Queries\\GetConversationRequestHandler.cs",
+              "ToolTip": "C:\\Project.net\\pitNik\\Application\\Features\\Conversation\\Handler\\Queries\\GetConversationRequestHandler.cs",
+              "RelativeToolTip": "Application\\Features\\Conversation\\Handler\\Queries\\GetConversationRequestHandler.cs",
+              "ViewState": "AQIAABUAAAAAAAAAAAAuwEoAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-24T19:01:00.689Z",
+              "WhenOpened": "2024-06-30T15:46:44.856Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "CreateFriendShipCommandHandler.cs",
-              "DocumentMoniker": "C:\\Project.net\\pitNik\\Application\\Features\\FriendShip\\Handlers\\Commands\\CreateFriendShipCommandHandler.cs",
-              "RelativeDocumentMoniker": "Application\\Features\\FriendShip\\Handlers\\Commands\\CreateFriendShipCommandHandler.cs",
-              "ToolTip": "C:\\Project.net\\pitNik\\Application\\Features\\FriendShip\\Handlers\\Commands\\CreateFriendShipCommandHandler.cs",
-              "RelativeToolTip": "Application\\Features\\FriendShip\\Handlers\\Commands\\CreateFriendShipCommandHandler.cs",
-              "ViewState": "AQIAACIAAAAAAAAAAAAwwDUAAAAyAAAA",
+              "DocumentIndex": 2,
+              "Title": "GetMessageRequestHandler.cs",
+              "DocumentMoniker": "C:\\Project.net\\pitNik\\Application\\Features\\Message\\Handlers\\Queries\\GetMessageRequestHandler.cs",
+              "RelativeDocumentMoniker": "Application\\Features\\Message\\Handlers\\Queries\\GetMessageRequestHandler.cs",
+              "ToolTip": "C:\\Project.net\\pitNik\\Application\\Features\\Message\\Handlers\\Queries\\GetMessageRequestHandler.cs",
+              "RelativeToolTip": "Application\\Features\\Message\\Handlers\\Queries\\GetMessageRequestHandler.cs",
+              "ViewState": "AQIAABcAAAAAAAAAAAAwwB4AAAA0AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-24T18:07:52.242Z",
+              "WhenOpened": "2024-06-30T13:39:12.107Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "FriendShipController.cs",
-              "DocumentMoniker": "C:\\Project.net\\pitNik\\API\\Controllers\\FriendShipController.cs",
-              "RelativeDocumentMoniker": "API\\Controllers\\FriendShipController.cs",
-              "ToolTip": "C:\\Project.net\\pitNik\\API\\Controllers\\FriendShipController.cs",
-              "RelativeToolTip": "API\\Controllers\\FriendShipController.cs",
-              "ViewState": "AQIAAAsAAAAAAAAAAAAwwBoAAAAMAAAA",
+              "Title": "MessageController.cs",
+              "DocumentMoniker": "C:\\Project.net\\pitNik\\API\\Controllers\\MessageController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\MessageController.cs",
+              "ToolTip": "C:\\Project.net\\pitNik\\API\\Controllers\\MessageController.cs",
+              "RelativeToolTip": "API\\Controllers\\MessageController.cs",
+              "ViewState": "AQIAAA4AAAAAAAAAAAAAAB0AAABOAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-24T18:04:23.361Z"
+              "WhenOpened": "2024-06-30T13:20:55.583Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "CreateMessageCommandHandler.cs",
+              "DocumentMoniker": "C:\\Project.net\\pitNik\\Application\\Features\\Message\\Handlers\\Command\\CreateMessageCommandHandler.cs",
+              "RelativeDocumentMoniker": "Application\\Features\\Message\\Handlers\\Command\\CreateMessageCommandHandler.cs",
+              "ToolTip": "C:\\Project.net\\pitNik\\Application\\Features\\Message\\Handlers\\Command\\CreateMessageCommandHandler.cs",
+              "RelativeToolTip": "Application\\Features\\Message\\Handlers\\Command\\CreateMessageCommandHandler.cs",
+              "ViewState": "AQIAAB0AAAAAAAAAAAAYwCoAAAARAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-30T13:02:42.129Z",
+              "EditorCaption": ""
             }
           ]
         }

@@ -52,7 +52,7 @@ namespace Infrastructure.Hubs
                     _connectionMap.Add(IdentityName, Context.ConnectionId);
                     Clients.All.SendAsync("addUserConnected", user.Id);
                 }
-                Clients.Caller.SendAsync("getProfileInfo", user.Name);
+                Clients.Caller.SendAsync("getProfileInfo", user);
             }
             catch (Exception ex)
             {

@@ -6,6 +6,8 @@ import { BaseQueriesResponse } from '../Models/Common/BaseQueriesResponse.entity
 import { UserService } from './User.service';
 import { FriendShip } from '../Models/FriendShip/FriendShip.entity';
 import { CreateFriendShip } from '../Models/FriendShip/CreateFriendShip.entity';
+import { BaseCommandResponse } from '../Models/Common/BaseCommandResponse.entity';
+import { UpdateStatusFriend } from '../Models/FriendShip/UpdateStatusFriend.entity';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +24,10 @@ export class FriendShipService {
     }
     return this.httpClient.get<BaseQueriesResponse<FriendShip>>(`${this.apiUrl}/api/FriendShip/Get`, { params,headers: this.userService.addHeaderToken()});
   }
-  create(comment: CreateFriendShip): Observable<any> {
-    return this.httpClient.post(`${this.apiUrl}/api/Comment/Create`, comment,{headers: this.userService.addHeaderToken()});
+  create(FriendShip: CreateFriendShip): Observable<BaseCommandResponse> {
+    return this.httpClient.post<BaseCommandResponse>(`${this.apiUrl}/api/FriendShip/Create`, FriendShip,{headers: this.userService.addHeaderToken()});
+  }
+  Update(FriendShip: UpdateStatusFriend): Observable<BaseCommandResponse> {
+    return this.httpClient.post<BaseCommandResponse>(`${this.apiUrl}/api/FriendShip/Update`, FriendShip,{headers: this.userService.addHeaderToken()});
   }
 }

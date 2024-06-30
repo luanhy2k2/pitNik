@@ -33,7 +33,6 @@ jQuery(document).ready(function($) {
 	 $(this).siblings('div').toggleClass('active');
 	  	return false;
   });
-
   $("body *").not('.top-area > .setting-area > li > a').on("click", function() {
 	 $(".top-area > .setting-area > li > a").removeClass('active');
 	

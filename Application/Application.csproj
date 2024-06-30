@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Features\Conversation\Handler\Commands\" />
+    <Folder Include="Features\Conversation\Request\Commands\" />
     <Folder Include="Features\FriendShip\Handlers\Queries\" />
     <Folder Include="Features\FriendShip\Request\Queries\" />
     <Folder Include="Features\Interactions\Handlers\Queries\" />

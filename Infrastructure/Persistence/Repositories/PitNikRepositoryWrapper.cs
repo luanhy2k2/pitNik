@@ -54,6 +54,8 @@ namespace Infrastructure.Persistence.Repositories
         private IMessageRepository _messageRepository;
         public IMessageRepository Message => _messageRepository ??= new MessageRepository(_context);
 
+        private INotificationRepository _notificationRepository;
+        public INotificationRepository Notification => _notificationRepository ??= new NotificationRepository(_context);
         public async Task SaveAsync()
         {
             await _context.SaveChangesAsync();

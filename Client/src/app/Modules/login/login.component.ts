@@ -10,7 +10,11 @@ import { ChatHubService } from 'src/app/services/chatHub.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  constructor(private readonly UserService:UserService, private readonly route:Router){}
+  constructor(
+    private readonly UserService:UserService, 
+    private readonly route:Router,
+    private readonly hubService:ChatHubService
+  ){}
   userName:string = "";
   passWord:string = "";
   Login(){

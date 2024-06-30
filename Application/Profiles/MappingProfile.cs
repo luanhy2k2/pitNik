@@ -2,6 +2,8 @@
 using Application.DTOs.Comment;
 using Application.DTOs.FriendShip;
 using Application.DTOs.Interactions;
+using Application.DTOs.Message;
+using Application.DTOs.Notification;
 using Application.DTOs.Post;
 using AutoMapper;
 using Core.Entities;
@@ -25,11 +27,18 @@ namespace Application.Profiles
 
             CreateMap<CreateInteractionDto, Interactions>().ReverseMap();
 
-            CreateMap<CommentDto, Comment>().ReverseMap();
+            CreateMap<Comment, CommentDto>().ReverseMap();
             CreateMap<Comment, CreateCommentDto>().ReverseMap();
 
             CreateMap<Friendship, CreateFriendShipDto>().ReverseMap();
             CreateMap<Friendship, FriendShipDto>().ReverseMap();
+
+            CreateMap<Notification, CreateNotificationDto>().ReverseMap();
+            CreateMap<Notification, NotificationDto>().ReverseMap();
+
+            CreateMap<Message, CreateMessageDto>().ReverseMap();
+            CreateMap<Message, MessageDto>().ReverseMap();
+
         }
     }
 }

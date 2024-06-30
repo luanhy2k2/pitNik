@@ -12,12 +12,8 @@ namespace Core.Entities
 {
     public class Message:BaseCoreEntity
     {
-        
-
-        
+        public int ConversationId { get; set; }
         public string SenderId { get; set; }
-
-        
         public string ReceiverId { get; set; }
 
         [Required]
@@ -28,6 +24,8 @@ namespace Core.Entities
         public virtual ApplicationUser Sender { get; set; }
         [ForeignKey("ReceiverId")]
         public virtual ApplicationUser Receiver { get; set; }
+        [ForeignKey("ConversationId")]
+        public virtual Conversation Conversation { get; set; }
         public virtual ICollection<MessageReadStatus> MessageReadStatuses { get; set; } = new List<MessageReadStatus>();
     }
 }

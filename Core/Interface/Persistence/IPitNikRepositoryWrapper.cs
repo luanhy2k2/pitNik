@@ -21,6 +21,7 @@ namespace Core.Interface.Persistence
         IMessageRepository Message { get; }
         IPostRepository Post { get; }
         IImagePostRepository ImagePost { get; }
+        INotificationRepository Notification { get; }
         Task SaveAsync();
     }
 }

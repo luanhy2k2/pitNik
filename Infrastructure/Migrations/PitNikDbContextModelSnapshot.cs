@@ -81,30 +81,6 @@ namespace Infrastructure.Migrations
                     b.ToTable("Conversations");
                 });
 
-            modelBuilder.Entity("Core.Entities.Emoji", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Emojis");
-                });
-
             modelBuilder.Entity("Core.Entities.Friendship", b =>
                 {
                     b.Property<int>("Id")
@@ -290,6 +266,9 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("Emoji")
+                        .HasColumnType("int");
+
                     b.Property<int>("EmojiId")
                         .HasColumnType("int");
 
@@ -301,8 +280,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("EmojiId");
 
                     b.HasIndex("PostId");
 
@@ -323,7 +300,7 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ConversationId")
+                    b.Property<int>("ConversationId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Created")
@@ -381,6 +358,45 @@ namespace Infrastructure.Migrations
                     b.ToTable("MessageReadStatuses");
                 });
 
+            modelBuilder.Entity("Core.Entities.Notification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsSeen")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("PostId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ReceiverId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("SenderId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.HasIndex("ReceiverId");
+
+                    b.HasIndex("SenderId");
+
+                    b.ToTable("Notifications");
+                });
+
             modelBuilder.Entity("Core.Entities.Post", b =>
                 {
                     b.Property<int>("Id")
@@ -430,6 +446,9 @@ namespace Infrastructure.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
+
                     b.Property<string>("Image")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -460,6 +479,10 @@ namespace Infrastructure.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Profile")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -744,12 +767,6 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.Entities.Interactions", b =>
                 {
-                    b.HasOne("Core.Entities.Emoji", "Emoji")
-                        .WithMany()
-                        .HasForeignKey("EmojiId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Core.Entities.Post", "Post")
                         .WithMany("Interactions")
                         .HasForeignKey("PostId")
@@ -762,8 +779,6 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Emoji");
-
                     b.Navigation("Post");
 
                     b.Navigation("User");
@@ -771,9 +786,11 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.Entities.Message", b =>
                 {
-                    b.HasOne("Core.Entities.Conversation", null)
+                    b.HasOne("Core.Entities.Conversation", "Conversation")
                         .WithMany("Messages")
-                        .HasForeignKey("ConversationId");
+                        .HasForeignKey("ConversationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Core.Model.ApplicationUser", "Receiver")
                         .WithMany()
@@ -786,6 +803,8 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("SenderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Conversation");
 
                     b.Navigation("Receiver");
 
@@ -809,6 +828,30 @@ namespace Infrastructure.Migrations
                     b.Navigation("Message");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Core.Entities.Notification", b =>
+                {
+                    b.HasOne("Core.Entities.Post", "Post")
+                        .WithMany()
+                        .HasForeignKey("PostId");
+
+                    b.HasOne("Core.Model.ApplicationUser", "Receiver")
+                        .WithMany()
+                        .HasForeignKey("ReceiverId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Core.Model.ApplicationUser", "Sender")
+                        .WithMany()
+                        .HasForeignKey("SenderId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Post");
+
+                    b.Navigation("Receiver");
+
+                    b.Navigation("Sender");
                 });
 
             modelBuilder.Entity("Core.Entities.Post", b =>

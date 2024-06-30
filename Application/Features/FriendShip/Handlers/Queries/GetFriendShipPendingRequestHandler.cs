@@ -48,6 +48,7 @@ namespace Application.Features.FriendShip.Handlers.Queries
                             ReceiverId = fr.ReceiverId,
                             RequestedAt = fr.RequestedAt,
                             Status = fr.Status,
+                            Id = fr.Id
                         };
 
             var totalItems = await query.CountAsync();

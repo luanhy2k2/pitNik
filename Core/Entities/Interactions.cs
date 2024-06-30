@@ -24,8 +24,15 @@ namespace Core.Entities
         [ForeignKey("PostId")]
         public virtual Post Post { get; set; }
         [ForeignKey("EmojiId")]
-        public virtual Emoji Emoji { get; set; }
+        public Emoji Emoji { get; set; }
         [ForeignKey("UserId")]
         public virtual ApplicationUser User { get; set; }
+    }
+    public enum Emoji
+    {
+        Like,
+        Heart,
+        DisLike,
+        Haha
     }
 }

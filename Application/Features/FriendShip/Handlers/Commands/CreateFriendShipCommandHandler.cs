@@ -50,8 +50,8 @@ namespace Application.Features.FriendShip.Handlers.Commands
 
 
                 //await _notificationService.SendTo(sender.UserName, "addFriendship", request.CreateFriendShipDto);
-                //await _notificationService.SendTo(receiver.UserName, "addFriendship", request.CreateFriendShipDto);
-                await _notificationService.SendAll("addFriendship", request.CreateFriendShipDto);
+                await _notificationService.SendTo(receiver.UserName , "addFriendship", request.CreateFriendShipDto);
+                //await _notificationService.SendAll("addFriendship", request.CreateFriendShipDto);
                 return new BaseCommandResponse("Gửi lời mời kết bạn thành công");
 
             }

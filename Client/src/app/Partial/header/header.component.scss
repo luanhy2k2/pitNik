@@ -275,7 +275,10 @@ input[type="radio"] {
     position: fixed;
     bottom: 10px;
     right: 10px;   
-    padding: 10px; /* Khoảng cách nội dung với viền của div */
+    
     border-radius: 5px; /* Bo tròn góc của div */
     z-index: 999;
+}
+.bold {
+    font-weight: bold;
   }

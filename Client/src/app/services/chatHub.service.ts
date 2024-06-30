@@ -6,6 +6,9 @@ import { UserService } from './User.service';
 import { CreateComment } from '../Models/Comment/create-comment.entity';
 import { Comment } from '../Models/Comment/comment.entity';
 import { CreateFriendShip } from '../Models/FriendShip/CreateFriendShip.entity';
+import { UpdateStatusFriend } from '../Models/FriendShip/UpdateStatusFriend.entity';
+import { Notification } from '../Models/Notification/Notification.entity';
+import { Message } from '../Models/Message/Message.entity';
 
 @Injectable({
   providedIn: 'root'
@@ -13,22 +16,24 @@ import { CreateFriendShip } from '../Models/FriendShip/CreateFriendShip.entity';
 export class ChatHubService {
   private connection: signalR.HubConnection = new signalR.HubConnectionBuilder()
   .withUrl("https://localhost:7261/chatHub", {
-    accessTokenFactory: () => this.userService.getUser().token,
+    accessTokenFactory: () => {
+      let token = this.userService.getUser().token;
+        return token ?? '';
+    },
     transport: signalR.HttpTransportType.LongPolling
   })
   .withAutomaticReconnect()
   .configureLogging(signalR.LogLevel.Information)
-  .build();;
-
+  .build();
   constructor(private userService: UserService) {
-    this.startConnection();
   }
-
-  private startConnection() {
-    this.connection
-      .start()
-      .then(() => console.log('SignalR connected'))
-      .catch(err => console.error('Error while starting connection: ' + err));
+  startConnection() {
+    try {
+      this.connection.start();
+      console.log('SignalR connected');
+    } catch (err) {
+      console.error('Error while starting connection: ', err);
+    }
   }
   stopConnection() {
     if (this.connection) {
@@ -36,31 +41,30 @@ export class ChatHubService {
       console.log('Disconnected from SignalR');
     }
   }
-
-  addNewMessageListener(callback: (messageView: any) => void) {
+  addNewMessageListener(callback: (messageDto: Message) => void) {
     this.connection.on("newMessage", callback);
   }
-
-  addProfileInfoListener(callback: (displayName: any) => void) {
+  addProfileInfoListener(callback: (user: any) => void) {
     this.connection.on("getProfileInfo", callback);
   }
-
   addUserConnectedListener(callback: (id: any) => void) {
     this.connection.on("addUserConnected", callback);
   }
-
   addPostListener(callback: (post: any) => void) {
     this.connection.on("newPost", callback);
   }
-
+  addNotificationListener(callback: (Notification: Notification) => void) {
+    this.connection.on("createNotification", callback);
+  }
   addReactListener(callback: (react: any) => void) {
     this.connection.on("addReact", callback);
   }
-
   addCommentLister(callback: (comment: any) => void) {
     this.connection.on("addComment", callback);
   }
-
+  updateFriendStatusLister(callback: (UpdateFriendShipDto: UpdateStatusFriend) => void) {
+    this.connection.on("updateFriend", callback);
+  }
   addFriendPendingLister(callback: (createFriendShipDto: any) => void) {
     this.connection.on("addFriendship", callback);
   }

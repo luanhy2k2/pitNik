@@ -19,13 +19,40 @@ namespace Infrastructure.ExternalService
            
             await _hubContext.Clients.All.SendAsync(method, EventObject);
         }
-        public async Task SendTo(string to, string method, T EventObject)
+        public async Task SendTo(List<string> to, string method, T EventObject)
         {
-            if (ChatHub.ConnectionMap.TryGetValue(to, out var connectionId))
+            try
             {
-                await _hubContext.Clients.Client(connectionId).SendAsync(method, EventObject);
+                foreach (var item in to)
+                {
+                    if (ChatHub.ConnectionMap.TryGetValue(item, out var connectionId))
+                    {
+                        await _hubContext.Clients.Client(connectionId).SendAsync(method, EventObject);
+                        
+                    }
+                }  
+            }
+            catch (Exception ex)
+            {
+                // Xử lý ngoại lệ nếu cần
+                Console.WriteLine($"Error sending signal to client: {ex.Message}");
+              
             }
         }
 
+        public async Task SendTo(string to, string method, T EventObject)
+        {
+            try
+            {
+                if (ChatHub.ConnectionMap.TryGetValue(to, out var connectionId))
+                {
+                    await _hubContext.Clients.Client(connectionId).SendAsync(method, EventObject);
+                }
+            }
+            catch(Exception ex )
+            {
+                throw new Exception(method, ex);
+            }
+        }
     }
 }

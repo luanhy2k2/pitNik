@@ -42,6 +42,8 @@ namespace Application.Features.Account.Handles.Commands
                 PhoneNumber = request.Register.PhoneNumber,
                 Name = request.Register.Name,
                 Address = request.Register.Address,
+                Gender = request.Register.Gender,
+                Profile = request.Register.Profile
                 //Image = request.Register.Image,
             };
             if (request.Register.Image != null)

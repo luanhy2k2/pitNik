@@ -26,6 +26,12 @@ namespace API.Controllers
             var result = await _mediator.Send(new CreateFriendShipCommand { CreateFriendShipDto = createFriendShipDto });
             return Ok(result);
         }
+        [HttpPost("Update")]
+        public async Task<ActionResult> Create(UpdateFriendShipDto updateFriendShipDto)
+        {
+            var result = await _mediator.Send(new UpdateStatusFriendCommand { UpdateFriendShipDto = updateFriendShipDto });
+            return Ok(result);
+        }
         [HttpGet("Get")]
         public async Task<ActionResult> Get([FromQuery] BasePagingDto pagingDto)
         {

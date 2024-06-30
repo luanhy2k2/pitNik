@@ -5026,6 +5026,10 @@ canvas {
 
 .chat-list > ul li.you .chat-message-item {
     background: rgba(202, 239, 142, 0.55) none repeat scroll 0 0;
+    float: right;
+}
+.chat-list > ul li.you .entry-date {
+    float: right;
 }
 
 .text-box {

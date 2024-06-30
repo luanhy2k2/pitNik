@@ -65,6 +65,7 @@ export class IndexComponent {
 
   ngOnInit() {
     this.LoadPost();
+    this.chatHubService.startConnection();
     this.chatHubService.addPostListener((post: any) => {
       this.LoadPost();
     });
@@ -158,7 +159,6 @@ export class IndexComponent {
     this.InteractionService.React(this.CreateReact).subscribe(
       response => {
         console.log('Tương tác thành công!', response);
-        this.LoadPost(); // Refresh posts
       },
       error => {
         console.error('Đã có lỗi xảy ra', error);
