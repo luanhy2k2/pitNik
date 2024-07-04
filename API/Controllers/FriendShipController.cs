@@ -27,7 +27,7 @@ namespace API.Controllers
             return Ok(result);
         }
         [HttpPost("Update")]
-        public async Task<ActionResult> Create(UpdateFriendShipDto updateFriendShipDto)
+        public async Task<ActionResult> Update(UpdateFriendShipDto updateFriendShipDto)
         {
             var result = await _mediator.Send(new UpdateStatusFriendCommand { UpdateFriendShipDto = updateFriendShipDto });
             return Ok(result);
@@ -39,5 +39,13 @@ namespace API.Controllers
             var result = await _mediator.Send(new GetFriendShipPendingRequest { PageIndex = pagingDto.PageIndex,PageSize = pagingDto.PageSize, Keyword = pagingDto.Keyword });
             return Ok(result);
         }
+        [HttpGet("GetMyFriend")]
+        public async Task<ActionResult> GetMyFriend([FromQuery] BasePagingDto pagingDto)
+        {
+            var currentUsername = User.Identity.Name;
+            var result = await _mediator.Send(new GetFriendShipAcceptRequest { CurrentUserName = currentUsername,  PageIndex = pagingDto.PageIndex, PageSize = pagingDto.PageSize, Keyword = pagingDto.Keyword });
+            return Ok(result);
+        }
+
     }
 }

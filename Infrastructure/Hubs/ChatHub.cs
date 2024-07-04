@@ -25,6 +25,12 @@ namespace Infrastructure.Hubs
         {
             get { return Context.User.Identity.Name; }
         }
+        public IEnumerable<ApplicationUser> GetUsers()
+        {
+            return _connections.ToList();
+        }
+
+        public static IReadOnlyDictionary<string, string> ConnectionMap => _connectionMap;
         public async Task Join(string roomName)
         {
             try
@@ -46,12 +52,17 @@ namespace Infrastructure.Hubs
             try
             {
                 var user = _context.Users.Where(u => u.UserName == IdentityName).FirstOrDefault();
-                if (!_connections.Any(u => u.UserName == IdentityName))
+                if (_connections.Any(u => u.UserName == IdentityName))
                 {
-                    _connections.Add(user);
-                    _connectionMap.Add(IdentityName, Context.ConnectionId);
-                    Clients.All.SendAsync("addUserConnected", user.Id);
+                    _connections.Remove(user);
+ 
+                    _connectionMap.Remove(user.UserName);
+                  
                 }
+                // add
+                _connections.Add(user);
+                _connectionMap.Add(IdentityName, Context.ConnectionId);
+                Clients.All.SendAsync("addUserConnected", user.Id);
                 Clients.Caller.SendAsync("getProfileInfo", user);
             }
             catch (Exception ex)
@@ -80,12 +91,7 @@ namespace Infrastructure.Hubs
         {
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, roomName);
         }
-        public IEnumerable<ApplicationUser> GetUsers()
-        {
-            return _connections.ToList();
-        }
-
-        public  static IReadOnlyDictionary<string, string> ConnectionMap => _connectionMap;
+       
     }
 }
 

@@ -1,32 +1,39 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { Account } from 'src/app/Models/Account/Account.entity';
+import { Account, Gender } from 'src/app/Models/Account/Account.entity';
 import { BaseQueriesResponse } from 'src/app/Models/Common/BaseQueriesResponse.entity';
 import { Conversation } from 'src/app/Models/Conversation/Conversation.entity';
 import { CreateFriendShip } from 'src/app/Models/FriendShip/CreateFriendShip.entity';
 import { FriendShip, FriendshipStatus } from 'src/app/Models/FriendShip/FriendShip.entity';
 import { UpdateStatusFriend } from 'src/app/Models/FriendShip/UpdateStatusFriend.entity';
+import { CreateMessage } from 'src/app/Models/Message/CreateMessage.entity';
 import { Message } from 'src/app/Models/Message/Message.entity';
 import { Notification } from 'src/app/Models/Notification/Notification.entity';
 import { UpdateStatusReadNotification } from 'src/app/Models/Notification/UpdateStatusReadNotification.entity';
+import { UserService } from 'src/app/services/User.service';
 import { ChatHubService } from 'src/app/services/chatHub.service';
 import { ConversationService } from 'src/app/services/conversation.service';
 import { FriendShipService } from 'src/app/services/friend-ship.service';
 import { MessageService } from 'src/app/services/message.service';
 import { NotificationService } from 'src/app/services/notification.service';
+import { SignalRService } from 'src/app/services/signal-rservice.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnDestroy {
   constructor(private readonly FriendService:FriendShipService,
-     private readonly chatHubService:ChatHubService,
+    private readonly signalRService:SignalRService,
      private readonly notificationService:NotificationService,
      private readonly conversationService:ConversationService,
      private readonly messageService:MessageService,
+     private readonly userService:UserService,
      private readonly Router:Router){}
+  ngOnDestroy(): void {
+    alert("dé")
+  }
   isHidden: boolean = true;
   FriendPending:BaseQueriesResponse<FriendShip> = {
     pageIndex: 1,
@@ -47,11 +54,13 @@ export class HeaderComponent {
     image:"",
     userName:"",
     phoneNumber:"",
-    email:""
+    email:"",
+    birthday:new Date,
+    gender:Gender.Male
   }
   Notifications:BaseQueriesResponse<Notification> = {
     pageIndex:1,
-    pageSize:10,
+    pageSize:20,
     items:[],
     total:0,
     keyword:""
@@ -62,7 +71,7 @@ export class HeaderComponent {
   }
   Conversations:BaseQueriesResponse<Conversation> = {
     pageIndex: 1,
-    pageSize:10,
+    pageSize:20,
     keyword:"",
     total: 0,
     items:[]
@@ -83,36 +92,76 @@ export class HeaderComponent {
     )
   }
   ngOnInit(){
-    this.chatHubService.startConnection();
-    this.chatHubService.addFriendPendingLister((createFriendShipDto: CreateFriendShip) => {
+    this.signalRService.friendInvitationAdded$.subscribe(res =>{
       this.LoadFrienPending();
-    }); 
-    this.chatHubService.addNotificationListener((Notification: Notification) => {
-      this.LoadNotification();
-    }); 
-    this.chatHubService.addProfileInfoListener((user:any) =>{
-      this.user = user;
     })
-    this.chatHubService.updateFriendStatusLister((dto: UpdateStatusFriend) => {
+    this.signalRService.notificationAdded$.subscribe(res =>{
+      this.LoadNotification();
+    })
+    this.signalRService.profileAdded$.subscribe(res =>{
+      this.user = res;
+      this.LoadNotification();
+      this.LoadConversation();
+    })
+    this.signalRService.friendStatusUpdateAdded$.subscribe(res =>{
       this.LoadFrienPending();
-    }); 
-    this.LoadNotification();
-    this.LoadConversation();
+    })
+    this.signalRService.messageAdded$.subscribe(message =>{
+      console.log("message:", message);
+      message.isSentByCurrentUser = message.sender.id == this.user.id
+      this.Messages.items.push(message); 
+      for (let element of this.Conversations.items) {
+        if (element.id == message.conversationId) {
+          element.message = message.content;
+          element.timeMessage = message.created;
+          element.isSeen = message.isSentByCurrentUser
+          break;
+        }
+      }
+    })
   }
   Messages:BaseQueriesResponse<Message> = {
     pageIndex:1,
-    pageSize:10,
+    pageSize:20,
     keyword:"",
     items:[],
     total:0
+  };
+  CreateMessageRequest:CreateMessage = {
+    receiverId: "",
+    senderUserName:"",
+    conversationId:0,
+    content:""
   }
-  LoadMessageConverstion(conversionId:number){
+  CreateMessage(){
+    this.messageService.create(this.CreateMessageRequest).subscribe(res =>{
+      if(res.success == true){
+        res.object.isSentByCurrentUser = res.object.sender.id == this.user.id
+        this.Messages.items.push(res.object); 
+        for (let element of this.Conversations.items) {
+        if (element.id == res.object.conversationId) {
+          element.message = res.object.content;
+          element.timeMessage = res.object.created;
+          element.isSeen = res.object.isSentByCurrentUser
+          break;
+        }
+      }
+        this.CreateMessageRequest.content = "";
+      }
+    })
+    
+  }
+  LoadMessageConverstion(conversionId:number, idUser:string){
     this.isHidden = !this.isHidden;
+    this.CreateMessageRequest.receiverId = idUser;
+    this.CreateMessageRequest.conversationId = conversionId;
     this.messageService.getPagedData(this.Messages.pageIndex,this.Messages.pageSize, conversionId,this.Messages.keyword).subscribe(
       res =>{
-        this.Messages.items = res.items
-      }
-    )
+        res.items.forEach(item =>{
+          item.isSentByCurrentUser = item.sender.id == this.user.id;
+          this.Messages.items.push(item)
+        })
+      })
   }
   UpdateFriendStatus(id:number, status:FriendshipStatus){
     this.UpdateFriendStatusModel.id = id;
@@ -124,7 +173,7 @@ export class HeaderComponent {
   logOut() {
     localStorage.removeItem('user');
     alert("Đăng xuất thành công");
-    this.chatHubService.stopConnection();
+    this.signalRService.stopConnection();
     this.Router.navigate(['/login']);
   }
   LoadNotification(){

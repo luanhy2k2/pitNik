@@ -43,7 +43,7 @@
             <div class="col-lg-2 col-md-3">
                 <div class="profile-author">
                     <div class="profile-author-thumb">
-                        <img alt="author" src="./assets/images/resources/author.jpg">
+                        <img style="height: 151px; width: 151px;" alt="author" src="https://localhost:7261/Users/{{displayImage}}">
                         <div class="edit-dp">
                             <label class="fileContainer">
                                 <i class="fa fa-camera"></i>
@@ -60,20 +60,20 @@
             </div>
             <div class="col-lg-10 col-md-9">
                 <ul class="profile-menu">
-                    <li>
-                        <a class="active" [routerLink]="['/setting']">Setting</a>
+                    <li >
+                        <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" [routerLink]="['/setting']">Cài đặt</a>
+                    </li>
+                    <li >
+                        <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" [routerLink]="['/about']">Bản thân</a>
                     </li>
                     <li>
-                        <a class="" [routerLink]="['/about']">About</a>
+                        <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" [routerLink]="['/friends']">Bạn bè</a>
                     </li>
                     <li>
-                        <a class="" [routerLink]="['/friends']">Friends</a>
+                        <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" [routerLink]="['/photos']">Ảnh</a>
                     </li>
                     <li>
-                        <a class="" [routerLink]="['/photos']">Photos</a>
-                    </li>
-                    <li>
-                        <a class="" [routerLink]="['/about']">Videos</a>
+                        <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" [routerLink]="['/videos']">Videos</a>
                     </li>
                     <li>
                         <div class="more">
@@ -89,6 +89,8 @@
                         </div>
                     </li>
                 </ul>
+                
+                
                 <ol class="folw-detail">
                     <li><span>Posts</span><ins>101</ins></li>
                     <li><span>Followers</span><ins>1.3K</ins></li>

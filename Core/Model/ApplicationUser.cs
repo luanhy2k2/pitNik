@@ -9,10 +9,10 @@ namespace Core.Model
     {
         
         public string Name { get; set; }
-        public string Address { get; set; }
-        public string Image { get; set; }
+        public string ?Address { get; set; }
+        public string ?Image { get; set; }
         public Gender Gender { get; set; }
-        public string Profile {  get; set; }
+        public DateTime ?Birthday { get; set; }
 
         //public virtual ICollection<Post> Posts { get; set; }
         //public virtual ICollection<Comment> Comments { get; set; }

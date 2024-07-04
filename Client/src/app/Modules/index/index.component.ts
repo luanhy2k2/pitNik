@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, Signal } from '@angular/core';
 import { Comment, defaultCommentQuery } from 'src/app/Models/Comment/comment.entity';
 import { commentRequest } from 'src/app/Models/Comment/commentRequest.entity';
 import { CreateComment } from 'src/app/Models/Comment/create-comment.entity';
@@ -12,19 +12,27 @@ import { ChatHubService } from 'src/app/services/chatHub.service';
 import { CommentService } from 'src/app/services/comment.service';
 import { InteractionsService } from 'src/app/services/interactions.service';
 import { PostService } from 'src/app/services/post.service';
+import { SignalRService } from 'src/app/services/signal-rservice.service';
+
 
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
   styleUrls: ['./index.component.scss']
 })
-export class IndexComponent {
+export class IndexComponent implements OnDestroy {
   constructor(
     private readonly postService: PostService,
-    private readonly chatHubService: ChatHubService,
+    // private readonly chatHubService: ChatHubService,
     private readonly InteractionService: InteractionsService,
-    private readonly CommentService: CommentService
-  ) { }
+    private readonly CommentService: CommentService,
+    private readonly UserService:UserService,
+    private readonly signalRService:SignalRService
+  ) {
+   }
+  ngOnDestroy(): void {
+  console.log("des")
+  }
   Posts: BaseQueriesResponse<Post> = {
     pageIndex: 1,
     pageSize: 5,
@@ -54,7 +62,7 @@ export class IndexComponent {
     pageSize: 10,
     postId: 0
   }
-  Comments: Comment[] = []
+ 
   CreateComment: CreateComment = {
     userId: "",
     content: "",
@@ -62,20 +70,24 @@ export class IndexComponent {
     created: new Date()
   }
   imageSrcs: (string | ArrayBuffer | null)[] = [];
-
+  displayImageUser:string = "";
   ngOnInit() {
     this.LoadPost();
-    this.chatHubService.startConnection();
-    this.chatHubService.addPostListener((post: any) => {
+    this.signalRService.commentAdded$.subscribe(res =>{
+      this.Posts.items.forEach(element => {
+        if (element.id == res.postId) {
+          element.comment = element.comment.concat(res);
+        }
+      })
+    })
+    this.signalRService.reactAdded$.subscribe(res =>{
+      console.log(res);
       this.LoadPost();
-    });
-    this.chatHubService.addReactListener((react: any) => {
+    })
+    this.signalRService.postAdded$.subscribe(res =>{
       this.LoadPost();
-    });
-    this.chatHubService.addCommentLister((comment: Comment) => {
-      this.Comments.push(comment);
-    });
-
+    })
+    this.LoadCurrentUser();
   };
 
   LoadPost() {
@@ -83,7 +95,6 @@ export class IndexComponent {
       res => {
         this.Posts.items = res.items;
         this.Posts.total = res.total;
-        console.log(this.Posts.items)
       },
       err => {
         console.log(err);
@@ -97,7 +108,7 @@ export class IndexComponent {
         element.pageSizeComment = 10;
         this.CommentService.getPagedData(element.pageIndexComment, element.pageSizeComment, postId).subscribe(res => {
           element.comment = res.items;
-          console.log(this.Comments)
+        
         })
       }
     });
@@ -112,11 +123,16 @@ export class IndexComponent {
       }
     });
   }
-
+  LoadCurrentUser(){
+    var userId = this.UserService.getUser().id;
+    this.UserService.getPersionalInfor(userId).subscribe(res =>{
+      this.displayImageUser = res.image
+    })
+  }
   AddComment(postId: number) {
     this.CreateComment.postId = postId;
     this.CommentService.create(this.CreateComment).subscribe(res => {
-      this.LoadComment(postId)
+      // this.LoadComment(postId)
       this.CreateComment.postId = 0;
       this.CreateComment.content = "";
     })

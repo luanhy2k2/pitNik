@@ -2,7 +2,7 @@ export interface Message{
     id:number
     sender:UserMessage,
     conversationId:number,
-    content:number,
+    content:string,
     isSentByCurrentUser:boolean,
     created:string
 }

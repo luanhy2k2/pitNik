@@ -28,6 +28,7 @@ namespace Application.Features.Message.Handlers.Queries
                                join sender in _pitNikRepo.Account.GetAllQueryable() 
                                on msg.SenderId equals sender.Id
                                where msg.ConversationId == request.ConversionId && (string.IsNullOrEmpty(request.Keyword) || msg.Content.Contains(request.Keyword))
+                               orderby msg.Created 
                                select new MessageDto
                                {
                                    Id = msg.Id,
@@ -40,7 +41,6 @@ namespace Application.Features.Message.Handlers.Queries
                                        Name = sender.Name,
                                        Image = sender.Image
                                    },
-                                   IsSentByCurrentUser = msg.Sender.UserName == request.currentUserName
                                };
                 var data = await messages.Skip((request.PageIndex - 1) * request.PageSize).Take(request.PageSize).ToListAsync();
                 var total = await messages.CountAsync();

@@ -56,6 +56,10 @@ namespace Infrastructure.Persistence.Repositories
 
         private INotificationRepository _notificationRepository;
         public INotificationRepository Notification => _notificationRepository ??= new NotificationRepository(_context);
+
+        private IInforUserRepository _inforUserRepository;
+        public IInforUserRepository InforUser => _inforUserRepository ??= new InforUserRepository(_context);
+
         public async Task SaveAsync()
         {
             await _context.SaveChangesAsync();

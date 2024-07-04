@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.FriendShip.Handlers.Queries
 {
-    public class GetFriendShipPendingRequestHandler : BaseFeatures, IRequestHandler<GetFriendShipPendingRequest, BaseQuerieResponse<FriendShipDto>>
+    public class GetFriendShipPendingRequestHandler : BaseFeatures, IRequestHandler<GetFriendShipPendingRequest, BaseQuerieResponse<InvitationsFriend>>
     {
         private readonly IMapper _mapper;
         public GetFriendShipPendingRequestHandler(IPitNikRepositoryWrapper pitNikRepo, IMapper mapper) : base(pitNikRepo)
@@ -21,16 +21,16 @@ namespace Application.Features.FriendShip.Handlers.Queries
             _mapper = mapper;
         }
 
-        public async Task<BaseQuerieResponse<FriendShipDto>> Handle(GetFriendShipPendingRequest request, CancellationToken cancellationToken)
+        public async Task<BaseQuerieResponse<InvitationsFriend>> Handle(GetFriendShipPendingRequest request, CancellationToken cancellationToken)
         {
             var receiver = await _pitNikRepo.Account.GetAllQueryable().FirstOrDefaultAsync(x => x.UserName == request.Keyword);
 
             if (receiver == null)
             {
                 // Xử lý khi không tìm thấy receiver
-                return new BaseQuerieResponse<FriendShipDto>
+                return new BaseQuerieResponse<InvitationsFriend>
                 {
-                    Items = new List<FriendShipDto>(),
+                    Items = new List<InvitationsFriend>(),
                     Total = 0,
                     PageIndex = request.PageIndex,
                     PageSize = request.PageSize
@@ -40,7 +40,7 @@ namespace Application.Features.FriendShip.Handlers.Queries
             var query = from fr in _pitNikRepo.FriendShip.GetAllQueryable()
                             .Where(x => x.Status == Core.Entities.FriendshipStatus.Pending && x.ReceiverId == receiver.Id)
                         join us in _pitNikRepo.Account.GetAllQueryable() on fr.ReceiverId equals us.Id
-                        select new FriendShipDto
+                        select new InvitationsFriend
                         {
                             SenderId = fr.SenderId,
                             SenderImage = us.Image,
@@ -57,7 +57,7 @@ namespace Application.Features.FriendShip.Handlers.Queries
                                   .Take(request.PageSize)
                                   .ToListAsync();
 
-            return new BaseQuerieResponse<FriendShipDto>
+            return new BaseQuerieResponse<InvitationsFriend>
             {
                 Items = data,
                 Total = totalItems,

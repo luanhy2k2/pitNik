@@ -14,6 +14,5 @@ namespace Application.Features.Message.Requests.Queries
     public class GetMessageRequest:BasePagingDto, IRequest<BaseQuerieResponse<MessageDto>>
     {
         public int ConversionId {  get; set; }
-        public string currentUserName { get; set; }
     }
 }

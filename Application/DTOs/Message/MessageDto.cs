@@ -13,7 +13,6 @@ namespace Application.DTOs.Message
         public UserMessage Sender { get; set; }
         public int ConversationId { get; set; }
         public string Content { get; set; }
-        public bool IsSentByCurrentUser { get; set; }
     }
     public class UserMessage
     {

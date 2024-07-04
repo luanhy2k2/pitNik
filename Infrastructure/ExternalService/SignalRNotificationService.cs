@@ -27,8 +27,7 @@ namespace Infrastructure.ExternalService
                 {
                     if (ChatHub.ConnectionMap.TryGetValue(item, out var connectionId))
                     {
-                        await _hubContext.Clients.Client(connectionId).SendAsync(method, EventObject);
-                        
+                        await _hubContext.Clients.Client(connectionId).SendAsync(method, EventObject); 
                     }
                 }  
             }
@@ -36,7 +35,6 @@ namespace Infrastructure.ExternalService
             {
                 // Xử lý ngoại lệ nếu cần
                 Console.WriteLine($"Error sending signal to client: {ex.Message}");
-              
             }
         }
 

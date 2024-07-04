@@ -18,6 +18,13 @@ namespace Core.Common
             Message = message;
             Success = true;
         }
+        public BaseCommandResponse(string message, Object model)
+        {
+            Errors = new List<string>();
+            Message = message;
+            Success = true;
+            Object = model;
+        }
         public BaseCommandResponse(string message,bool success)
         {
             Errors = new List<string>();
@@ -36,5 +43,6 @@ namespace Core.Common
         public bool Success { get; set; } = true;
         public string Message { get; set; }
         public List<string> Errors { get; set; }
+        public Object Object { get; set; }
     }
 }

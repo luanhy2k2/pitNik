@@ -21,6 +21,8 @@ namespace Application.Profiles
         public MappingProfile()
         {
             CreateMap<ApplicationUser, AccountDto>().ReverseMap();
+            CreateMap<InforUser, UserInforDto>().ReverseMap();
+            CreateMap<InforUser, UpdateUserInfor>().ReverseMap();
 
             CreateMap<Post, CreatePostDto>().ReverseMap();
             CreateMap<Post, PostDto>().ReverseMap();
@@ -31,7 +33,7 @@ namespace Application.Profiles
             CreateMap<Comment, CreateCommentDto>().ReverseMap();
 
             CreateMap<Friendship, CreateFriendShipDto>().ReverseMap();
-            CreateMap<Friendship, FriendShipDto>().ReverseMap();
+            CreateMap<Friendship, InvitationsFriend>().ReverseMap();
 
             CreateMap<Notification, CreateNotificationDto>().ReverseMap();
             CreateMap<Notification, NotificationDto>().ReverseMap();

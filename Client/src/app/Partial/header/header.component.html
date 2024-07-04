@@ -112,7 +112,7 @@
             <span>5 New Messages <a href="#" title="">Mark all as read</a></span>
             <ul class="drops-menu">
               <li *ngFor="let cvt of Conversations.items">
-                <a (click)="LoadMessageConverstion(cvt.id)" class="show-mesg" href="#" title="">
+                <a (click)="LoadMessageConverstion(cvt.id, cvt.user1.isCurrentUser ? cvt.user2.id : cvt.user1.id)" class="show-mesg" href="#" title="">
                   <figure>
                     <img style="width: 45px; height: 45px;" src="https://localhost:7261/Users/{{cvt.user1.isCurrentUser ? cvt.user2.image : cvt.user1.image}}" alt="">
                     <span class="status f-online"></span>
@@ -390,15 +390,8 @@
         <img style="width: 45px; height: 45px;" src="https://localhost:7261/Users/{{user.image}}" alt="">
         <span class="status f-online"></span>
         <div class="user-setting">
-          <span class="seting-title">Chat setting <a href="#" title="">see all</a></span>
-          <ul class="chat-setting">
-            <li><a href="#" title=""><span class="status f-online"></span>online</a></li>
-            <li><a href="#" title=""><span class="status f-away"></span>away</a></li>
-            <li><a href="#" title=""><span class="status f-off"></span>offline</a></li>
-          </ul>
-          <span class="seting-title">User setting <a href="#" title="">see all</a></span>
           <ul class="log-out">
-            <li><a href="about.html" title=""><i class="ti-user"></i> view profile</a></li>
+            <li><a [routerLink]="['/about']" title=""><i class="ti-user"></i> view profile</a></li>
             <li><a href="setting.html" title=""><i class="ti-pencil-alt"></i>edit profile</a></li>
             <li><a href="#" title=""><i class="ti-target"></i>activity log</a></li>
             <li><a [routerLink]="['/setting']" title=""><i class="ti-settings"></i>account setting</a></li>
@@ -437,10 +430,12 @@
           </div>
         </li>
       <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: -106px;"><div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps-scrollbar-y-rail" style="top: 106px; height: 290px; right: 0px;"><div class="ps-scrollbar-y" tabindex="0" style="top: 78px; height: 212px;"></div></div></ul>
-      <form class="text-box">
-        <textarea placeholder="Post enter to post..."></textarea>
+      <form  class="text-box">
+        <textarea [(ngModel)] = "CreateMessageRequest.content" name="message"
+        placeholder="Post enter to post..."></textarea>
         <div class="add-smiles">
           <span title="add icon" class="em em-expressionless"></span>
+          <i (click)="CreateMessage()" class="fa fa-paper-plane"></i>
           <div class="smiles-bunch">
             <i class="em em---1"></i>
             <i class="em em-smiley"></i>

@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/User.service';
 import { ChatHubService } from 'src/app/services/chatHub.service';
+import { SignalRService } from 'src/app/services/signal-rservice.service';
+
 
 
 @Component({
@@ -13,7 +15,6 @@ export class LoginComponent {
   constructor(
     private readonly UserService:UserService, 
     private readonly route:Router,
-    private readonly hubService:ChatHubService
   ){}
   userName:string = "";
   passWord:string = "";
@@ -21,8 +22,7 @@ export class LoginComponent {
     this.UserService.login(this.userName,this.passWord).subscribe(
       res =>{
         alert("Đăng nhập thành công!");
-        localStorage.setItem("user", JSON.stringify(res));
-        this.route.navigate(['/']);
+        window.location.href = "/";
       },
       err =>{
         alert(err);

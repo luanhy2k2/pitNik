@@ -20,6 +20,7 @@ namespace Infrastructure.Persistence
         public DbSet<MessageReadStatus> MessageReadStatuses { get; set; }
         public DbSet<Post> Posts { get; set; } 
         public DbSet<Notification> Notifications { get; set; }
+        public DbSet<InforUser> InforUsers { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.DTOs.FriendShip
 {
-    public class FriendShipDto:BaseDto
+    public class InvitationsFriend:BaseDto
     {
         public string SenderId { get; set; }
         public string SenderName { get; set; }

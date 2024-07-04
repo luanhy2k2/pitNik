@@ -1,6 +1,7 @@
 ﻿using Application.Features.Account.Requests.Commands;
 using Core.Common;
 using Core.Entities;
+using Core.Interface.Persistence;
 using Core.Model;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
@@ -13,11 +14,11 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Account.Handles.Commands
 {
-    public class RegisterCommandHandler : IRequestHandler<RegisterCommand, BaseCommandResponse>
+    public class RegisterCommandHandler : BaseFeatures, IRequestHandler<RegisterCommand, BaseCommandResponse>
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IWebHostEnvironment _environment;
-        public RegisterCommandHandler(UserManager<ApplicationUser> userManager, IWebHostEnvironment webHostEnvironment)
+        public RegisterCommandHandler(UserManager<ApplicationUser> userManager, IPitNikRepositoryWrapper pitNikRepositoryWrapper, IWebHostEnvironment webHostEnvironment):base(pitNikRepositoryWrapper)
         {
             _userManager = userManager;
             _environment = webHostEnvironment;
@@ -43,8 +44,7 @@ namespace Application.Features.Account.Handles.Commands
                 Name = request.Register.Name,
                 Address = request.Register.Address,
                 Gender = request.Register.Gender,
-                Profile = request.Register.Profile
-                //Image = request.Register.Image,
+                Birthday = request.Register.Birthday
             };
             if (request.Register.Image != null)
             {
@@ -64,6 +64,16 @@ namespace Application.Features.Account.Handles.Commands
             var result = await _userManager.CreateAsync(user, request.Register.Password);
             if(result.Succeeded)
             {
+                var infor = new InforUser
+                {
+                    UserId = user.Id,
+                    AboutMe = "",
+                    Created = DateTime.Now,
+                    Hobbies = "",
+                    Education = "",
+                    WorkAndExperience = ""
+                };
+                await _pitNikRepo.InforUser.Create(infor);
                 return new BaseCommandResponse("Đăng kí tài khoản thành công!");
             }
             else

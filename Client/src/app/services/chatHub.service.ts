@@ -18,38 +18,48 @@ export class ChatHubService {
   .withUrl("https://localhost:7261/chatHub", {
     accessTokenFactory: () => {
       let token = this.userService.getUser().token;
-        return token ?? '';
+      return token ?? '';
     },
     transport: signalR.HttpTransportType.LongPolling
   })
   .withAutomaticReconnect()
   .configureLogging(signalR.LogLevel.Information)
   .build();
-  constructor(private userService: UserService) {
+
+constructor(private userService: UserService) {}
+
+startConnection() {
+  try {
+    this.connection.start();
+    console.log('Đã kết nối SignalR');
+  } catch (err) {
+    console.error('Lỗi khi bắt đầu kết nối: ', err);
   }
-  startConnection() {
+}
+
+stopConnection() {
+  if (this.connection) {
     try {
-      this.connection.start();
-      console.log('SignalR connected');
-    } catch (err) {
-      console.error('Error while starting connection: ', err);
-    }
-  }
-  stopConnection() {
-    if (this.connection) {
       this.connection.stop();
-      console.log('Disconnected from SignalR');
+      console.log('Đã ngắt kết nối SignalR');
+    } catch (err) {
+      console.error('Lỗi khi dừng kết nối: ', err);
     }
   }
-  addNewMessageListener(callback: (messageDto: Message) => void) {
-    this.connection.on("newMessage", callback);
-  }
-  addProfileInfoListener(callback: (user: any) => void) {
-    this.connection.on("getProfileInfo", callback);
-  }
-  addUserConnectedListener(callback: (id: any) => void) {
-    this.connection.on("addUserConnected", callback);
-  }
+}
+
+addNewMessageListener(callback: (messageDto: any) => void) {
+  this.connection.on("newMessage", callback);
+}
+
+addProfileInfoListener(callback: (user: any) => void) {
+  this.connection.on("getProfileInfo", callback);
+}
+
+addUserConnectedListener(callback: (id: any) => void) {
+  this.connection.on("addUserConnected", callback);
+}
+
   addPostListener(callback: (post: any) => void) {
     this.connection.on("newPost", callback);
   }

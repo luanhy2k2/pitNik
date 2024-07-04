@@ -29,7 +29,6 @@ namespace API.Controllers
         [HttpGet("Get")]
         public async Task<ActionResult> Get([FromQuery] GetMessageRequest dto)
         {
-            dto.currentUserName = User.Identity.Name;
             var result = await _mediator.Send(dto);
             return Ok(result);
         }

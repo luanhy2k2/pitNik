@@ -17,7 +17,6 @@ export class MessageService {
   getPagedData(pageIndex:number, pageSize:number,conversationId:number, keyword:string): Observable<BaseQueriesResponse<Message>> {
     let params = new HttpParams()
       .set('PageIndex', pageIndex.toString())
-      .set('currentUserName', pageIndex.toString())
       .set('ConversionId', conversationId.toString())
       .set('PageSize', pageSize.toString());
     if (keyword) {

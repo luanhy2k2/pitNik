@@ -22,40 +22,73 @@ namespace Application.Features.Message.Handlers.Command
         public CreateMessageCommandHandler(IPitNikRepositoryWrapper pitNikRepo, IMapper mapper, INotificationService<MessageDto> notificationService) : base(pitNikRepo)
         {
             _notificationService = notificationService;
-            mapper = mapper;
+            _mapper = mapper;
         }
 
         public async Task<BaseCommandResponse> Handle(CreateMessageCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var sender = await _pitNikRepo.Account.GetAllQueryable().FirstOrDefaultAsync(x => x.UserName == request.CreateMessageDto.SenderUserName);
-                var receiver = await _pitNikRepo.Account.GetAllQueryable().FirstOrDefaultAsync(x => x.Id == request.CreateMessageDto.ReceiverId);
+                // Kiểm tra các trường trong request.CreateMessageDto
+                if (request.CreateMessageDto == null)
+                {
+                    return new BaseCommandResponse("Thông tin tin nhắn không hợp lệ!", false);
+                }
+
+                var sender = await _pitNikRepo.Account.GetAllQueryable()
+                    .FirstOrDefaultAsync(x => x.UserName == request.CreateMessageDto.SenderUserName);
+                var receiver = await _pitNikRepo.Account.GetAllQueryable()
+                    .FirstOrDefaultAsync(x => x.Id == request.CreateMessageDto.ReceiverId);
+
                 if (sender == null || receiver == null)
                 {
                     return new BaseCommandResponse("Người gửi hoặc người nhận không tồn tại!", false);
                 }
-                var message = _mapper.Map<Core.Entities.Message>(request.CreateMessageDto);
-                message.SenderId = sender.Id;
+
+                var message = new Core.Entities.Message
+                {
+                    SenderId = sender.Id,
+                    ReceiverId = receiver.Id,
+                    Content = request.CreateMessageDto.Content,
+                    Created = DateTime.Now,
+                    ConversationId = request.CreateMessageDto.ConversationId
+                };
+
                 await _pitNikRepo.Message.Create(message);
-                var messageDto = _mapper.Map<MessageDto>(message);
+
                 var senderReadStatus = new MessageReadStatus
                 {
-
                     MessageId = message.Id,
                     UserId = sender.Id,
                     IsSeen = true,
                     ReadAt = DateTime.UtcNow,
                     Created = DateTime.UtcNow,
                 };
+
                 await _pitNikRepo.MessageReadStatus.Create(senderReadStatus);
-                await _notificationService.SendTo(new List<string> { sender.UserName, receiver.UserName }, "newMessage", messageDto);
-                return new BaseCommandResponse("Gửi tin nhắn thành công!");
+
+                var messageDto = new MessageDto
+                {
+                    Created = TimeHelper.GetRelativeTime(message.Created),
+                    Sender = new UserMessage
+                    {
+                        Id = sender.Id,
+                        Image = sender.Image,
+                        Name = sender.Name
+                    },
+                    Content = message.Content,
+                    Id = message.Id,
+                    ConversationId = message.ConversationId,
+                };
+                await _notificationService.SendTo(receiver.UserName , "newMessage", messageDto);
+
+                return new BaseCommandResponse("Gửi tin nhắn thành công!", messageDto);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                return new BaseCommandResponse($"{ex.Message}", false);
+                return new BaseCommandResponse($"Lỗi: {ex.Message}", false);
             }
         }
+
     }
 }

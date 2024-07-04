@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.FriendShip.Request.Queries
 {
-    public class GetFriendShipPendingRequest: BasePagingDto, IRequest<BaseQuerieResponse<FriendShipDto>>
+    public class GetFriendShipPendingRequest: BasePagingDto, IRequest<BaseQuerieResponse<InvitationsFriend>>
     {
     }
 }

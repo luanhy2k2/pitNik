@@ -9,6 +9,7 @@ namespace Core.Interface.Persistence
     public interface IPitNikRepositoryWrapper
     {
         IAccountRepository Account { get; }
+        IInforUserRepository InforUser { get; }
         ICommentRepository Comment { get; }
         IConversationRepository Conversation { get; }
         IFriendShipRepository FriendShip { get; }

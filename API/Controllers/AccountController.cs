@@ -25,7 +25,7 @@ namespace API.Controllers
             var result = await _mediator.Send(new RegisterCommand { Register = model });
             return Ok(result);
         }
-        [HttpPost("Update")]
+        [HttpPost("UpdatePersionalInfor")]
         public async Task<ActionResult<BaseCommandResponse>> Update([FromForm] UpdateAccountDto model)
         {
             var result = await _mediator.Send(new UpdateAccountCommand {UpdateAccountDto = model });
@@ -47,6 +47,18 @@ namespace API.Controllers
         public async Task<ActionResult<AccountDto>> GetAll(string id)
         {
             var result = await _mediator.Send(new GetAccountDetailRequest {Id = id });
+            return Ok(result);
+        }
+        [HttpGet("GetUserInfor/{id}")]
+        public async Task<ActionResult<UserInforDto>> GetUserInfor(string id)
+        {
+            var result = await _mediator.Send(new GetUserInforRequest { UserId = id });
+            return Ok(result);
+        }
+        [HttpPost("UpdateGeneralInfor")]
+        public async Task<ActionResult<BaseCommandResponse>> UpdateUserInfor([FromBody] UpdateUserInfor model)
+        {
+            var result = await _mediator.Send(new UpdateUserInforCommand { UpdateUserInfor = model });
             return Ok(result);
         }
     }
