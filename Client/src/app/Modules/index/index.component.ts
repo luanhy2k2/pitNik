@@ -20,7 +20,7 @@ import { SignalRService } from 'src/app/services/signal-rservice.service';
   templateUrl: './index.component.html',
   styleUrls: ['./index.component.scss']
 })
-export class IndexComponent implements OnDestroy {
+export class IndexComponent {
   constructor(
     private readonly postService: PostService,
     // private readonly chatHubService: ChatHubService,
@@ -30,9 +30,6 @@ export class IndexComponent implements OnDestroy {
     private readonly signalRService:SignalRService
   ) {
    }
-  ngOnDestroy(): void {
-  console.log("des")
-  }
   Posts: BaseQueriesResponse<Post> = {
     pageIndex: 1,
     pageSize: 5,
@@ -132,7 +129,6 @@ export class IndexComponent implements OnDestroy {
   AddComment(postId: number) {
     this.CreateComment.postId = postId;
     this.CommentService.create(this.CreateComment).subscribe(res => {
-      // this.LoadComment(postId)
       this.CreateComment.postId = 0;
       this.CreateComment.content = "";
     })

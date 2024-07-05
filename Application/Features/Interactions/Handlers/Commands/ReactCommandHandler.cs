@@ -21,8 +21,8 @@ namespace Application.Features.Interactions.Handlers.Commands
     {
         private readonly IMapper _mapper;
         private readonly IMediator _mediator;
-        private readonly INotificationService<CreateInteractionDto> _notificationService;
-        public ReactCommandHandler(IPitNikRepositoryWrapper pitNikRepo, IMediator mediator, IMapper mapper, INotificationService<CreateInteractionDto> notificationService):base(pitNikRepo)
+        private readonly ISignalRNotificationService<CreateInteractionDto> _notificationService;
+        public ReactCommandHandler(IPitNikRepositoryWrapper pitNikRepo, IMediator mediator, IMapper mapper, ISignalRNotificationService<CreateInteractionDto> notificationService):base(pitNikRepo)
         {
             _mapper = mapper;
             _notificationService = notificationService;

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "t3xoO9vHui+kOa2v804TWvxsuss6XYqehfzJaIe90XA=",
+  "Hash": "VYZABA2LpSzGFdPyP23g8RQ2i3qj0fGUrrLgyvbz63U=",
   "Source": "API",
   "BasePath": "_content/API",
   "Mode": "Default",
@@ -16,6 +16,25 @@
     }
   ],
   "Assets": [
+    {
+      "Identity": "C:\\Project.net\\pitNik\\API\\wwwroot\\Messages\\2_20240706032753.jpg",
+      "SourceId": "API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Project.net\\pitNik\\API\\wwwroot\\",
+      "BasePath": "_content/API",
+      "RelativePath": "Messages/2_20240706032753.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Messages\\2_20240706032753.jpg"
+    },
     {
       "Identity": "C:\\Project.net\\pitNik\\API\\wwwroot\\uploads\\5_album11.jpg",
       "SourceId": "API",

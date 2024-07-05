@@ -25,6 +25,11 @@ export class MessageService {
     return this.httpClient.get<BaseQueriesResponse<Message>>(`${this.apiUrl}/api/Message/Get`, { params,headers: this.userService.addHeaderToken()});
   }
   create(message: CreateMessage): Observable<BaseCommandResponse> {
-    return this.httpClient.post<BaseCommandResponse>(`${this.apiUrl}/api/Message/Create`, message,{headers: this.userService.addHeaderToken()});
+    const formData: FormData = new FormData();
+    formData.append('ConversationId', message.conversationId.toString());
+    formData.append('Content', message.content);
+    
+    message.files.forEach(file => formData.append('Files', file, file.name));
+    return this.httpClient.post<BaseCommandResponse>(`${this.apiUrl}/api/Message/Create`, formData,{headers: this.userService.addHeaderToken()});
   }
 }

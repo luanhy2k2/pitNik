@@ -18,8 +18,8 @@ namespace Application.Features.FriendShip.Handlers.Commands
     public class CreateFriendShipCommandHandler : BaseFeatures, IRequestHandler<CreateFriendShipCommand, BaseCommandResponse>
     {
         private readonly IMapper _mapper;
-        private readonly INotificationService<CreateFriendShipDto> _notificationService;
-        public CreateFriendShipCommandHandler(IPitNikRepositoryWrapper pitNikRepo, INotificationService<CreateFriendShipDto> notificationService, IMapper mapper) : base(pitNikRepo)
+        private readonly ISignalRNotificationService<CreateFriendShipDto> _notificationService;
+        public CreateFriendShipCommandHandler(IPitNikRepositoryWrapper pitNikRepo, ISignalRNotificationService<CreateFriendShipDto> notificationService, IMapper mapper) : base(pitNikRepo)
         {
             _mapper = mapper;
             _notificationService = notificationService;

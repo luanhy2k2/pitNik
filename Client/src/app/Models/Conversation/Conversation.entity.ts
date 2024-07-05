@@ -1,7 +1,6 @@
 export interface Conversation{
     id:number,
-    user1:UserConversation,
-    user2:UserConversation,
+    member:UserConversation[],
     message:string,
     isSeen:boolean,
     timeMessage:string,

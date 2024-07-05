@@ -20,8 +20,8 @@ namespace Application.Features.Notification.Handlers.Commands
     public class CreateNotificationCommandHandler : BaseFeatures, IRequestHandler<CreateNotificationCommand, BaseCommandResponse>
     {
         private readonly IMapper _mapper;
-        private readonly INotificationService<NotificationDto> _notificationService;  
-        public CreateNotificationCommandHandler(IPitNikRepositoryWrapper pitNikRepo, IMapper mapper, INotificationService<NotificationDto> notificationService) : base(pitNikRepo)
+        private readonly ISignalRNotificationService<NotificationDto> _notificationService;  
+        public CreateNotificationCommandHandler(IPitNikRepositoryWrapper pitNikRepo, IMapper mapper, ISignalRNotificationService<NotificationDto> notificationService) : base(pitNikRepo)
         {
             _mapper = mapper;
             _notificationService = notificationService;

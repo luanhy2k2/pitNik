@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\Messages\" />
     <Folder Include="wwwroot\Users\" />
     <Folder Include="wwwroot\uploads\" />
   </ItemGroup>

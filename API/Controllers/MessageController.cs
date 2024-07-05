@@ -20,10 +20,10 @@ namespace API.Controllers
             _mediator = mediator;
         }
         [HttpPost("Create")]
-        public async Task<ActionResult> Create(CreateMessageDto message)
+        public async Task<ActionResult> Create([FromForm] CreateMessageDto message)
         {
-            message.SenderUserName = User.Identity.Name;
-            var result = await _mediator.Send(new CreateMessageCommand { CreateMessageDto = message});
+            string senderUserName = User.Identity.Name;
+            var result = await _mediator.Send(new CreateMessageCommand { CreateMessageDto = message,SenderUserName = senderUserName});
             return Ok(result);
         }
         [HttpGet("Get")]

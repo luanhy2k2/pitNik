@@ -10,8 +10,7 @@ namespace Application.DTOs.Conversation
 {
     public class ConversationDto:BaseDto
     {
-        public UserConversation User1 { get; set; }
-        public UserConversation User2 { get; set;}
+        public List<UserConversation> Member { get; set; }
         public string Message { get; set;}
         public bool IsSeen {  get; set;}
         public string TimeMessage { get; set;}
@@ -21,6 +20,7 @@ namespace Application.DTOs.Conversation
         public string Id { get; set; }
         public string Name { get; set; }
         public string Image { get; set; }
+        public bool IsCreate { get; set; }
         public bool IsCurrentUser { get; set; }
     }
 }

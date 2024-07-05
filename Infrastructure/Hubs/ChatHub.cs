@@ -59,7 +59,6 @@ namespace Infrastructure.Hubs
                     _connectionMap.Remove(user.UserName);
                   
                 }
-                // add
                 _connections.Add(user);
                 _connectionMap.Add(IdentityName, Context.ConnectionId);
                 Clients.All.SendAsync("addUserConnected", user.Id);

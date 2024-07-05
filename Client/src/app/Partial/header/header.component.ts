@@ -107,9 +107,6 @@ export class HeaderComponent implements OnDestroy {
       this.LoadFrienPending();
     })
     this.signalRService.messageAdded$.subscribe(message =>{
-      console.log("message:", message);
-      message.isSentByCurrentUser = message.sender.id == this.user.id
-      this.Messages.items.push(message); 
       for (let element of this.Conversations.items) {
         if (element.id == message.conversationId) {
           element.message = message.content;
@@ -118,6 +115,10 @@ export class HeaderComponent implements OnDestroy {
           break;
         }
       }
+      message.isSentByCurrentUser = message.sender.id == this.user.id
+      message.created = "";
+      this.Messages.items.push(message); 
+      
     })
   }
   Messages:BaseQueriesResponse<Message> = {
@@ -127,33 +128,41 @@ export class HeaderComponent implements OnDestroy {
     items:[],
     total:0
   };
+  imageMessageSrcs: (string | ArrayBuffer | null)[] = [];
   CreateMessageRequest:CreateMessage = {
-    receiverId: "",
-    senderUserName:"",
     conversationId:0,
-    content:""
+    content:"",
+    files:[]
+  }
+  onFilesSelected(event: Event): void {
+    const fileInput = event.target as HTMLInputElement;
+    if (fileInput.files) {
+      Array.from(fileInput.files).forEach(file => {
+        this.CreateMessageRequest.files.push(file); // Update CreatePost object
+        if (file.type.startsWith('image/')) {
+          const reader = new FileReader();
+          reader.onload = (e: ProgressEvent<FileReader>) => {
+            if (e.target) {
+              this.imageMessageSrcs.push(e.target.result);
+            }
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+    }
+    console.log(this.imageMessageSrcs);
   }
   CreateMessage(){
     this.messageService.create(this.CreateMessageRequest).subscribe(res =>{
       if(res.success == true){
-        res.object.isSentByCurrentUser = res.object.sender.id == this.user.id
-        this.Messages.items.push(res.object); 
-        for (let element of this.Conversations.items) {
-        if (element.id == res.object.conversationId) {
-          element.message = res.object.content;
-          element.timeMessage = res.object.created;
-          element.isSeen = res.object.isSentByCurrentUser
-          break;
-        }
-      }
         this.CreateMessageRequest.content = "";
+        this,this.imageMessageSrcs = [];
       }
     })
     
   }
-  LoadMessageConverstion(conversionId:number, idUser:string){
+  LoadMessageConverstion(conversionId:number){
     this.isHidden = !this.isHidden;
-    this.CreateMessageRequest.receiverId = idUser;
     this.CreateMessageRequest.conversationId = conversionId;
     this.messageService.getPagedData(this.Messages.pageIndex,this.Messages.pageSize, conversionId,this.Messages.keyword).subscribe(
       res =>{
@@ -192,6 +201,9 @@ export class HeaderComponent implements OnDestroy {
   LoadConversation(){
     this.conversationService.getPagedData(this.Conversations.pageIndex, this.Conversations.pageSize, this.Conversations.keyword).subscribe(res =>{
       this.Conversations.items = res.items;
+      this.Conversations.items.forEach(item =>{
+        this.signalRService.joinRoom(item.id.toString())
+      })
     })
   }
   UpdateReadStatusNotification(id:number, status:boolean){
@@ -208,7 +220,5 @@ export class HeaderComponent implements OnDestroy {
       }
     })
   }
-  sendNewMessage(){
-    
-  }
+
 }

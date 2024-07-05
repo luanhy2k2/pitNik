@@ -6,7 +6,9 @@ using Core.Entities;
 using Core.Interface.Infrastructure;
 using Core.Interface.Persistence;
 using MediatR;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,10 +20,12 @@ namespace Application.Features.Message.Handlers.Command
     public class CreateMessageCommandHandler : BaseFeatures, IRequestHandler<CreateMessageCommand, BaseCommandResponse>
     {
         private readonly IMapper _mapper;
-        private readonly INotificationService<MessageDto> _notificationService;
-        public CreateMessageCommandHandler(IPitNikRepositoryWrapper pitNikRepo, IMapper mapper, INotificationService<MessageDto> notificationService) : base(pitNikRepo)
+        private readonly IWebHostEnvironment _environment;
+        private readonly ISignalRNotificationService<MessageDto> _notificationService;
+        public CreateMessageCommandHandler(IPitNikRepositoryWrapper pitNikRepo, IWebHostEnvironment environment, IMapper mapper, ISignalRNotificationService<MessageDto> notificationService) : base(pitNikRepo)
         {
             _notificationService = notificationService;
+            _environment = environment;
             _mapper = mapper;
         }
 
@@ -30,26 +34,46 @@ namespace Application.Features.Message.Handlers.Command
             try
             {
                 // Kiểm tra các trường trong request.CreateMessageDto
-                if (request.CreateMessageDto == null)
+                if (string.IsNullOrEmpty(request.CreateMessageDto.Content) && request.CreateMessageDto.Files == null)
                 {
                     return new BaseCommandResponse("Thông tin tin nhắn không hợp lệ!", false);
                 }
+                string Content = request.CreateMessageDto.Content;
+                if (request.CreateMessageDto.Files != null && request.CreateMessageDto.Files.Count > 0)
+                {
+                    foreach(var file in request.CreateMessageDto.Files)
+                    {
+                        var timestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
+                        var folderPath = Path.Combine(_environment.WebRootPath, "Messages");
+                        var filename = $"{request.CreateMessageDto.ConversationId}_{timestamp}_{file.FileName}";
+                        var filePath = Path.Combine(folderPath, filename);
+                        if (!Directory.Exists(folderPath))
+                        {
+                            Directory.CreateDirectory(folderPath);
+                        }
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await file.CopyToAsync(fileStream);
+                        }
+                        Content += string.Format(
+                         "<img src=\"https://localhost:7261/Messages/{0} \">",filename
+                        );
+                    }
+                    
+                }
+                
 
                 var sender = await _pitNikRepo.Account.GetAllQueryable()
-                    .FirstOrDefaultAsync(x => x.UserName == request.CreateMessageDto.SenderUserName);
-                var receiver = await _pitNikRepo.Account.GetAllQueryable()
-                    .FirstOrDefaultAsync(x => x.Id == request.CreateMessageDto.ReceiverId);
-
-                if (sender == null || receiver == null)
+                    .FirstOrDefaultAsync(x => x.UserName == request.SenderUserName);
+                if (sender == null)
                 {
-                    return new BaseCommandResponse("Người gửi hoặc người nhận không tồn tại!", false);
+                    return new BaseCommandResponse("Người gửi không tồn tại!", false);
                 }
 
                 var message = new Core.Entities.Message
                 {
                     SenderId = sender.Id,
-                    ReceiverId = receiver.Id,
-                    Content = request.CreateMessageDto.Content,
+                    Content = Content,
                     Created = DateTime.Now,
                     ConversationId = request.CreateMessageDto.ConversationId
                 };
@@ -80,7 +104,7 @@ namespace Application.Features.Message.Handlers.Command
                     Id = message.Id,
                     ConversationId = message.ConversationId,
                 };
-                await _notificationService.SendTo(receiver.UserName , "newMessage", messageDto);
+                await _notificationService.SendToGroup(request.CreateMessageDto.ConversationId.ToString() , "newMessage", messageDto);
 
                 return new BaseCommandResponse("Gửi tin nhắn thành công!", messageDto);
             }

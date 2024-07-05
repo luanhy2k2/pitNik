@@ -18,8 +18,8 @@ namespace Application.Features.Comment.Handlers.Commands
     public class CreateCommentCommandHandler : BaseFeatures, IRequestHandler<CreateCommentCommand, BaseCommandResponse>
     {
         private readonly IMapper _mapper;
-        private readonly INotificationService<CommentDto> _notificationService;
-        public CreateCommentCommandHandler(IPitNikRepositoryWrapper pitNikRepo, INotificationService<CommentDto> notificationService, IMapper mapper) : base(pitNikRepo)
+        private readonly ISignalRNotificationService<CommentDto> _notificationService;
+        public CreateCommentCommandHandler(IPitNikRepositoryWrapper pitNikRepo, ISignalRNotificationService<CommentDto> notificationService, IMapper mapper) : base(pitNikRepo)
         {
             _mapper = mapper;
             _notificationService = notificationService;

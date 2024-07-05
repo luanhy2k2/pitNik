@@ -11,6 +11,7 @@ namespace Core.Model
         public string Name { get; set; }
         public string ?Address { get; set; }
         public string ?Image { get; set; }
+        public string ?ImageBackground { get; set; }
         public Gender Gender { get; set; }
         public DateTime ?Birthday { get; set; }
 

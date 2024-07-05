@@ -28,7 +28,6 @@ export class PostService {
     formData.append('Created', post.created.toISOString());
     formData.append('UserId', this.userService.getUser().id);
     formData.append('Content', post.content);
-    
     post.files.forEach(file => formData.append('Files', file, file.name));
 
     return this.httpClient.post(`${this.apiUrl}/api/Post/Create`, formData,{headers: this.userService.addHeaderToken()});

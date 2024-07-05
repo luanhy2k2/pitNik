@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.ExternalService
 {
-    public class SignalRNotificationService<T> : INotificationService<T>
+    public class SignalRNotificationService<T> : ISignalRNotificationService<T>
     {
         private IHubContext<ChatHub> _hubContext;
         public SignalRNotificationService(IHubContext<ChatHub> hubContext) { _hubContext = hubContext; }
@@ -51,6 +51,11 @@ namespace Infrastructure.ExternalService
             {
                 throw new Exception(method, ex);
             }
+        }
+
+        public async Task SendToGroup(string nameGroup, string method, T EventObject)
+        {
+            await _hubContext.Clients.Group(nameGroup).SendAsync(method, EventObject);
         }
     }
 }

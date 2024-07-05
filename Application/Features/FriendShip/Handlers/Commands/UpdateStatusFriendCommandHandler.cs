@@ -16,8 +16,8 @@ namespace Application.Features.FriendShip.Handlers.Commands
 {
     public class UpdateStatusFriendCommandHandler : BaseFeatures, IRequestHandler<UpdateStatusFriendCommand, BaseCommandResponse>
     {
-        private readonly INotificationService<UpdateFriendShipDto> _notificationService;
-        public UpdateStatusFriendCommandHandler(IPitNikRepositoryWrapper pitNikRepo, INotificationService<UpdateFriendShipDto> notificationService ) : base(pitNikRepo)
+        private readonly ISignalRNotificationService<UpdateFriendShipDto> _notificationService;
+        public UpdateStatusFriendCommandHandler(IPitNikRepositoryWrapper pitNikRepo, ISignalRNotificationService<UpdateFriendShipDto> notificationService ) : base(pitNikRepo)
         {
             _notificationService = notificationService;
         }

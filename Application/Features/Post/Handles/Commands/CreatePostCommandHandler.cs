@@ -23,9 +23,9 @@ namespace Application.Features.Post.Handles.Commands
     {
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _environment;
-        private readonly INotificationService<CreatePostDto> _notificationService;
+        private readonly ISignalRNotificationService<CreatePostDto> _notificationService;
        
-        public CreatePostCommandHandler(IPitNikRepositoryWrapper pitNikRepo, INotificationService<CreatePostDto> notificationService, IMapper mapper, IWebHostEnvironment webHostEnvironment):base(pitNikRepo)
+        public CreatePostCommandHandler(IPitNikRepositoryWrapper pitNikRepo, ISignalRNotificationService<CreatePostDto> notificationService, IMapper mapper, IWebHostEnvironment webHostEnvironment):base(pitNikRepo)
         {
             _mapper = mapper;
             _notificationService = notificationService;

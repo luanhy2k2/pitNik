@@ -14,7 +14,6 @@ namespace Core.Entities
     {
         public int ConversationId { get; set; }
         public string SenderId { get; set; }
-        public string ReceiverId { get; set; }
 
         [Required]
         public string Content { get; set; }
@@ -22,8 +21,6 @@ namespace Core.Entities
         // Navigation properties
         [ForeignKey("SenderId")]
         public virtual ApplicationUser Sender { get; set; }
-        [ForeignKey("ReceiverId")]
-        public virtual ApplicationUser Receiver { get; set; }
         [ForeignKey("ConversationId")]
         public virtual Conversation Conversation { get; set; }
         public virtual ICollection<MessageReadStatus> MessageReadStatuses { get; set; } = new List<MessageReadStatus>();

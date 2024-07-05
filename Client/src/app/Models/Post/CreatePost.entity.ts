@@ -4,4 +4,4 @@ export interface CreatePost {
     files: File[];
     id:number;
     created:Date
-  }
+  } 

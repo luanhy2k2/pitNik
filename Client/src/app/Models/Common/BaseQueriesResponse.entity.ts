@@ -8,3 +8,5 @@ export interface BaseQueriesResponse<T> {
     keyword:string
   }
 
+  
+

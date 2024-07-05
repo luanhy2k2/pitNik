@@ -74,7 +74,14 @@ export class SignalRService {
       }
     }
   }
-
+  async joinRoom(roomName: string) {
+    try {
+      return await this.connection.invoke("Join", roomName);
+    } catch (err) {
+      console.error('Error while joining room:', err);
+      throw err; // Re-throw the error to be handled by the caller if necessary
+    }
+  }
   private registerSignalREvents() {
     this.connection.on('getProfileInfo', (react) => {
       this.profileAddedSource.next(react);
@@ -104,5 +111,6 @@ export class SignalRService {
     this.connection.on('addFriendship', (react) => {
       this.friendInvitationAddedSource.next(react);
     });
+    
   }
 }

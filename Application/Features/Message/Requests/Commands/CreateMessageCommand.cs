@@ -12,5 +12,6 @@ namespace Application.Features.Message.Requests.Commands
     public class CreateMessageCommand:IRequest<BaseCommandResponse>
     {
         public CreateMessageDto CreateMessageDto { get; set; }
+        public string SenderUserName { get; set; }
     }
 }

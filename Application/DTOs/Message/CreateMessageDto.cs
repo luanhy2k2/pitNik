@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.Account;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,9 +12,7 @@ namespace Application.DTOs.Message
     public class CreateMessageDto
     {
         public int ConversationId { get; set; }
-        public string SenderUserName { get; set; }
-        public string ReceiverId { get; set; }
-        [Required]
-        public string Content { get; set; }
+        public string ?Content { get; set; }
+        public List<IFormFile> ?Files {  get; set; }
     }
 }
