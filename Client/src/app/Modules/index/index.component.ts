@@ -86,7 +86,6 @@ export class IndexComponent {
     })
     this.LoadCurrentUser();
   };
-
   LoadPost() {
     this.postService.getPagedData(this.Posts.pageIndex, this.Posts.pageSize, this.Posts.keyword).subscribe(
       res => {

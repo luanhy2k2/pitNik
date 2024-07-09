@@ -14,10 +14,7 @@ namespace Core.Entities
     {
         
         public int EmojiId { get; set; }
-        
         public int PostId { get; set; }
-
-
         public string UserId { get; set; }
 
         // Navigation properties

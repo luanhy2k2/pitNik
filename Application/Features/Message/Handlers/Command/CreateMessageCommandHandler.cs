@@ -38,6 +38,11 @@ namespace Application.Features.Message.Handlers.Command
                 {
                     return new BaseCommandResponse("Thông tin tin nhắn không hợp lệ!", false);
                 }
+                var conversation = await _pitNikRepo.Conversation.getById(request.CreateMessageDto.ConversationId);
+                if (conversation == null)
+                {
+                    
+                }
                 string Content = request.CreateMessageDto.Content;
                 if (request.CreateMessageDto.Files != null && request.CreateMessageDto.Files.Count > 0)
                 {

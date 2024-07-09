@@ -6,6 +6,10 @@ import { AboutComponent } from './Modules/about/about.component';
 import { FriendComponent } from './Modules/friend/friend.component';
 import { LoginComponent } from './Modules/login/login.component';
 import { SearchComponent } from './Modules/search/search.component';
+import { TimelineGroupComponent } from './Modules/timeline-group/timeline-group.component';
+import { GroupComponent } from './Modules/group/group.component';
+import { MemberComponent } from './Modules/group/member/member.component';
+import { InvitationComponent } from './Modules/group/invitation/invitation.component';
 
 const routes: Routes = [
   {
@@ -13,6 +17,7 @@ const routes: Routes = [
     component: IndexComponent,
     title: 'Pinik'
   },
+  { path: 'post/:id', component: IndexComponent },
   {
     path: 'setting',
     component: AccountSettingComponent,
@@ -32,6 +37,22 @@ const routes: Routes = [
   {
     path: 'search',
     component: SearchComponent,
+  },
+  {
+    path: 'groups',
+    component: TimelineGroupComponent,
+  },
+  {
+    path: 'group',
+    component: GroupComponent,
+  },
+  {
+    path: 'groupMember',
+    component: MemberComponent,
+  },
+  {
+    path: 'groupInvitation',
+    component: InvitationComponent,
   },
 ]
 

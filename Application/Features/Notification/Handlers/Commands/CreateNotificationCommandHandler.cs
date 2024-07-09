@@ -42,8 +42,7 @@ namespace Application.Features.Notification.Handlers.Commands
                 var senderDto = _mapper.Map<AccountDto>(sender);
                 notificationDto.Sender = senderDto;
                 await _pitNikRepo.Notification.Create(notification);
-                //await _notificationService.SendTo(receiver.UserName, "createNotification", notificationDto);
-                await _notificationService.SendTo(new List<string> { sender.UserName, receiver.UserName }, "createNotification", notificationDto);
+                await _notificationService.SendTo( receiver.UserName , "createNotification", notificationDto);
                 return new BaseCommandResponse("Gửi thông báo thành công");
             }
             catch(Exception ex)

@@ -17,12 +17,20 @@ namespace Core.Entities
        
         public string UserId { get; set; }
 
-        public DateTime JoinedAt { get; set; } = DateTime.UtcNow;
+        public GroupMemberStatus Status { get; set; }
+        public DateTime ?JoinedAt { get; set; }
+        public bool IsCreate { get; set; }
 
         // Navigation properties
         [ForeignKey("GroupId")]
         public virtual Group Group { get; set; }
         [ForeignKey("UserId")]
         public virtual ApplicationUser User { get; set; }
+    }
+    public enum GroupMemberStatus
+    {
+        Pending,
+        Accepted,
+        Rejected
     }
 }

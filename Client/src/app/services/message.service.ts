@@ -13,6 +13,20 @@ import { BaseCommandResponse } from '../Models/Common/BaseCommandResponse.entity
 })
 export class MessageService {
   private apiUrl = "https://localhost:7261";
+  Messages:BaseQueriesResponse<Message> = {
+    pageIndex:1,
+    pageSize:20,
+    keyword:"",
+    items:[],
+    total:0
+  };
+  imageMessageSrcs: (string | ArrayBuffer | null)[] = [];
+  CreateMessageRequest:CreateMessage = {
+    conversationId:0,
+    content:String.fromCodePoint(0x1F60A),
+    files:[]
+  }
+  isHidden: boolean = true;
   constructor(private readonly httpClient: HttpClient,private readonly userService:UserService) { }
   getPagedData(pageIndex:number, pageSize:number,conversationId:number, keyword:string): Observable<BaseQueriesResponse<Message>> {
     let params = new HttpParams()
@@ -31,5 +45,17 @@ export class MessageService {
     
     message.files.forEach(file => formData.append('Files', file, file.name));
     return this.httpClient.post<BaseCommandResponse>(`${this.apiUrl}/api/Message/Create`, formData,{headers: this.userService.addHeaderToken()});
+  }
+  LoadMessageConverstion(conversionId: number) {
+    this.isHidden = !this.isHidden;
+    this.CreateMessageRequest.conversationId = conversionId;
+    this.getPagedData(this.Messages.pageIndex, this.Messages.pageSize, conversionId, this.Messages.keyword).subscribe(
+      res => {
+        res.items.forEach(item => {
+          item.isSentByCurrentUser = item.sender.id == this.userService.getUser().id;
+          this.Messages.items.push(item);
+        });
+      }
+    );
   }
 }

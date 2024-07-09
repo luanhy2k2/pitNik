@@ -39,7 +39,7 @@ namespace Application.Features.FriendShip.Handlers.Queries
 
             var query = from fr in _pitNikRepo.FriendShip.GetAllQueryable()
                             .Where(x => x.Status == Core.Entities.FriendshipStatus.Pending && x.ReceiverId == receiver.Id)
-                        join us in _pitNikRepo.Account.GetAllQueryable() on fr.ReceiverId equals us.Id
+                        join us in _pitNikRepo.Account.GetAllQueryable() on fr.SenderId equals us.Id
                         select new InvitationsFriend
                         {
                             SenderId = fr.SenderId,

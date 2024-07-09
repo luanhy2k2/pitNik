@@ -108,8 +108,9 @@ export class SignalRService {
     this.connection.on('updateFriend', (react) => {
       this.friendStatusUpdatedSource.next(react);
     });
-    this.connection.on('addFriendship', (react) => {
-      this.friendInvitationAddedSource.next(react);
+    this.connection.on('addFriendship', (friend) => {
+      console.log("addFriendship",friend)
+      this.friendInvitationAddedSource.next(friend);
     });
     
   }

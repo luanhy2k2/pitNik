@@ -23,7 +23,7 @@ import { SignalRService } from 'src/app/services/signal-rservice.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnDestroy {
+export class HeaderComponent {
   constructor(private readonly FriendService:FriendShipService,
     private readonly signalRService:SignalRService,
      private readonly notificationService:NotificationService,
@@ -31,9 +31,7 @@ export class HeaderComponent implements OnDestroy {
      private readonly messageService:MessageService,
      private readonly userService:UserService,
      private readonly Router:Router){}
-  ngOnDestroy(): void {
-    alert("dé")
-  }
+
   isHidden: boolean = true;
   FriendPending:BaseQueriesResponse<FriendShip> = {
     pageIndex: 1,
@@ -105,6 +103,7 @@ export class HeaderComponent implements OnDestroy {
     })
     this.signalRService.friendStatusUpdateAdded$.subscribe(res =>{
       this.LoadFrienPending();
+      this.LoadConversation();
     })
     this.signalRService.messageAdded$.subscribe(message =>{
       for (let element of this.Conversations.items) {
@@ -131,8 +130,15 @@ export class HeaderComponent implements OnDestroy {
   imageMessageSrcs: (string | ArrayBuffer | null)[] = [];
   CreateMessageRequest:CreateMessage = {
     conversationId:0,
-    content:"",
+    content:String.fromCodePoint(0x1F60A),
     files:[]
+  }
+  addEmoji(emoji: string) {
+    this.CreateMessageRequest.content += emoji;
+  }
+  toggleEmoji:boolean = false;
+  ToggleEmoji(){
+    this.toggleEmoji = !this.toggleEmoji;
   }
   onFilesSelected(event: Event): void {
     const fileInput = event.target as HTMLInputElement;

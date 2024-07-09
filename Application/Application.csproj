@@ -7,8 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Conversation\Handler\Commands\" />
-    <Folder Include="Features\Conversation\Request\Commands\" />
     <Folder Include="Features\Interactions\Handlers\Queries\" />
     <Folder Include="Features\Interactions\Request\Queries\" />
     <Folder Include="Services\" />
@@ -22,6 +20,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.4" />
   </ItemGroup>
 
   <ItemGroup>

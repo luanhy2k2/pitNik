@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "VYZABA2LpSzGFdPyP23g8RQ2i3qj0fGUrrLgyvbz63U=",
+  "Hash": "VRJ4BdvCOw/0/3SGiKI3E7M/eJh4jlDl7KSSphcOQvM=",
   "Source": "API",
   "BasePath": "_content/API",
   "Mode": "Default",
@@ -16,6 +16,44 @@
     }
   ],
   "Assets": [
+    {
+      "Identity": "C:\\Project.net\\pitNik\\API\\wwwroot\\Groups\\0_10847189_458439227652952_7159736634825005371_o.jpg",
+      "SourceId": "API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Project.net\\pitNik\\API\\wwwroot\\",
+      "BasePath": "_content/API",
+      "RelativePath": "Groups/0_10847189_458439227652952_7159736634825005371_o.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Groups\\0_10847189_458439227652952_7159736634825005371_o.jpg"
+    },
+    {
+      "Identity": "C:\\Project.net\\pitNik\\API\\wwwroot\\Groups\\0_35356766_711642512344080_5722752001582825472_n.jpg",
+      "SourceId": "API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Project.net\\pitNik\\API\\wwwroot\\",
+      "BasePath": "_content/API",
+      "RelativePath": "Groups/0_35356766_711642512344080_5722752001582825472_n.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Groups\\0_35356766_711642512344080_5722752001582825472_n.jpg"
+    },
     {
       "Identity": "C:\\Project.net\\pitNik\\API\\wwwroot\\Messages\\2_20240706032753.jpg",
       "SourceId": "API",
@@ -34,6 +72,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Messages\\2_20240706032753.jpg"
+    },
+    {
+      "Identity": "C:\\Project.net\\pitNik\\API\\wwwroot\\Messages\\2_20240706041952_album11.jpg",
+      "SourceId": "API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Project.net\\pitNik\\API\\wwwroot\\",
+      "BasePath": "_content/API",
+      "RelativePath": "Messages/2_20240706041952_album11.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Messages\\2_20240706041952_album11.jpg"
     },
     {
       "Identity": "C:\\Project.net\\pitNik\\API\\wwwroot\\uploads\\5_album11.jpg",

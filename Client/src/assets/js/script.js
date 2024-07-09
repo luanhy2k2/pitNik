@@ -676,32 +676,32 @@ if ($.isFunction($.fn.loadMoreResults)) {
 		});
 		
 		// Related groups on groups page
-		$('.related-groups').owlCarousel({
-			items: 6,
-			loop: true,
-			margin: 50,
-			autoplay: false,
-			autoplayTimeout: 1500,
-			smartSpeed: 1000,
-			autoplayHoverPause: true,
-			nav: true,
-			dots: false,
-			center:false,
-			responsiveClass:true,
-				responsive:{
-					0:{
-						items:2,
-						margin: 10,
-					},
-					600:{
-						items:3,
+		// $('.related-groups').owlCarousel({
+		// 	items: 6,
+		// 	loop: true,
+		// 	margin: 50,
+		// 	autoplay: false,
+		// 	autoplayTimeout: 1500,
+		// 	smartSpeed: 1000,
+		// 	autoplayHoverPause: true,
+		// 	nav: true,
+		// 	dots: false,
+		// 	center:false,
+		// 	responsiveClass:true,
+		// 		responsive:{
+		// 			0:{
+		// 				items:2,
+		// 				margin: 10,
+		// 			},
+		// 			600:{
+		// 				items:3,
 
-					},
-					1000:{
-						items:6,
-					}
-				}
-		});
+		// 			},
+		// 			1000:{
+		// 				items:6,
+		// 			}
+		// 		}
+		// });
 		
 		// trending pitred posts
 		$('.pitred-trendings.six').owlCarousel({

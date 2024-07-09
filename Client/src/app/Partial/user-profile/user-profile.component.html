@@ -8,25 +8,8 @@
         </div>
         <img src="./assets/images/resources/profile-image.jpg" alt="">
         <ul class="profile-controls">
-            <li><a href="#" title="Add friend" data-toggle="tooltip"><i
+            <li><a (click)="CreateFriendShip()"  title="Add friend" data-toggle="tooltip"><i
                         class="fa fa-user-plus"></i></a></li>
-            <li><a href="#" title="Follow" data-toggle="tooltip"><i class="fa fa-star"></i></a>
-            </li>
-            <li><a class="send-mesg" href="#" title="Send Message" data-toggle="tooltip"><i
-                        class="fa fa-comment"></i></a></li>
-            <li>
-                <div class="edit-seting" title="Edit Profile image"><i
-                        class="fa fa-sliders"></i>
-                    <ul class="more-dropdown">
-                        <li><a href="setting.html" title="">Update Profile Photo</a></li>
-                        <li><a href="setting.html" title="">Update Header Photo</a></li>
-                        <li><a href="setting.html" title="">Account Settings</a></li>
-                        <li><a href="support-and-help.html" title="">Find Support</a></li>
-                        <li><a class="bad-report" href="#" title="">Report Profile</a></li>
-                        <li><a href="#" title="">Block Profile</a></li>
-                    </ul>
-                </div>
-            </li>
         </ul>
         <ol class="pit-rate">
             <li class="rated"><i class="fa fa-star"></i></li>
@@ -43,7 +26,7 @@
             <div class="col-lg-2 col-md-3">
                 <div class="profile-author">
                     <div class="profile-author-thumb">
-                        <img style="height: 151px; width: 151px;" alt="author" src="https://localhost:7261/Users/{{displayImage}}">
+                        <img style="height: 151px; width: 151px;" alt="author" src="https://localhost:7261/Users/{{user.image}}">
                         <div class="edit-dp">
                             <label class="fileContainer">
                                 <i class="fa fa-camera"></i>
@@ -53,27 +36,27 @@
                     </div>
 
                     <div class="author-content">
-                        <a class="h4 author-name" href="about.html">Jack Carter</a>
-                        <div class="country">Ontario, CA</div>
+                        <a class="h4 author-name" href="about.html">{{user.name}}</a>
+                        <div class="country">{{user.address}}</div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-10 col-md-9">
-                <ul class="profile-menu">
-                    <li >
+            <div  class="col-lg-10 col-md-9">
+                <ul style="margin-left: 10%;" class="profile-menu">
+                    <!-- <li >
                         <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" [routerLink]="['/setting']">Cài đặt</a>
-                    </li>
-                    <li >
-                        <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" [routerLink]="['/about']">Bản thân</a>
-                    </li>
-                    <li>
-                        <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" [routerLink]="['/friends']">Bạn bè</a>
+                    </li> -->
+                    <li  >
+                        <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" [routerLink]="['/about']" [queryParams]="{id:userId}">Bản thân</a>
                     </li>
                     <li>
-                        <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" [routerLink]="['/photos']">Ảnh</a>
+                        <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" [routerLink]="['/friends']" [queryParams]="{id:userId}">Bạn bè</a>
                     </li>
                     <li>
-                        <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" [routerLink]="['/videos']">Videos</a>
+                        <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" [routerLink]="['/photos']" [queryParams]="{id:userId}">Ảnh</a>
+                    </li>
+                    <li>
+                        <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" [routerLink]="['/videos']" [queryParams]="{id:userId}">Videos</a>
                     </li>
                     <li>
                         <div class="more">

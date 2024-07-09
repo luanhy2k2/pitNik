@@ -2550,7 +2550,7 @@ li.post-comment .comet-avatar {
     border-top: 7px solid #fff;
     border-left: 7px solid transparent;
     border-right: 7px solid transparent;
-    content: "";
+    
     position: absolute;
     right: 11px;
     bottom: -7px;
@@ -6962,7 +6962,7 @@ a.addnewforum {
     list-style: outside none none;
     margin-bottom: 0;
     padding: 0 15px;
-    width: 70%;
+    width: 50%;
 	padding-right: 0;
 }
 .profile-menu > li {

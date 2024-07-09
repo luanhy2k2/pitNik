@@ -12,6 +12,6 @@ namespace Application.Features.FriendShip.Request.Queries
 {
     public class GetFriendShipAcceptRequest:BasePagingDto, IRequest<BaseQuerieResponse<MyFriendDto>>
     {
-        public string CurrentUserName { get; set; }
+        public string CurrentUserId { get; set; }
     }
 }

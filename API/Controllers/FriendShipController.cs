@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace API.Controllers
 {
@@ -40,10 +41,14 @@ namespace API.Controllers
             return Ok(result);
         }
         [HttpGet("GetMyFriend")]
-        public async Task<ActionResult> GetMyFriend([FromQuery] BasePagingDto pagingDto)
+        public async Task<ActionResult> GetMyFriend([FromQuery] GetFriendShipAcceptRequest request)
         {
-            var currentUsername = User.Identity.Name;
-            var result = await _mediator.Send(new GetFriendShipAcceptRequest { CurrentUserName = currentUsername,  PageIndex = pagingDto.PageIndex, PageSize = pagingDto.PageSize, Keyword = pagingDto.Keyword });
+            var result = await _mediator.Send(new GetFriendShipAcceptRequest { 
+                CurrentUserId = request.CurrentUserId,  
+                PageIndex = request.PageIndex, 
+                PageSize = request.PageSize,
+                Keyword = request.Keyword 
+            });
             return Ok(result);
         }
 

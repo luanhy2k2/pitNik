@@ -1,0 +1,179 @@
+<section>
+    <div class="gap2 gray-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="row merged20" id="page-contents">
+                       
+                        <div class="col-lg-12">
+                            <div class="central-meta">
+                                <div class="title-block">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="align-left">
+                                                <h5>Nhóm <span>{{groups.total}}</span></h5>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="row merged20">
+                                                <div class="col-lg-7 col-md-7 col-sm-7">
+                                                    <form method="post">
+                                                        <input type="text" placeholder="Search Group">
+                                                        <button type="submit"><i class="fa fa-search"></i></button>
+                                                    </form>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                                    <div class="select-options">
+                                                        <select class="select">
+                                                            <option>Sort by</option>
+                                                            <option>A to Z</option>
+                                                            <option>See All</option>
+                                                            <option>Newest</option>
+                                                            <option>oldest</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-1 col-md-1 col-sm-1">
+                                                    <div class="option-list">
+                                                        <i class="fa fa-ellipsis-v"></i>
+                                                        <ul>
+                                                            <li><a title="" href="#">Show Friends Public</a></li>
+                                                            <li><a title="" href="#">Show Friends Private</a></li>
+                                                            <li><a title="" href="#">Mute Notifications</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!-- title block -->
+                            <div class="central-meta padding30">
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-4 col-sm-4">
+                                        <div class="addgroup">
+                                            <div class="item-upload">
+                                                <i class="fa fa-plus-circle"></i>
+                                                <div class="upload-meta">
+                                                    <h5>Create Group</h5>
+                                                    <span>its only take a few minutes!</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div *ngFor="let group of groups.items" class="col-lg-2 col-md-4 col-sm-4">
+                                        <div  class="group-box">
+                                            <figure><img [routerLink]="['/group']" [queryParams]="{ id: group.id }" style="width: 120px; height: 120px;" src="https://localhost:7261/Groups/{{group.background}}" alt=""></figure>
+                                            <a [routerLink]="['/group']" [queryParams]="{ id: group.id }" title="">{{group.name}}</a>
+                                            <span>{{group.totalMember}} thành viên</span>
+                                            <button *ngIf="group.isJoined == false"><span (click)="JoinGroup(group.id)">Tham gia</span></button>
+                                            
+                                            <p style="background-color:#9a9fbf; color: aliceblue;" *ngIf="group.isJoined == true">Đã tham gia</p>
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                                <div class="lodmore">
+                                    <span>Viewing 1-11 of 302 Groups</span>
+                                    <button class="btn-view btn-load-more"></button>
+                                </div>
+                            </div>
+                            <div class="central-meta">
+                                <div class="author-info">
+                                    <h4>Suggested Groups</h4>
+                                    <p>You May join more these relevant groups.</p>
+                                </div>
+                                <ul class="related-groups">
+                                    <li>
+                                        <div class="group-box">
+                                            <figure><img src="./assets/images/resources/group12.jpg" alt=""></figure>
+                                            <a href="#" title="">Big Biker</a>
+                                            <span>15K Members</span>
+                                            <button>join group</button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="group-box">
+                                            <figure><img src="./assets/images/resources/group13.jpg" alt=""></figure>
+                                            <a href="#" title="">Blue Tech</a>
+                                            <span>12k Members</span>
+                                            <button>join group</button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="group-box">
+                                            <figure><img src="./assets/images/resources/group14.jpg" alt=""></figure>
+                                            <a href="#" title="">Gold Movies</a>
+                                            <span>125M Members</span>
+                                            <button>join group</button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="group-box">
+                                            <figure><img src="./assets/images/resources/group15.jpg" alt=""></figure>
+                                            <a href="#" title="">Musicly Friends</a>
+                                            <span>22M Members</span>
+                                            <button>join group</button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="group-box">
+                                            <figure><img src="./assets/images/resources/group16.jpg" alt=""></figure>
+                                            <a href="#" title="">AFC Cafe</a>
+                                            <span>5k Members</span>
+                                            <button>join group</button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="group-box">
+                                            <figure><img src="./assets/images/resources/group17.jpg" alt=""></figure>
+                                            <a href="#" title="">Volunteers</a>
+                                            <span>12k Members</span>
+                                            <button>join group</button>
+                                        </div>
+                                    </li>
+                                </ul>
+                                
+                            </div>
+                        </div>	
+                    </div>	
+                </div>
+            </div>
+        </div>
+    </div>	
+</section>
+<div class="popup-wraper4">
+    <div class="popup creat-group">
+        <span class="popup-closed"><i class="ti-close"></i></span>
+        <div class="popup-meta">
+            <div class="popup-head">
+                <h5>Tạo nhóm</h5>
+            </div>
+            <div class="group-adding">
+                <div class="friend-group">
+                    
+                    <div class="change-photo">
+                        <figure>
+                            <img *ngIf="backgroundSrcs" [src]="backgroundSrcs" style="width: 60px;height: 60px;" />
+                    
+                        </figure>
+                        <div class="edit-img">
+                            <form class="edit-phto">
+                                <label class="fileContainer">
+                                    <i class="fa fa-camera-retro"></i>
+                                    Chọn ảnh nền
+                                <input (change)="onFileChange($event)" name="background" type="file">
+                                </label>
+                            </form>
+                        </div>
+                    </div>
+                    <form method="post">
+                        <input [(ngModel)]="createGroupRequest.name" type="text" name="nameGroup" placeholder="Tên nhóm...">
+                        <input [(ngModel)]="createGroupRequest.description" type="text" name="desGroup" placeholder="Mô tả...">
+                        <button (click)="CreateGroup()" class="main-btn">Tạo nhóm</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

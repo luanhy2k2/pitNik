@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "SACsarClNiMoFctPrp5T4SqXuoHAksgb8jhJauGSwWqm7SkqhZFhImJkkaEpGN0ncH9dpkoYDV/FXLqfHjqxJw==",
+  "dgSpecHash": "z0S/kNs0FnPNFSp/bRmG1WV5cpdBd9K/FPVDm1mLHr1gbMr4ospFzR1V2YuHwvHtEQw9viRIuVYERbakhncRUg==",
   "success": true,
   "projectFilePath": "C:\\Project.net\\pitNik\\Application\\Application.csproj",
   "expectedPackageFiles": [
@@ -54,6 +54,7 @@
     "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.sqlserver.server\\1.0.0\\microsoft.sqlserver.server.1.0.0.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.win32.systemevents\\6.0.0\\microsoft.win32.systemevents.6.0.0.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\sixlabors.imagesharp\\3.1.4\\sixlabors.imagesharp.3.1.4.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\system.codedom\\4.4.0\\system.codedom.4.4.0.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\system.collections.immutable\\6.0.0\\system.collections.immutable.6.0.0.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\system.composition\\6.0.0\\system.composition.6.0.0.nupkg.sha512",

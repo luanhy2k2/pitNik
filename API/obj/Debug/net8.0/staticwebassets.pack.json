@@ -1,8 +1,20 @@
 {
   "Files": [
     {
+      "Id": "C:\\Project.net\\pitNik\\API\\wwwroot\\Groups\\0_10847189_458439227652952_7159736634825005371_o.jpg",
+      "PackagePath": "staticwebassets\\Groups\\0_10847189_458439227652952_7159736634825005371_o.jpg"
+    },
+    {
+      "Id": "C:\\Project.net\\pitNik\\API\\wwwroot\\Groups\\0_35356766_711642512344080_5722752001582825472_n.jpg",
+      "PackagePath": "staticwebassets\\Groups\\0_35356766_711642512344080_5722752001582825472_n.jpg"
+    },
+    {
       "Id": "C:\\Project.net\\pitNik\\API\\wwwroot\\Messages\\2_20240706032753.jpg",
       "PackagePath": "staticwebassets\\Messages\\2_20240706032753.jpg"
+    },
+    {
+      "Id": "C:\\Project.net\\pitNik\\API\\wwwroot\\Messages\\2_20240706041952_album11.jpg",
+      "PackagePath": "staticwebassets\\Messages\\2_20240706041952_album11.jpg"
     },
     {
       "Id": "C:\\Project.net\\pitNik\\API\\wwwroot\\Users\\04894db7-b48e-40ee-a64a-cc234bbf307c_tải xuống (1).jfif",

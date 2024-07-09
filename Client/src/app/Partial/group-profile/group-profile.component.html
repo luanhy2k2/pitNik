@@ -1,0 +1,41 @@
+<div class="user-profile">
+    <figure>
+        
+        <img src="https://localhost:7261/Groups/{{group.background}}" alt="">
+        
+        
+    </figure>
+
+    <div class="profile-section">
+        <div class="row">
+          
+            <div class="col-lg-12">
+                <ol style="margin-right: 10%;" class="folw-detail">
+                    <a  class="h4 author-name" href="#">{{group.name}}</a>
+                   
+                </ol>
+                <ul class="profile-menu">
+                    
+                    <li>
+                        <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" [routerLink]="['/group']" [queryParams]="{ id: group.id }"  >Page Feed</a>
+                    </li>
+                    <li>
+                        <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" [routerLink]="['/groupMember']" [queryParams]="{ id: group.id }" >Followers</a>
+                    </li>
+                    <li>
+                        <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="" >Events</a>
+                    </li>
+                    <li>
+                        <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" [routerLink]="['/groupInvitation']" [queryParams]="{ id: group.id }" class="" >Invitations</a>
+                    </li>
+                 
+                </ul>
+                <ol class="folw-detail">
+                    <li><span>Bài viết</span><ins>101</ins></li>
+                   
+                    <li><span>Thành viên</span><ins>{{group.totalMember}}</ins></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div><!-- user profile banner  -->

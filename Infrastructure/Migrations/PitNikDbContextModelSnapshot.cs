@@ -141,6 +141,10 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Background")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
@@ -171,8 +175,14 @@ namespace Infrastructure.Migrations
                     b.Property<int>("GroupId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("JoinedAt")
+                    b.Property<bool>("IsCreate")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("JoinedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<string>("UserId")
                         .IsRequired()
@@ -458,11 +468,16 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("GroupId")
+                        .HasColumnType("int");
+
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GroupId");
 
                     b.HasIndex("UserId");
 
@@ -746,7 +761,7 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Core.Entities.GroupMember", b =>
                 {
                     b.HasOne("Core.Entities.Group", "Group")
-                        .WithMany()
+                        .WithMany("Members")
                         .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -905,11 +920,17 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.Entities.Post", b =>
                 {
+                    b.HasOne("Core.Entities.Group", "Group")
+                        .WithMany()
+                        .HasForeignKey("GroupId");
+
                     b.HasOne("Core.Model.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Group");
 
                     b.Navigation("User");
                 });
@@ -970,6 +991,11 @@ namespace Infrastructure.Migrations
                     b.Navigation("Members");
 
                     b.Navigation("Messages");
+                });
+
+            modelBuilder.Entity("Core.Entities.Group", b =>
+                {
+                    b.Navigation("Members");
                 });
 
             modelBuilder.Entity("Core.Entities.GroupMessage", b =>

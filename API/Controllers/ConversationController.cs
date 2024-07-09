@@ -1,5 +1,7 @@
 ﻿using Application.DTOs.Common;
+using Application.Features.Conversation.Request.Commands;
 using Application.Features.Conversation.Request.Queries;
+using Core.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -30,6 +32,11 @@ namespace API.Controllers
             });
             return Ok(result);
         }
-
+        [HttpPost("Create")]
+        public async Task<ActionResult> Create(Conversation conversation)
+        {
+            var result = await _mediator.Send(new CreateConversationCommand { CreateConversationDto = conversation });  
+            return Ok(result);  
+        }
     }
 }

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Qg0ORCP+d8Lh9/xQ3sWF8fM+FT+fzQD0VuNVeoFxXbdxApJmtgqK2DH4rGZfdHt+x3uWsXuzB+Vybx0Z6wx7dg==",
+  "dgSpecHash": "1m4LeynWtergu2WBmfv86ZXYCQkOD96AcyN/RD/5rCied144kz/pcef/HwZYs13wnLul7uZpuujmkKskPQKGmA==",
   "success": true,
   "projectFilePath": "C:\\Project.net\\pitNik\\API\\API.csproj",
   "expectedPackageFiles": [
@@ -57,6 +57,7 @@
     "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.win32.systemevents\\6.0.0\\microsoft.win32.systemevents.6.0.0.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\scrutor\\3.3.0\\scrutor.3.3.0.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\sixlabors.imagesharp\\3.1.4\\sixlabors.imagesharp.3.1.4.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\swashbuckle.aspnetcore\\6.4.0\\swashbuckle.aspnetcore.6.4.0.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\swashbuckle.aspnetcore.filters\\8.0.2\\swashbuckle.aspnetcore.filters.8.0.2.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\swashbuckle.aspnetcore.filters.abstractions\\8.0.2\\swashbuckle.aspnetcore.filters.abstractions.8.0.2.nupkg.sha512",

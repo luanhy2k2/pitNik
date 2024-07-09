@@ -3,20 +3,12 @@
   "WorkspaceRootPath": "C:\\Project.net\\pitNik\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|c:\\project.net\\pitnik\\application\\features\\message\\handlers\\command\\createmessagecommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|solutionrelative:application\\features\\message\\handlers\\command\\createmessagecommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|c:\\project.net\\pitnik\\application\\features\\friendship\\handlers\\commands\\updatestatusfriendcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|solutionrelative:application\\features\\friendship\\handlers\\commands\\updatestatusfriendcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E58E86E4-4674-4EA6-9AD8-E9278AE07C74}|API\\API.csproj|c:\\project.net\\pitnik\\api\\controllers\\messagecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E58E86E4-4674-4EA6-9AD8-E9278AE07C74}|API\\API.csproj|solutionrelative:api\\controllers\\messagecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|c:\\project.net\\pitnik\\application\\features\\message\\requests\\commands\\createmessagecommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|solutionrelative:application\\features\\message\\requests\\commands\\createmessagecommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|c:\\project.net\\pitnik\\application\\features\\post\\handles\\commands\\createpostcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|solutionrelative:application\\features\\post\\handles\\commands\\createpostcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|c:\\project.net\\pitnik\\application\\features\\group\\handlers\\commands\\updatestatusinvitationcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|solutionrelative:application\\features\\group\\handlers\\commands\\updatestatusinvitationcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,58 +18,32 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "CreateMessageCommand.cs",
-              "DocumentMoniker": "C:\\Project.net\\pitNik\\Application\\Features\\Message\\Requests\\Commands\\CreateMessageCommand.cs",
-              "RelativeDocumentMoniker": "Application\\Features\\Message\\Requests\\Commands\\CreateMessageCommand.cs",
-              "ToolTip": "C:\\Project.net\\pitNik\\Application\\Features\\Message\\Requests\\Commands\\CreateMessageCommand.cs",
-              "RelativeToolTip": "Application\\Features\\Message\\Requests\\Commands\\CreateMessageCommand.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAkAAAA",
+              "DocumentIndex": 1,
+              "Title": "UpdateStatusInvitationCommandHandler.cs",
+              "DocumentMoniker": "C:\\Project.net\\pitNik\\Application\\Features\\Group\\Handlers\\Commands\\UpdateStatusInvitationCommandHandler.cs",
+              "RelativeDocumentMoniker": "Application\\Features\\Group\\Handlers\\Commands\\UpdateStatusInvitationCommandHandler.cs",
+              "ToolTip": "C:\\Project.net\\pitNik\\Application\\Features\\Group\\Handlers\\Commands\\UpdateStatusInvitationCommandHandler.cs",
+              "RelativeToolTip": "Application\\Features\\Group\\Handlers\\Commands\\UpdateStatusInvitationCommandHandler.cs",
+              "ViewState": "AQIAABsAAAAAAAAAAAAowDQAAABhAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-05T21:12:07.271Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "CreatePostCommandHandler.cs",
-              "DocumentMoniker": "C:\\Project.net\\pitNik\\Application\\Features\\Post\\Handles\\Commands\\CreatePostCommandHandler.cs",
-              "RelativeDocumentMoniker": "Application\\Features\\Post\\Handles\\Commands\\CreatePostCommandHandler.cs",
-              "ToolTip": "C:\\Project.net\\pitNik\\Application\\Features\\Post\\Handles\\Commands\\CreatePostCommandHandler.cs",
-              "RelativeToolTip": "Application\\Features\\Post\\Handles\\Commands\\CreatePostCommandHandler.cs",
-              "ViewState": "AQIAACIAAAAAAAAAAAAgwDMAAAAZAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-05T20:25:09.338Z",
+              "WhenOpened": "2024-07-09T19:02:27.232Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "CreateMessageCommandHandler.cs",
-              "DocumentMoniker": "C:\\Project.net\\pitNik\\Application\\Features\\Message\\Handlers\\Command\\CreateMessageCommandHandler.cs",
-              "RelativeDocumentMoniker": "Application\\Features\\Message\\Handlers\\Command\\CreateMessageCommandHandler.cs",
-              "ToolTip": "C:\\Project.net\\pitNik\\Application\\Features\\Message\\Handlers\\Command\\CreateMessageCommandHandler.cs",
-              "RelativeToolTip": "Application\\Features\\Message\\Handlers\\Command\\CreateMessageCommandHandler.cs",
-              "ViewState": "AQIAABgAAAAAAAAAAAAgwCIAAAAMAAAA",
+              "Title": "UpdateStatusFriendCommandHandler.cs",
+              "DocumentMoniker": "C:\\Project.net\\pitNik\\Application\\Features\\FriendShip\\Handlers\\Commands\\UpdateStatusFriendCommandHandler.cs",
+              "RelativeDocumentMoniker": "Application\\Features\\FriendShip\\Handlers\\Commands\\UpdateStatusFriendCommandHandler.cs",
+              "ToolTip": "C:\\Project.net\\pitNik\\Application\\Features\\FriendShip\\Handlers\\Commands\\UpdateStatusFriendCommandHandler.cs",
+              "RelativeToolTip": "Application\\Features\\FriendShip\\Handlers\\Commands\\UpdateStatusFriendCommandHandler.cs",
+              "ViewState": "AQIAAD8AAAAAAAAAAAAowEMAAAAyAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-05T19:54:43.044Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "MessageController.cs",
-              "DocumentMoniker": "C:\\Project.net\\pitNik\\API\\Controllers\\MessageController.cs",
-              "RelativeDocumentMoniker": "API\\Controllers\\MessageController.cs",
-              "ToolTip": "C:\\Project.net\\pitNik\\API\\Controllers\\MessageController.cs",
-              "RelativeToolTip": "API\\Controllers\\MessageController.cs",
-              "ViewState": "AQIAAA4AAAAAAAAAAAAxwBkAAACDAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-05T20:12:19.297Z",
+              "WhenOpened": "2024-07-09T17:41:19.857Z",
               "EditorCaption": ""
             }
           ]

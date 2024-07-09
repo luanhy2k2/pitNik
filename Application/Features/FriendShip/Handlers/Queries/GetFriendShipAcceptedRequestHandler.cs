@@ -23,7 +23,7 @@ namespace Application.Features.FriendShip.Handlers.Queries
         {
             try
             {
-                var currentUser = await _pitNikRepo.Account.GetAllQueryable().FirstOrDefaultAsync(x => x.UserName == request.CurrentUserName);
+                var currentUser = await _pitNikRepo.Account.GetAllQueryable().FirstOrDefaultAsync(x => x.Id == request.CurrentUserId);
                 if(currentUser == null)
                 {
                     throw new Exception("Tài khoản không tồn tại");
@@ -33,13 +33,13 @@ namespace Application.Features.FriendShip.Handlers.Queries
                             join receiver in _pitNikRepo.Account.GetAllQueryable() on fr.ReceiverId equals receiver.Id
                             select new MyFriendDto
                             {
-                                UserId = sender.UserName == request.CurrentUserName ? receiver.Id : sender.Id,
-                                Name = sender.UserName == request.CurrentUserName ? receiver.Name : sender.Name,
-                                Address = sender.UserName == request.CurrentUserName ? receiver.Address : sender.Address,
-                                Image = sender.UserName == request.CurrentUserName ? receiver.Image : sender.Image,
-                                TotalPost = _pitNikRepo.Post.GetAllQueryable().Count(x => x.UserId == (sender.UserName == request.CurrentUserName ? receiver.Id : sender.Id)),
-                                TotalImage = _pitNikRepo.ImagePost.GetAllQueryable().Count(x => x.Post.UserId == (sender.UserName == request.CurrentUserName ? receiver.Id : sender.Id)),
-                                TotalFriend = _pitNikRepo.FriendShip.GetAllQueryable().Count(x => (x.Receiver.UserName == request.CurrentUserName || x.Sender.UserName == request.CurrentUserName) && x.Status == FriendshipStatus.Accepted),
+                                UserId = sender.Id == request.CurrentUserId ? receiver.Id : sender.Id,
+                                Name = sender.Id == request.CurrentUserId ? receiver.Name : sender.Name,
+                                Address = sender.Id == request.CurrentUserId ? receiver.Address : sender.Address,
+                                Image = sender.Id == request.CurrentUserId ? receiver.Image : sender.Image,
+                                TotalPost = _pitNikRepo.Post.GetAllQueryable().Count(x => x.UserId == (sender.Id == request.CurrentUserId ? receiver.Id : sender.Id)),
+                                TotalImage = _pitNikRepo.ImagePost.GetAllQueryable().Count(x => x.Post.UserId == (sender.Id == request.CurrentUserId ? receiver.Id : sender.Id)),
+                                TotalFriend = _pitNikRepo.FriendShip.GetAllQueryable().Count(x => (x.Receiver.Id == request.CurrentUserId || x.Sender.Id == request.CurrentUserId) && x.Status == FriendshipStatus.Accepted),
                                 Created = fr.RequestedAt
                             };
                 if (!string.IsNullOrEmpty(request.Keyword))

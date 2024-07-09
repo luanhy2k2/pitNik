@@ -15,9 +15,8 @@ namespace Core.Model
         public Gender Gender { get; set; }
         public DateTime ?Birthday { get; set; }
 
-        //public virtual ICollection<Post> Posts { get; set; }
-        //public virtual ICollection<Comment> Comments { get; set; }
-        //public virtual ICollection<Interactions> Interactions { get; set; }
+        public virtual ICollection<InforUser> InforUsers { get; set; }
+        public virtual ICollection<GroupMember> GroupMembers { get; set; }
         //public virtual ICollection<Message> Messages { get; set; }
         //public virtual ICollection<GroupMessage> GroupMessages { get; set; }
         //public virtual ICollection<Message> ReceivedMessages { get; set; }

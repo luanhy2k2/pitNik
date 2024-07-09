@@ -12,18 +12,6 @@ namespace Core.Entities
 {
     public class Conversation:BaseCoreEntity
     {
-        //public string User1Id { get; set; }
-
-
-        //public string User2Id { get; set; }
-
-        //// Navigation properties
-        //[ForeignKey("User1Id")]
-        //public virtual ApplicationUser User1 { get; set; }
-        //[ForeignKey("User2Id")]
-        //public virtual ApplicationUser User2 { get; set; }
-
-        //public virtual ICollection<Message> Messages { get; set; } = new List<Message>();
         public virtual ICollection<ConversationMember> Members { get; set; }
         public virtual ICollection<Message> Messages { get; set; } = new List<Message>();
     }
