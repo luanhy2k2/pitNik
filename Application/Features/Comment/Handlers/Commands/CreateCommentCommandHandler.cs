@@ -35,10 +35,10 @@ namespace Application.Features.Comment.Handlers.Commands
                     return new BaseCommandResponse("Nội dung không được để trống", false);
                 }
                 var comment = _mapper.Map<Core.Entities.Comment>(request.CreateCommentDto);
-                await _pitNikRepo.Comment.Create(comment);
+                //await _pitNikRepo.Comment.Create(comment);
                 var commentDto = _mapper.Map<CommentDto>(comment);
                 commentDto.Created = TimeHelper.GetRelativeTime(comment.Created);
-                await _notificationService.SendAll("addComment", commentDto);
+                await _notificationService.SendToGroup($"Post_{request.CreateCommentDto.PostId}","addComment", commentDto);
                 return new BaseCommandResponse("Bình luận thành công!");
             }
             catch (Exception ex)

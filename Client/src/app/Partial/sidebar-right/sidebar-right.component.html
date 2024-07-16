@@ -14,47 +14,45 @@
                 <img src="./assets/images/clock.png" alt="">
             </div>
         </div><!-- explore events -->
-        <div class="widget">
-            <h4 class="widget-title">Profile intro</h4>
+        <div routerLink="/setting" class="widget">
+            <h4 class="widget-title">Giới thiệu bản thân</h4>
             <ul class="short-profile">
                 <li>
-                    <span>about</span>
-                    <p>Hi, i am jhon kates, i am 32 years old and worked as a web developer in microsoft </p>
+                    <span>Về bản thân</span>
+                    <p *ngIf="GeneralInfo.aboutMe; else nullAbout" >{{GeneralInfo.aboutMe}}</p>
+                    <ng-template #nullAbout>
+                        <p>Hãy viết gì đó về bản thân của bạn</p>
+                    </ng-template>
                 </li>
                 <li>
-                    <span>fav tv show</span>
-                    <p>Sacred Games, Spartcus Blood, Games of Theron </p>
+                    <span>Sở thích</span>
+                    <p *ngIf="GeneralInfo.hobbies; else nullHobbies" >{{GeneralInfo.hobbies}}</p>
+                    <ng-template #nullHobbies>
+                        <p>Hãy viết gì đó về sở thích của bạn</p>
+                    </ng-template>
                 </li>
                 <li>
-                    <span>favourit music</span>
-                    <p>Justin Biber, Shakira, Nati Natasah</p>
+                    <span>Kinh nghiệm và làm việc</span>
+                    <p *ngIf="GeneralInfo.workAndExperience; else nullExperience" >{{GeneralInfo.workAndExperience}}</p>
+                    <ng-template #nullExperience>
+                        <p>Hãy viết gì đó về sở thích của bạn</p>
+                    </ng-template>
                 </li>
             </ul>
         </div><!-- profile intro widget -->
         <div class="widget stick-widget">
-            <h4 class="widget-title">Recent Links <a title="" href="#" class="see-all">See All</a></h4>
-            <ul class="recent-links">
-                <li>
-                    <figure><img src="./assets/images/resources/recentlink-1.jpg" alt=""></figure>
-                    <div class="re-links-meta">
-                        <h6><a href="#" title="">moira's fade reaches much farther than you think.</a></h6>
-                        <span>2 weeks ago </span>
+            <h4 class="widget-title">Nhóm của bạn</h4>
+            <ul class="followers">
+                <li *ngFor="let item of groups.items">
+                    <figure>
+                        <img style="width: 40px; height: 40px;" src="https://localhost:7261/Groups/{{item.background}}" alt="">
+                    </figure>
+                    <div class="friend-meta">
+                        <h4 [routerLink]="['/group']" [queryParams]="{ id: item.id }" style="width: 100%;"><a title="">{{item.name}}</a></h4>
+                        
                     </div>
                 </li>
-                <li>
-                    <figure><img src="./assets/images/resources/recentlink-2.jpg" alt=""></figure>
-                    <div class="re-links-meta">
-                        <h6><a href="#" title="">daniel asks if we want him to do the voice of doomfist</a></h6>
-                        <span>3 months ago </span>
-                    </div>
-                </li>
-                <li>
-                    <figure><img src="./assets/images/resources/recentlink-3.jpg" alt=""></figure>
-                    <div class="re-links-meta">
-                        <h6><a href="#" title="">the pitnik overwatch scandals.</a></h6>
-                        <span>1 day before</span>
-                    </div>
-                </li>
+               
             </ul>
-        </div><!-- recent links -->
+        </div>
     </aside>

@@ -26,10 +26,22 @@ namespace Application.Features.Account.Handles.Commands
 
         public async Task<BaseCommandResponse> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
+            if(request.Register.Password != request.Register.ConfirmPassword)
+            {
+                return new BaseCommandResponse("Vui lòng nhập mật khẩu tương ứng!");
+            }
             var existingUserName = await _userManager.FindByNameAsync(request.Register.UserName);
             if(existingUserName != null)
             {
-                throw new Exception("Tài khoản đã tồn tại");
+                if (existingUserName.EmailConfirmed == false)
+                {
+                    await _userManager.DeleteAsync(existingUserName);
+                }
+                else
+                {
+                    throw new Exception("Tài khoản đã tồn tại");
+                }
+               
             }
             var existingEmail = await _userManager.FindByEmailAsync(request.Register.Email);
             if (existingEmail != null)

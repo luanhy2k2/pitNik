@@ -28,6 +28,8 @@ namespace Infrastructure.Persistence.Repositories
 
         private IConversationRepository _conversationRepository;
         public IConversationRepository Conversation => _conversationRepository ??= new ConversationRepository(_context);
+        private IConversationMemberRepository _conversationMemberRepository;
+        public IConversationMemberRepository ConversationMember => _conversationMemberRepository ??= new ConversationMemberRepository(_context);
 
         private IFriendShipRepository _friendShipRepository;
         public IFriendShipRepository FriendShip => _friendShipRepository ??= new FriendShipRepository(_context);

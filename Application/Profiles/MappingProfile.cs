@@ -1,5 +1,6 @@
 ﻿using Application.DTOs.Account;
 using Application.DTOs.Comment;
+using Application.DTOs.Conversation;
 using Application.DTOs.FriendShip;
 using Application.DTOs.Group;
 using Application.DTOs.Interactions;
@@ -44,6 +45,8 @@ namespace Application.Profiles
 
             CreateMap<Group, GroupDto>().ReverseMap();
             CreateMap<GroupMember, GroupMemberDto>().ReverseMap();
+
+            CreateMap<Conversation, ConversationDto>().ReverseMap();
 
         }
     }

@@ -38,6 +38,7 @@ namespace Application.Features.Notification.Handlers.Commands
                 }
                 var notification = _mapper.Map<Core.Entities.Notification>(request.CreateDto);
                 var notificationDto = _mapper.Map<NotificationDto>(notification);
+                notificationDto.Created = TimeHelper.GetRelativeTime(notification.Created);
                 var sender = await _pitNikRepo.Account.GetAllQueryable().FirstOrDefaultAsync(x =>x.Id == request.CreateDto.SenderId);
                 var senderDto = _mapper.Map<AccountDto>(sender);
                 notificationDto.Sender = senderDto;

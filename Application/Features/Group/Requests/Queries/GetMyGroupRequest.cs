@@ -12,6 +12,6 @@ namespace Application.Features.Group.Requests.Queries
 {
     public class GetMyGroupRequest:BasePagingDto, IRequest<BaseQuerieResponse<GroupDto>>
     {
-        public string CurrentUserName { get; set; }
+        public string CurrentUserId { get; set; }
     }
 }

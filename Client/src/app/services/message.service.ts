@@ -1,12 +1,13 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { CreateComment } from '../Models/Comment/create-comment.entity';
 import { BaseQueriesResponse } from '../Models/Common/BaseQueriesResponse.entity';
 import { UserService } from './User.service';
 import { Message } from '../Models/Message/Message.entity';
 import { CreateMessage } from '../Models/Message/CreateMessage.entity';
 import { BaseCommandResponse } from '../Models/Common/BaseCommandResponse.entity';
+import { UpdateMessageReadStatus } from '../Models/Message/UpdateMessageReadStatus.entuty';
 
 @Injectable({
   providedIn: 'root'
@@ -46,6 +47,9 @@ export class MessageService {
     message.files.forEach(file => formData.append('Files', file, file.name));
     return this.httpClient.post<BaseCommandResponse>(`${this.apiUrl}/api/Message/Create`, formData,{headers: this.userService.addHeaderToken()});
   }
+  updateMessageReadStatus(request: UpdateMessageReadStatus): Observable<BaseCommandResponse> {
+    return this.httpClient.post<BaseCommandResponse>(`${this.apiUrl}/api/Message/UpdateStatusRead/${request.conversationId}/${request.status}`, {},{headers: this.userService.addHeaderToken()});
+  }
   LoadMessageConverstion(conversionId: number) {
     this.isHidden = !this.isHidden;
     this.CreateMessageRequest.conversationId = conversionId;
@@ -58,4 +62,10 @@ export class MessageService {
       }
     );
   }
+  private ConversationSource = new BehaviorSubject<string>("");
+  loadConversation$ = this.ConversationSource.asObservable();
+  toggleModal(userId: string) {
+    this.ConversationSource.next(userId);
+  }
+
 }

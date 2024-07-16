@@ -55,6 +55,25 @@ namespace API.Controllers
             var result = await _mediator.Send(new GetUserInforRequest { UserId = id });
             return Ok(result);
         }
+        [HttpGet("generateConfirmTokenEmail/{email}")]
+        public async Task<ActionResult> GenerateTokenConfirmEmail(string email)
+        {
+            var result = await _mediator.Send(new GetTokenConfirmEmailRequest { Email = email });
+            return Ok(result);
+        }
+        [HttpGet("ConfirmEmail")]
+        public async Task<ActionResult> ConfirmEmail(string email, string token)
+        {
+            var result = await _mediator.Send(new ConfirmEmailCommand { Email = email, Token = token });
+            if(result.Success == true)
+            {
+                return Redirect($"http://localhost:4200/login");
+            }
+            else
+            {
+                return BadRequest("Error confirming email.");
+            }
+        }
         [HttpPost("UpdateGeneralInfor")]
         public async Task<ActionResult<BaseCommandResponse>> UpdateUserInfor([FromBody] UpdateUserInfor model)
         {

@@ -12,6 +12,7 @@ namespace Application.DTOs.Post
     {
         public string UserId { get; set; }
         public string Content { get; set; }
+        public int ?GroupId { get; set; }
         public List<IFormFile> ?Files { get; set; }
     }
 }

@@ -55,7 +55,7 @@
         <li><a href="newsfeed.html" title="Home" data-ripple=""><i class="fa fa-home"></i></a></li>
         <li>
           <a href="#" title="Friend Requests" data-ripple="">
-            <i class="fa fa-user"></i><em class="bg-red">5</em>
+            <i class="fa fa-user"></i><em class="bg-red">{{CountFriendShipPending()}}</em>
           </a>
           <div class="dropdowns">
             <span>5 New Requests <a href="#" title="">View all Requests</a></span>
@@ -63,8 +63,12 @@
               <li *ngFor="let x of FriendPending.items">
                 <div>
                   <figure>
-                    <img class="image" style="max-height: 30px; width: 100%;"
+                    <img *ngIf="x.senderImage; else nullUserImage;" class="image" style="max-height: 30px; width: 100%;"
                       src="https://localhost:7261/Users/{{x.senderImage}}" alt="">
+                    <ng-template #nullUserImage>
+                      <img alt="" class="image" style="max-height: 30px; width: 100%;"
+                        src="./assets/images/userDefault.png">
+                    </ng-template>
                   </figure>
                   <div class="mesg-meta">
                     <h6><a href="#" title="">{{x.senderName}}</a></h6>
@@ -92,8 +96,11 @@
               <li *ngFor=" let no of Notifications.items">
                 <a (click)="UpdateReadStatusNotification(no.id, true)" title="">
                   <figure>
-                    <img style="width: 45px; height: 45px;" src="https://localhost:7261/Users/{{no.sender.image}}"
-                      alt="">
+                    <img *ngIf="no.sender.image; else nullUserImage;" style="height: 45px; width: 45px;" alt="author"
+                      src="https://localhost:7261/Users/{{no.sender.image}}">
+                    <ng-template #nullUserImage>
+                      <img style="height: 45px; width: 45px;" src="./assets/images/userDefault.png">
+                    </ng-template>
                     <span class="status f-online"></span>
                   </figure>
                   <div class="mesg-meta">
@@ -109,7 +116,8 @@
           </div>
         </li>
         <li>
-          <a href="#" title="Messages" data-ripple=""><i class="fa fa-commenting"></i><em class="bg-blue">9</em></a>
+          <a href="#" title="Messages" data-ripple=""><i class="fa fa-commenting"></i><em
+              class="bg-blue">{{UnreadConversationCount()}}</em></a>
           <div class="dropdowns">
             <span>5 New Messages <a href="#" title="">Mark all as read</a></span>
             <ul class="drops-menu">
@@ -118,9 +126,12 @@
                   <div *ngIf="member.isCurrentUser == false">
                     <a (click)="LoadMessageConverstion(cvt.id)" class="show-mesg" href="#" title="">
                       <figure>
-                        <img style="width: 45px; height: 45px;" src="https://localhost:7261/Users/{{member.image}}"
-                          alt="">
-                        <span class="status f-online"></span>
+                        <img *ngIf="member.image; else nullImageConversation;" style="height: 45px; width: 45px;"
+                          alt="author" src="https://localhost:7261/Users/{{member.image}}">
+                        <ng-template #nullImageConversation>
+                          <img style="height: 45px; width: 45px;" alt="author" src="./assets/images/userDefault.png">
+                        </ng-template>
+                        <span *ngIf="cvt.isOnline" class="status f-online"></span>
                       </figure>
                       <div class="mesg-meta">
                         <h6>{{ member.name }}</h6>
@@ -138,8 +149,8 @@
             <a href="chat-messenger.html" title="" class="more-mesg">View All</a>
           </div>
         </li>
-        <li><a [routerLink]="['/groups']" ><i class="fas fa-users"></i></a>
-         
+        <li><a [routerLink]="['/groups']"><i class="fas fa-users"></i></a>
+
         </li>
         <li><a href="#" title="Help" data-ripple=""><i class="fa fa-question-circle"></i></a>
           <div class="dropdowns helps">
@@ -161,7 +172,9 @@
       </ul>
       <div class="user-img">
         <h5>{{user.name}}</h5>
-        <img style="width: 45px; height: 45px;" src="https://localhost:7261/Users/{{user.image}}" alt="">
+        <img *ngIf="user"
+          [src]="user.image ? 'https://localhost:7261/Users/' + user.image : './assets/images/userDefault.png'"
+          style="width: 45px; height: 45px;" alt="">
         <span class="status f-online"></span>
         <div class="user-setting">
           <ul class="log-out">
@@ -189,19 +202,25 @@
             <li>conversation</li>
           </ul>
         </div>
-        <span class="close-mesage"><i class="ti-close"></i></span>
+        <span (click)="HiddenModalMesage()"><i class="ti-close"></i></span>
       </div>
     </div>
     <div class="chat-list">
       <ul class="ps-container ps-theme-default ps-active-y" data-ps-id="3a17b8ac-7e73-8eb3-71a9-de987f2b6825">
         <li *ngFor="let x of Messages.items" [ngClass]="{'me':x.isSentByCurrentUser, 'you':!x.isSentByCurrentUser}">
-          <div class="chat-thumb"><img src="https://localhost:7261/Users/{{x.sender.image}}" alt=""></div>
+          <div class="chat-thumb">
+            <img *ngIf="x.sender.image; else nullImageConversation;" style="height: 30px; width: 30px;" alt="author"
+              src="https://localhost:7261/Users/{{x.sender.image}}">
+            <ng-template #nullImageConversation>
+              <img style="height: 39px; width: 30px;" alt="author" src="./assets/images/userDefault.png">
+            </ng-template>
+          </div>
           <div class="notification-event">
             <span class="chat-message-item">
               <span [innerHTML]="x.content"></span>
             </span>
             <span class="notification-date"><time class="entry-date updated">{{x.created}}</time></span>
-          </div>  
+          </div>
         </li>
         <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: -106px;">
           <div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div>
@@ -210,20 +229,22 @@
           <div class="ps-scrollbar-y" tabindex="0" style="top: 78px; height: 212px;"></div>
         </div>
       </ul>
-      <div style="width: 100%;background-color: #f0f0f0; border-top-left-radius: 16px; border-top-right-radius: 16px;" class="chat-message-item" *ngIf="imageMessageSrcs.length > 0">
+      <div style="width: 100%;background-color: #f0f0f0; border-top-left-radius: 16px; border-top-right-radius: 16px;"
+        class="chat-message-item" *ngIf="imageMessageSrcs.length > 0">
         <img *ngFor="let imageSrc of imageMessageSrcs" [src]="imageSrc" style="width: 60px;height: 60px;" />
       </div>
       <form class="text-box">
-        <textarea rows="2" [(ngModel)]="CreateMessageRequest.content" name="message" placeholder="Post enter to post...">
+        <textarea rows="2" [(ngModel)]="CreateMessageRequest.content" name="message"
+          placeholder="Post enter to post...">
         </textarea>
-        
+
         <div class="add-smiles">
           <div class="attachments">
             <ul>
               <li>
                 <span (click)="ToggleEmoji()" title="add icon" class="em em-expressionless"></span>
               </li>
-              
+
               <li>
                 <i class="fa fa-image"></i>
                 <label class="fileContainer">
@@ -233,10 +254,10 @@
               <li>
                 <i (click)="CreateMessage()" class="fa fa-paper-plane"></i>
               </li>
-              
+
             </ul>
           </div>
-       
+
           <div [ngClass]="{'isDisplay':toggleEmoji}" class="smiles-bunch">
             <i (click)="addEmoji('👍')" class="em em---1"></i>
             <i (click)="addEmoji('😃')" class="em em-smiley"></i>
@@ -254,7 +275,7 @@
         </div>
         <button type="submit"></button>
       </form>
-      
+
     </div>
   </div>
 

@@ -4,10 +4,11 @@ export interface Conversation{
     message:string,
     isSeen:boolean,
     timeMessage:string,
+    isOnline:boolean
 }
 export interface UserConversation{
     id:string,
     name:string,
     image:string,
-    isCurrentUser:boolean
+    isCurrentUser:false
 }

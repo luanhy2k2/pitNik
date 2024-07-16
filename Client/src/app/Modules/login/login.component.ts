@@ -1,11 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/User.service';
-import { ChatHubService } from 'src/app/services/chatHub.service';
-import { SignalRService } from 'src/app/services/signal-rservice.service';
-
-
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',

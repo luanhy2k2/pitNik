@@ -37,9 +37,19 @@
                                 <div *ngFor="let x of invitations.items" class="event-invites">
                                     <div class="row">
                                         <div class="col-lg-5 col-md-6 col-sm-12">
-                                            <div [routerLink]="['/about']" [queryParams]="{id:x.userId}" class="invite-figure">
-                                                <figure><img style="height: 45px; width: 45px;" src="https://localhost:7261/Users/{{x.image}}" alt=""></figure>
-                                                <h6><a class="invitor"  title="">{{x.name}}</a> Muốn tham gia vào nhóm <br> <a title="">{{x.address}}</a></h6>
+                                            <div [routerLink]="['/about']" [queryParams]="{id:x.userId}"
+                                                class="invite-figure">
+                                                <figure>
+                                                    <img *ngIf="x.image; else nullUserImage;"
+                                                        style="height: 45px; width: 45px;" alt="author"
+                                                        src="https://localhost:7261/Users/{{x.image}}">
+                                                    <ng-template #nullUserImage>
+                                                        <img style="height: 45px; width: 45px;" alt="author"
+                                                            src="./assets/images/userDefault.png">
+                                                    </ng-template>
+                                                </figure>
+                                                <h6><a class="invitor" title="">{{x.name}}</a> Muốn tham gia vào nhóm
+                                                    <br> <a title="">{{x.address}}</a></h6>
                                                 <p>
                                                     {{x.aboutMe}}
                                                 </p>
@@ -47,18 +57,20 @@
                                         </div>
                                         <div class="col-lg-5 col-md-4 col-sm-12">
                                             <div class="invite-location">
-                                                
+
                                             </div>
                                         </div>
                                         <div class="col-lg-2 col-md-2 col-sm-12">
                                             <div class="invites-btns">
-                                                <a class="main-btn" (click)="updateStatusInvitation(x.id, 1)" title="" data-ripple="">Chấp nhận</a>
-                                                <a class="main-btn3" (click)="updateStatusInvitation(x.id, 2)"  title="" data-ripple="">Từ chối</a>
+                                                <a class="main-btn" (click)="updateStatusInvitation(x.id, 1)" title=""
+                                                    data-ripple="">Chấp nhận</a>
+                                                <a class="main-btn3" (click)="updateStatusInvitation(x.id, 2)" title=""
+                                                    data-ripple="">Từ chối</a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                              
+
                             </div>
                             <div class="auto-load">
                                 <div class="wave">

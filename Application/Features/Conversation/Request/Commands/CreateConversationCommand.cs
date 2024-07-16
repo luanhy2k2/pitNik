@@ -12,6 +12,7 @@ namespace Application.Features.Conversation.Request.Commands
 {
     public class CreateConversationCommand:IRequest<BaseCommandResponse>
     {
-        public Core.Entities.Conversation CreateConversationDto { get; set; }
+        public string CreatorId { get; set; }
+        public List<string> OtherMemberId { get; set; }
     }
 }

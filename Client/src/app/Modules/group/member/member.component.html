@@ -3,9 +3,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                   
+
                     <div class="row merged20" id="page-contents">
-                        <app-group-profile></app-group-profile> 
+                        <app-group-profile></app-group-profile>
                         <div class="col-lg-12">
                             <div class="central-meta">
                                 <div class="title-block">
@@ -62,30 +62,36 @@
                                             </ul>
                                         </div>
                                         <figure>
-                                            <img style="width: 79px; height: 79px;" src="https://localhost:7261/Users/{{member.image}}" alt="">
+                                            <img *ngIf="member.image; else nullImageConversation;"
+                                                style="height: 79px; width: 79px;" alt="author"
+                                                src="https://localhost:7261/Users/{{member.image}}">
+                                            <ng-template #nullImageConversation>
+                                                <img style="height: 79px; width: 79px;" alt="author"
+                                                    src="./assets/images/userDefault.png">
+                                            </ng-template>
                                         </figure>
 
                                         <div class="frnd-meta">
                                             <div class="frnd-name">
                                                 <a href="#" title="">{{member.name}}</a>
                                                 <span>{{member.address}}</span>
-                                                
+
                                             </div>
                                             <a class="send-mesg" href="#" title="">Message</a> <br />
-                                            <a class="send-mesg"  title="">Quản trị viên</a>
+                                            <a class="send-mesg" title="">Quản trị viên</a>
                                         </div>
                                     </div>
                                 </div>
-                                
+
                             </div>
                             <div class="lodmore">
                                 <span>Viewing 1-16 of 99 friends</span>
                                 <button class="btn-view btn-load-more"></button>
                             </div>
                         </div><!-- centerl meta -->
-                    </div>	
+                    </div>
                 </div>
             </div>
         </div>
-    </div>	
+    </div>
 </section>

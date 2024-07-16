@@ -1,4 +1,6 @@
-﻿using Application.DTOs.Post;
+﻿using Application.DTOs.Notification;
+using Application.DTOs.Post;
+using Application.Features.Notification.Request.Commands;
 using Application.Features.Post.Notifications.Notifications;
 using Application.Features.Post.Requests.Commands;
 using AutoMapper;
@@ -6,10 +8,13 @@ using Core.Common;
 using Core.Entities;
 using Core.Interface.Infrastructure;
 using Core.Interface.Persistence;
+using Core.Model;
+using Hangfire;
 using Infrastructure.Hubs;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
@@ -22,21 +27,36 @@ namespace Application.Features.Post.Handles.Commands
     public class CreatePostCommandHandler : BaseFeatures, IRequestHandler<CreatePostCommand, BaseCommandResponse>
     {
         private readonly IMapper _mapper;
+        private readonly IBackgroundJobClient _jobClient;
         private readonly IWebHostEnvironment _environment;
-        private readonly ISignalRNotificationService<CreatePostDto> _notificationService;
+        private readonly IMediator _mediator;
        
-        public CreatePostCommandHandler(IPitNikRepositoryWrapper pitNikRepo, ISignalRNotificationService<CreatePostDto> notificationService, IMapper mapper, IWebHostEnvironment webHostEnvironment):base(pitNikRepo)
+        public CreatePostCommandHandler(
+            IPitNikRepositoryWrapper pitNikRepo,
+            IBackgroundJobClient jobClient, 
+            IMapper mapper, IWebHostEnvironment webHostEnvironment,
+            IMediator mediator
+        ):base(pitNikRepo)
         {
             _mapper = mapper;
-            _notificationService = notificationService;
             _environment = webHostEnvironment;
-           
+            _jobClient = jobClient;
+            _mediator = mediator;
         }
 
         public async Task<BaseCommandResponse> Handle(CreatePostCommand request, CancellationToken cancellationToken)
         {
             try
             {
+                if(request.CreatePostDto.GroupId != 0)
+                {
+                    var isJoinGroup = await _pitNikRepo.GroupMember.GetAllQueryable()
+                        .Where(x =>x.GroupId == request.CreatePostDto.GroupId && x.UserId == request.CreatePostDto.UserId && x.Status == GroupMemberStatus.Accepted).FirstOrDefaultAsync();  
+                    if (isJoinGroup == null)
+                    {
+                        return new BaseCommandResponse("Bạn chưa tham gia vào nhóm", false);
+                    }
+                }
                 var post = _mapper.Map<Core.Entities.Post>(request.CreatePostDto);
                 post.Created = DateTime.Now;
                 await _pitNikRepo.Post.Create(post);
@@ -69,14 +89,33 @@ namespace Application.Features.Post.Handles.Commands
                         await _pitNikRepo.ImagePost.Create(newImage);
                     }
                 }
+                var friendId = await _pitNikRepo.FriendShip.GetAllQueryable().
+                    Where(x => (x.SenderId == request.CreatePostDto.UserId || x.ReceiverId == request.CreatePostDto.UserId)
+                    && x.Status == FriendshipStatus.Accepted).Select(x => x.SenderId == request.CreatePostDto.UserId ? x.ReceiverId : x.SenderId).ToListAsync();
+                foreach(var item in friendId)
+                {
+                    var notification = new CreateNotificationDto
+                    {
+                        Content = "Vừa đăng 1 bài viết",
+                        Created = DateTime.Now,
+                        SenderId = request.CreatePostDto.UserId,
+                        ReceiverId = item,
+                        IsSeen = false,
+                    };
 
-                await _notificationService.SendAll("newPost", request.CreatePostDto);
+                     _jobClient.Enqueue(() => CreateNotificationJob(notification));
+                }
                 return new BaseCommandResponse("Tạo bài viết thành công!");
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
+        }
+        public async Task CreateNotificationJob(CreateNotificationDto notificationDto)
+        {
+            // Xử lý logic tạo thông báo ở đây
+            await _mediator.Send(new CreateNotificationCommand { CreateDto = notificationDto });
         }
 
     }

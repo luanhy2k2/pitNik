@@ -158,3 +158,9 @@ C:\Project.net\pitNik\API\bin\Debug\net8.0\Swashbuckle.AspNetCore.Filters.dll
 C:\Project.net\pitNik\API\bin\Debug\net8.0\Swashbuckle.AspNetCore.Filters.Abstractions.dll
 C:\Project.net\pitNik\API\obj\Debug\net8.0\API.MvcApplicationPartsAssemblyInfo.cs
 C:\Project.net\pitNik\API\bin\Debug\net8.0\SixLabors.ImageSharp.dll
+C:\Project.net\pitNik\API\bin\Debug\net8.0\Hangfire.AspNetCore.dll
+C:\Project.net\pitNik\API\bin\Debug\net8.0\Hangfire.Core.dll
+C:\Project.net\pitNik\API\bin\Debug\net8.0\Hangfire.NetCore.dll
+C:\Project.net\pitNik\API\bin\Debug\net8.0\Hangfire.SqlServer.dll
+C:\Project.net\pitNik\API\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\Project.net\pitNik\API\bin\Debug\net8.0\System.Linq.Dynamic.Core.dll

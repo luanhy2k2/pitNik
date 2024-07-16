@@ -1,5 +1,6 @@
 ﻿using Application.Profiles;
 using AutoMapper.Internal;
+using Hangfire;
 using Infrastructure.Persistence;
 using MediatR;
 using Microsoft.AspNetCore.Identity.Data;
@@ -21,6 +22,14 @@ namespace Application
         {
             //services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddAutoMapper(cfg => cfg.Internal().MethodMappingEnabled = false, typeof(MappingProfile));
+            services.AddHangfire(option => option
+                    .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                    .UseSimpleAssemblyNameTypeSerializer()
+                    .UseDefaultTypeSerializer()
+                    .UseSqlServerStorage(configuration.GetConnectionString("DefaultConnection")));
+
+            // Thêm Hangfire server
+            services.AddHangfireServer();
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.ConfigurePersistenceService(configuration);
             //services.AddTransient<IRequestHandler<LoginRequest, AuthResponse>, LoginRequestHandler>();

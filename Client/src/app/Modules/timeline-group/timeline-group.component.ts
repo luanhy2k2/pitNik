@@ -13,6 +13,13 @@ import { GroupService } from 'src/app/services/group.service';
 })
 export class TimelineGroupComponent {
   constructor(private readonly groupService:GroupService){}
+  myGroups:BaseQueriesResponse<Group> = {
+    pageIndex: 1,
+    pageSize:10,
+    keyword:"",
+    total:0,
+    items:[]
+  };
   groups:BaseQueriesResponse<Group> = {
     pageIndex: 1,
     pageSize:10,
@@ -31,13 +38,17 @@ export class TimelineGroupComponent {
     groupMemberStatus:GroupMemberStatus.Pending
   }
   ngOnInit(){
+    this.loadMyGroup();
     this.loadGroup();
+  }
+  loadMyGroup(){
+    this.groupService.getMyGroup(this.groups.pageIndex, this.groups.pageSize,this.groups.keyword).subscribe(res =>{
+      this.myGroups = res
+    })
   }
   loadGroup(){
     this.groupService.getGroup(this.groups.pageIndex, this.groups.pageSize,this.groups.keyword).subscribe(res =>{
-      this.groups.items = res.items,
-      this.groups.total = res.total,
-      this.groups.keyword = res.keyword
+      this.groups = res
     })
   }
   backgroundSrcs: (string | ArrayBuffer | null) = null;
@@ -59,6 +70,7 @@ export class TimelineGroupComponent {
       res =>{
         if(res.success == true){
           alert("Tạo nhóm thành công!");
+          this.loadMyGroup();
         }  
       }
     )

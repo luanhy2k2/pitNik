@@ -27,7 +27,7 @@ namespace API.Controllers
                 PageIndex = dto.PageIndex,
                 PageSize = dto.PageSize,
                 Keyword = dto.Keyword,
-                CurrentUserName = User.Identity.Name
+                CurrentUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value
             });
             return Ok(result);
         }

@@ -26,7 +26,10 @@
             <div class="col-lg-2 col-md-3">
                 <div class="profile-author">
                     <div class="profile-author-thumb">
-                        <img style="height: 151px; width: 151px;" alt="author" src="https://localhost:7261/Users/{{user.image}}">
+                        <img *ngIf="userImage; else nullUserImage;" style="height: 151px; width: 151px;" alt="author" src="https://localhost:7261/Users/{{userImage}}">
+                        <ng-template #nullUserImage>
+                            <img style="height: 151px; width: 151px;" alt="author" src="./assets/images/userDefault.png">
+                        </ng-template>
                         <div class="edit-dp">
                             <label class="fileContainer">
                                 <i class="fa fa-camera"></i>
@@ -36,8 +39,8 @@
                     </div>
 
                     <div class="author-content">
-                        <a class="h4 author-name" href="about.html">{{user.name}}</a>
-                        <div class="country">{{user.address}}</div>
+                        <a class="h4 author-name" >{{nameUser}}</a>
+                        <div class="country">{{addressUser}}</div>
                     </div>
                 </div>
             </div>

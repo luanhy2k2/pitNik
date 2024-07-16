@@ -7,5 +7,6 @@ export interface MyFriend{
     totalImage:number,
     totalFriend:number,
     created:Date,
-    mutualFriend:number
+    mutualFriend:number,
+    isOnline:boolean
 }

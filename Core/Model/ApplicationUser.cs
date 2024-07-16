@@ -20,7 +20,7 @@ namespace Core.Model
         //public virtual ICollection<Message> Messages { get; set; }
         //public virtual ICollection<GroupMessage> GroupMessages { get; set; }
         //public virtual ICollection<Message> ReceivedMessages { get; set; }
-        ////public virtual ICollection<Friendship> SentFriendRequests { get; set; }
+        //public virtual ICollection<Friendship> Friendships { get; set; }
         //public virtual ICollection<Friendship> Friendships { get; set; }
         //public virtual ICollection<GroupMember> GroupMemberships { get; set; }
         //public virtual ICollection<Conversation> ConversationsUser1 { get; set; }

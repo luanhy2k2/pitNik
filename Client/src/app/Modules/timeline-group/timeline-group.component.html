@@ -61,13 +61,12 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div *ngFor="let group of groups.items" class="col-lg-2 col-md-4 col-sm-4">
+                                    <div *ngFor="let group of myGroups.items" class="col-lg-2 col-md-4 col-sm-4">
                                         <div  class="group-box">
                                             <figure><img [routerLink]="['/group']" [queryParams]="{ id: group.id }" style="width: 120px; height: 120px;" src="https://localhost:7261/Groups/{{group.background}}" alt=""></figure>
                                             <a [routerLink]="['/group']" [queryParams]="{ id: group.id }" title="">{{group.name}}</a>
                                             <span>{{group.totalMember}} thành viên</span>
                                             <button *ngIf="group.isJoined == false"><span (click)="JoinGroup(group.id)">Tham gia</span></button>
-                                            
                                             <p style="background-color:#9a9fbf; color: aliceblue;" *ngIf="group.isJoined == true">Đã tham gia</p>
                                         </div>
                                     </div>
@@ -84,54 +83,16 @@
                                     <p>You May join more these relevant groups.</p>
                                 </div>
                                 <ul class="related-groups">
-                                    <li>
+                                    <li *ngFor="let group of groups.items">
                                         <div class="group-box">
-                                            <figure><img src="./assets/images/resources/group12.jpg" alt=""></figure>
-                                            <a href="#" title="">Big Biker</a>
-                                            <span>15K Members</span>
-                                            <button>join group</button>
+                                            <figure><img [routerLink]="['/group']" [queryParams]="{ id: group.id }" style="width: 120px; height: 120px;" src="https://localhost:7261/Groups/{{group.background}}" alt=""></figure>
+                                            <a [routerLink]="['/group']" [queryParams]="{ id: group.id }" title="">{{group.name}}</a>
+                                            <span>{{group.totalMember}} thành viên</span>
+                                            <p *ngIf="group.isJoined == false" (click)="JoinGroup(group.id)" style="background-color:#9a9fbf; color: aliceblue; cursor: pointer;">Tham gia</p>
+                                            <p style="background-color:#9a9fbf; color: aliceblue; cursor: pointer;" *ngIf="group.isJoined == true">Đã tham gia</p>
                                         </div>
                                     </li>
-                                    <li>
-                                        <div class="group-box">
-                                            <figure><img src="./assets/images/resources/group13.jpg" alt=""></figure>
-                                            <a href="#" title="">Blue Tech</a>
-                                            <span>12k Members</span>
-                                            <button>join group</button>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="group-box">
-                                            <figure><img src="./assets/images/resources/group14.jpg" alt=""></figure>
-                                            <a href="#" title="">Gold Movies</a>
-                                            <span>125M Members</span>
-                                            <button>join group</button>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="group-box">
-                                            <figure><img src="./assets/images/resources/group15.jpg" alt=""></figure>
-                                            <a href="#" title="">Musicly Friends</a>
-                                            <span>22M Members</span>
-                                            <button>join group</button>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="group-box">
-                                            <figure><img src="./assets/images/resources/group16.jpg" alt=""></figure>
-                                            <a href="#" title="">AFC Cafe</a>
-                                            <span>5k Members</span>
-                                            <button>join group</button>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="group-box">
-                                            <figure><img src="./assets/images/resources/group17.jpg" alt=""></figure>
-                                            <a href="#" title="">Volunteers</a>
-                                            <span>12k Members</span>
-                                            <button>join group</button>
-                                        </div>
-                                    </li>
+                                   
                                 </ul>
                                 
                             </div>

@@ -10,6 +10,6 @@ namespace Application.DTOs.Conversation
 {
     public class CreateConversationDto
     {
-        public Core.Entities.Conversation conversation {  get; set; }
+        public List<string> OtherMembersId {  get; set; }
     }
 }

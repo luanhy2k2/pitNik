@@ -23,6 +23,7 @@
     "@angular/router": "^16.2.0",
     "@ctrl/ngx-emoji-mart": "^9.2.0",
     "@microsoft/signalr": "^8.0.0",
+    "ngx-clipboard": "^16.0.0",
     "run-script-os": "*",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

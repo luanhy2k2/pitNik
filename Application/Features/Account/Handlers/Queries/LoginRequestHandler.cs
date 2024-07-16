@@ -30,6 +30,10 @@ namespace Application.Features.Account.Handles.Queries
         public async Task<AuthResponse> Handle(LoginRequest request, CancellationToken cancellationToken)
         {
             var user = await _userManager.FindByNameAsync(request.UserName) ?? throw new Exception($"Tài khoản {request.UserName} không tồn tại.");
+            if(user.EmailConfirmed == false)
+            {
+                throw new Exception("Tài khoản chưa được xác thực");
+            }
             var result = await _signInManager.PasswordSignInAsync(user.UserName, request.Password, false, false);
             if (!result.Succeeded) throw new Exception("Mật khẩu hoặc tài khoản không đúng");
             var jwtSecurityToken = await GenerateToken(user);

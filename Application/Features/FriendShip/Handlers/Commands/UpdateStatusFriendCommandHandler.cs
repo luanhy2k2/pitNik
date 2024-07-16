@@ -21,11 +21,9 @@ namespace Application.Features.FriendShip.Handlers.Commands
 {
     public class UpdateStatusFriendCommandHandler : BaseFeatures, IRequestHandler<UpdateStatusFriendCommand, BaseCommandResponse>
     {
-        private readonly ISignalRNotificationService<UpdateFriendShipDto> _notificationService;
         private readonly IMediator _mediator;
-        public UpdateStatusFriendCommandHandler(IPitNikRepositoryWrapper pitNikRepo, IMediator mediator, ISignalRNotificationService<UpdateFriendShipDto> notificationService ) : base(pitNikRepo)
+        public UpdateStatusFriendCommandHandler(IPitNikRepositoryWrapper pitNikRepo, IMediator mediator ) : base(pitNikRepo)
         {
-            _notificationService = notificationService;
             _mediator = mediator;
         }
 
@@ -56,7 +54,6 @@ namespace Application.Features.FriendShip.Handlers.Commands
                     PostId = null
                 };
                 await _pitNikRepo.FriendShip.Update(data);
-                await _notificationService.SendTo(receiver.UserName, "updateFriend", request.UpdateFriendShipDto);
                 if (request.UpdateFriendShipDto.Status == FriendshipStatus.Accepted)
                 {
                     await _mediator.Send(new CreateNotificationCommand { CreateDto = notification });
@@ -86,8 +83,7 @@ namespace Application.Features.FriendShip.Handlers.Commands
                             }
                         }
                     };
-                    
-                    await _mediator.Send(new CreateConversationCommand { CreateConversationDto = conversation });
+                    await _pitNikRepo.Conversation.Create(conversation);
                     return new BaseCommandResponse("Cập nhật trạng thái thành công!", true);
                 }
 

@@ -10,7 +10,7 @@ namespace Core.Interface.Persistence
 {
     public interface IGenericRepository<T> where T : class
     {
-        Task<BaseQuerieResponse<T>> GetAll(int pageIndex, int pageSize, Expression<Func<T, bool>> conditions);
+        Task<BaseQuerieResponse<T>> GetAll(int pageIndex, int pageSize, Expression<Func<T, bool>> conditions,string orderBy);
         Task<T> getById(int id);
         Task<T> Create(T entity);
         Task<T> Update(T entity);

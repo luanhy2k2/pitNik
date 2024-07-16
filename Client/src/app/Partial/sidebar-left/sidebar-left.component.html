@@ -6,16 +6,16 @@
             <ul class="naves">
                 <li>
                     <i class="ti-clipboard"></i>
-                    <a href="newsfeed.html" title="">Bảng tin</a>
+                    <a [routerLink]="['/']" title="">Bảng tin</a>
                 </li>
                
                 <li>
                     <i class="ti-files"></i>
-                    <a href="fav-page.html" title="">Nhóm của tôi</a>
+                    <a [routerLink]="['/groups']" title="">Nhóm của tôi</a>
                 </li>
                 <li>
                     <i class="ti-user"></i>
-                    <a href="timeline-friends.html" title="">Bạn bè</a>
+                    <a [routerLink]="['/friends']" title="">Bạn bè</a>
                 </li>
                 <li>
                     <i class="ti-image"></i>
@@ -34,48 +34,23 @@
             </ul>
         </div><!-- Shortcuts -->
         <div class="widget stick-widget">
-            <h4 class="widget-title">Who's follownig</h4>
+            <h4 class="widget-title">Người liên hệ</h4>
             <ul class="followers">
-                <li>
-                    <figure><img src="./assets/images/resources/friend-avatar2.jpg" alt="">
+                <li *ngFor="let item of friends.items">
+                    <figure>
+                        <img *ngIf="item.image; else nullImageUser;" style="height: 40px; width: 40px;"
+                          alt="author" src="https://localhost:7261/Users/{{item.image}}">
+                        <ng-template #nullImageUser>
+                          <img style="height: 40px; width: 40px;" alt="author" src="./assets/images/userDefault.png">
+                        </ng-template>
+                        <span *ngIf="item.isOnline" class="status f-online"></span>
                     </figure>
                     <div class="friend-meta">
-                        <h4><a href="time-line.html" title="">Kelly Bill</a></h4>
-                        <a href="#" title="" class="underline">Add Friend</a>
+                        <h4 (click)="openChatModal(item.userId)" style="width: 100%;"><a title="">{{item.name}}</a></h4>
+                        
                     </div>
                 </li>
-                <li>
-                    <figure><img src="./assets/images/resources/friend-avatar4.jpg" alt="">
-                    </figure>
-                    <div class="friend-meta">
-                        <h4><a href="time-line.html" title="">Issabel</a></h4>
-                        <a href="#" title="" class="underline">Add Friend</a>
-                    </div>
-                </li>
-                <li>
-                    <figure><img src="./assets/images/resources/friend-avatar6.jpg" alt="">
-                    </figure>
-                    <div class="friend-meta">
-                        <h4><a href="time-line.html" title="">Andrew</a></h4>
-                        <a href="#" title="" class="underline">Add Friend</a>
-                    </div>
-                </li>
-                <li>
-                    <figure><img src="./assets/images/resources/friend-avatar8.jpg" alt="">
-                    </figure>
-                    <div class="friend-meta">
-                        <h4><a href="time-line.html" title="">Sophia</a></h4>
-                        <a href="#" title="" class="underline">Add Friend</a>
-                    </div>
-                </li>
-                <li>
-                    <figure><img src="./assets/images/resources/friend-avatar3.jpg" alt="">
-                    </figure>
-                    <div class="friend-meta">
-                        <h4><a href="time-line.html" title="">Allen</a></h4>
-                        <a href="#" title="" class="underline">Add Friend</a>
-                    </div>
-                </li>
+               
             </ul>
         </div><!-- who's following -->
         
@@ -104,5 +79,5 @@
                 </li>
             </ul>
         </div><!-- recent activites -->
-       
+      
 </aside>

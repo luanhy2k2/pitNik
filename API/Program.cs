@@ -1,4 +1,5 @@
 ﻿using Application;
+using Hangfire;
 using Infrastructure.Hubs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -52,6 +53,7 @@ app.UseAuthorization();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapHub<ChatHub>("/chatHub");
+    endpoints.MapHangfireDashboard();
 });
 app.UseStaticFiles();
 app.MapControllers();

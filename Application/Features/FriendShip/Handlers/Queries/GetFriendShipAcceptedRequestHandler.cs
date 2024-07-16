@@ -28,7 +28,7 @@ namespace Application.Features.FriendShip.Handlers.Queries
                 {
                     throw new Exception("Tài khoản không tồn tại");
                 }
-                var query = from fr in _pitNikRepo.FriendShip.GetAllQueryable()
+                var query = from fr in _pitNikRepo.FriendShip.GetAllQueryable().Where(x =>x.SenderId == request.CurrentUserId || x.ReceiverId == request.CurrentUserId)
                             join sender in _pitNikRepo.Account.GetAllQueryable() on fr.SenderId equals sender.Id
                             join receiver in _pitNikRepo.Account.GetAllQueryable() on fr.ReceiverId equals receiver.Id
                             select new MyFriendDto

@@ -10,6 +10,7 @@ import { TimelineGroupComponent } from './Modules/timeline-group/timeline-group.
 import { GroupComponent } from './Modules/group/group.component';
 import { MemberComponent } from './Modules/group/member/member.component';
 import { InvitationComponent } from './Modules/group/invitation/invitation.component';
+import { RegisterComponent } from './Modules/register/register.component';
 
 const routes: Routes = [
   {
@@ -33,6 +34,10 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
   },
   {
     path: 'search',

@@ -32,7 +32,7 @@ namespace Application.Features.Notification.Handlers.Queries
                     throw new Exception("Người nhận thông báo không được phép rỗng!");
                 }
                 var receiverDto = _mapper.Map<AccountDto>(receiver);
-                var query = from no in _pitNikRepo.Notification.GetAllQueryable()
+                var query = from no in _pitNikRepo.Notification.GetAllQueryable() orderby no.Created descending
                             join us in _pitNikRepo.Account.GetAllQueryable()
                             on no.SenderId equals us.Id
                             select new NotificationDto

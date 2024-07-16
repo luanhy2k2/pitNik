@@ -4,6 +4,7 @@ using AutoMapper;
 using Core.Common;
 using Core.Interface.Persistence;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,13 +25,20 @@ namespace Application.Features.Group.Handlers.Queries
         {
             try
             {
-                var data = await _pitNikRepo.Group.GetAll(request.PageIndex, request.PageSize,
-                    x => (x.Members.Any(x => x.User.Name == request.CurrentUserName)));
-                var result = _mapper.Map<List<GroupDto>>(data.Items);
+                var query = _pitNikRepo.Group.GetAllQueryable().Include(x => x.Members)
+                            .Where(x => x.Members.Any(mb => mb.UserId == request.CurrentUserId && mb.Status == Core.Entities.GroupMemberStatus.Accepted));
+                var data = await query.Skip((request.PageIndex - 1) * request.PageIndex).Take(request.PageSize).ToListAsync();
+                var total =await query.CountAsync();
+                 var result = _mapper.Map<List<GroupDto>>(query);
+                foreach(var item in result)
+                {
+                    item.IsJoined = true;
+                    item.TotalMember = await _pitNikRepo.GroupMember.GetAllQueryable().Where(x =>x.GroupId == item.Id).CountAsync();
+                }
                 return new BaseQuerieResponse<GroupDto>
                 {
                     Items = result,
-                    Total = data.Total,
+                    Total = total,
                     PageIndex = request.PageIndex,
                     PageSize = request.PageSize,
                 };

@@ -1,15 +1,30 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, HostListener, OnDestroy } from '@angular/core';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs';
+import { SignalRService } from './services/signal-rservice.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnDestroy {
+export class AppComponent {
+  showHeader = true;
+  constructor(private router: Router,
+    private readonly signalRService:SignalRService,
+    private activatedRoute: ActivatedRoute) {}
+  ngOnInit() {
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      const currentRoute = this.activatedRoute.snapshot.firstChild;
+      this.showHeader = currentRoute?.routeConfig?.path !== 'login' && currentRoute?.routeConfig?.path !== 'register';
 
-
-  ngOnDestroy(): void {
-        alert("destroy") 
+    });
   }
-  title = 'pitNik_UI';
+  @HostListener('window:beforeunload', ['$event'])
+  unloadHandler(event: Event): void {
+    this.signalRService.stopConnection();
+  }
+  
 }

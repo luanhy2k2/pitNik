@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace API.Controllers
 {
@@ -24,6 +25,18 @@ namespace API.Controllers
         {
             string senderUserName = User.Identity.Name;
             var result = await _mediator.Send(new CreateMessageCommand { CreateMessageDto = message,SenderUserName = senderUserName});
+            return Ok(result);
+        }
+        [HttpPost("UpdateStatusRead/{conversionId}/{status}")]
+        public async Task<ActionResult> UpdateStatusRead(int conversionId, bool status)
+        {
+            string CurrentUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var result = await _mediator.Send(new UpdateMessageReadStatusCommand 
+            { 
+                ConversionId = conversionId, 
+                Status = status,
+                UserId = CurrentUserId
+            });
             return Ok(result);
         }
         [HttpGet("Get")]

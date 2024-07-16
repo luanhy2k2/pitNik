@@ -51,13 +51,13 @@
                                 <input [(ngModel)] = "passWord" name="passWord" type="password" placeholder="Password">
                                 <input type="checkbox"><label>remember me</label>
                                 <button (click)="Login()" type="submit" data-ripple="">sign in</button>
-                                <a class="forgot underline" href="#" title="">forgot password?</a>
+                                <a class="forgot underline" title="">forgot password?</a>
                             </div>
                             <a class="with-smedia facebook" href="#" title="" data-ripple=""><i class="fa fa-facebook"></i></a>
                             <a class="with-smedia twitter" href="#" title="" data-ripple=""><i class="fa fa-twitter"></i></a>
                             <a class="with-smedia instagram" href="#" title="" data-ripple=""><i class="fa fa-instagram"></i></a>
                             <a class="with-smedia google" href="#" title="" data-ripple=""><i class="fa fa-google-plus"></i></a>
-                            <span>don't have an account? <a class="we-account underline" href="#" title="">register now</a></span>
+                            <span>don't have an account? <a class="we-account underline" routerLink="/register" >register now</a></span>
                         </div>
                     </div>
                     

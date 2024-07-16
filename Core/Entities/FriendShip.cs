@@ -22,10 +22,10 @@ namespace Core.Entities
 
         // Navigation properties
         [ForeignKey("SenderId")]
-        public virtual ApplicationUser Sender { get; set; }
+        public virtual ApplicationUser ?Sender { get; set; }
 
         [ForeignKey("ReceiverId")]
-        public virtual ApplicationUser Receiver { get; set; }
+        public virtual ApplicationUser ?Receiver { get; set; }
     }
     public enum FriendshipStatus
     {

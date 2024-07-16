@@ -7,6 +7,7 @@ import { CreateMessage } from '../Models/Message/CreateMessage.entity';
 import { Message } from '../Models/Message/Message.entity';
 import { UserService } from './User.service';
 import { Conversation } from '../Models/Conversation/Conversation.entity';
+import { CreateConversation } from '../Models/Conversation/CreateConversation.entity';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,10 @@ export class ConversationService {
     }
     return this.httpClient.get<BaseQueriesResponse<Conversation>>(`${this.apiUrl}/api/Conversation/GetAll`, { params,headers: this.userService.addHeaderToken()});
   }
-  create(message: CreateMessage): Observable<BaseCommandResponse> {
-    return this.httpClient.post<BaseCommandResponse>(`${this.apiUrl}/api/Message/Create`, message,{headers: this.userService.addHeaderToken()});
+  getByFriendId(id:string): Observable<Conversation> {
+    return this.httpClient.get<Conversation>(`${this.apiUrl}/api/Conversation/GetByFriendId/${id}`,{headers: this.userService.addHeaderToken()});
+  }
+  createConversation(request:CreateConversation): Observable<BaseCommandResponse> {
+    return this.httpClient.post<BaseCommandResponse>(`${this.apiUrl}/api/Conversation/Create`, request,{headers: this.userService.addHeaderToken()});
   }
 }

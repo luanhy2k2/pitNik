@@ -15,28 +15,45 @@ namespace Application.Features.Group.Handlers.Queries
 {
     public class GetGroupRequestHandler : BaseFeatures, IRequestHandler<GetGroupRequest, BaseQuerieResponse<GroupDto>>
     {
-        private readonly IMapper _mapper;
-        public GetGroupRequestHandler(IPitNikRepositoryWrapper pitNikRepo, IMapper mapper) : base(pitNikRepo)
+        public GetGroupRequestHandler(IPitNikRepositoryWrapper pitNikRepo) : base(pitNikRepo)
         {
-            _mapper = mapper;
         }
 
         public async Task<BaseQuerieResponse<GroupDto>> Handle(GetGroupRequest request, CancellationToken cancellationToken)
         {
             try
             {
-                var data = await _pitNikRepo.Group.GetAll(request.PageIndex, request.PageSize, x
-                    => (string.IsNullOrEmpty(request.Keyword) || x.Name.Contains(request.Keyword)));
-                var groupDto = _mapper.Map<List<GroupDto>>(data.Items);
-                foreach ( var item in groupDto )
+                var data = await _pitNikRepo.Group.GetAllQueryable()
+                            .Where(x => string.IsNullOrEmpty(request.Keyword) || x.Name.Contains(request.Keyword))
+                            .Select(g => new
+                            {
+                                Group = g,
+                                TotalMember = g.Members.Count,
+                                IsJoined = g.Members.Any(m => m.UserId == request.CurrentUserId)
+                            })
+                            .OrderByDescending(g => g.TotalMember)
+                            .Skip((request.PageIndex - 1) * request.PageSize)
+                            .Take(request.PageSize)
+                            .ToListAsync();
+
+                var groupDto = data.Select(item => new GroupDto
                 {
-                    item.TotalMember = await _pitNikRepo.Group.GetAllQueryable().Where(g =>g.Id == item.Id).Select(g =>g.Members.Count).FirstOrDefaultAsync();
-                    item.IsJoined = await _pitNikRepo.GroupMember.GetAllQueryable().AnyAsync(x =>x.GroupId == item.Id && x.UserId == request.CurrentUserId);
-                }
+                    Id = item.Group.Id,
+                    Name = item.Group.Name,
+                    Background = item.Group.Background,
+                    Description = item.Group.Description,
+                    TotalMember = item.TotalMember,
+                    IsJoined = item.IsJoined
+                }).ToList();
+
+                var total = await _pitNikRepo.Group.GetAllQueryable()
+                    .Where(x => string.IsNullOrEmpty(request.Keyword) || x.Name.Contains(request.Keyword))
+                    .CountAsync();
+
                 return new BaseQuerieResponse<GroupDto>
                 {
                     Items = groupDto,
-                    Total = data.Total,
+                    Total = total,
                     PageIndex = request.PageIndex,
                     PageSize = request.PageSize
                 };

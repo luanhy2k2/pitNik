@@ -29,19 +29,24 @@ namespace Application.Features.FriendShip.Handlers.Commands
         {
             try
             {
-                var sender = await _pitNikRepo.Account.GetAllQueryable().FirstOrDefaultAsync(x => x.UserName == request.CreateFriendShipDto.SenderUserName);
-                if (sender == null)
-                {
-                    return new BaseCommandResponse("Người gửi không tồn tại", false);
-                }
                 var receiver = await _pitNikRepo.Account.GetAllQueryable().FirstOrDefaultAsync(x => x.Id == request.CreateFriendShipDto.ReceiverId);
                 if (receiver == null)
                 {
                     return new BaseCommandResponse("Người nhận không tồn tại", false);
                 }
+                var existFriendShip = await _pitNikRepo.FriendShip.GetAllQueryable()
+                    .Where(x => (x.SenderId == request.CreateFriendShipDto.SenderId || x.SenderId == request.CreateFriendShipDto.ReceiverId)
+                    || (x.ReceiverId == request.CreateFriendShipDto.SenderId || x.ReceiverId == request.CreateFriendShipDto.ReceiverId)).FirstOrDefaultAsync();
+                if (existFriendShip != null)
+                {
+                    if (existFriendShip.Status == FriendshipStatus.Accepted)
+                        return new BaseCommandResponse("2 bạn đã trở thành bạn bè rồi!");
+                    if (existFriendShip.Status == FriendshipStatus.Pending)
+                        return new BaseCommandResponse("Vui lòng chờ họ chấp nhận!");
+                }
                 var friendShip = new Friendship
                 {
-                    SenderId = sender.Id,
+                    SenderId = request.CreateFriendShipDto.SenderId,
                     ReceiverId = receiver.Id,
                     Status = FriendshipStatus.Pending,
                     RequestedAt = DateTime.Now,

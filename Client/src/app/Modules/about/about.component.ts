@@ -60,7 +60,7 @@ export class AboutComponent {
     this.UserService.getGeneralInfor(userId).subscribe(res =>{
       this.GeneralInfo = res;
     })
-  }
+  } 
   LoadPersionalInfo(userId:string){
     this.UserService.getPersionalInfor(userId).subscribe(res =>{
       this.PersionalInfo = res;

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq.Dynamic.Core;
 
 namespace Infrastructure.Persistence.Repositories
 {
@@ -39,9 +40,12 @@ namespace Infrastructure.Persistence.Repositories
             return data;
         }
 
-        public async Task<BaseQuerieResponse<T>> GetAll(int pageIndex, int pageSize, Expression<Func<T, bool>> conditions)
+        public async Task<BaseQuerieResponse<T>> GetAll(int pageIndex, int pageSize,
+            Expression<Func<T, bool>> conditions, string orderBy)
         {
-            var query = _context.Set<T>().Where(conditions);
+            var query = _context.Set<T>().AsNoTracking().Where(conditions);
+            if (!string.IsNullOrEmpty(orderBy))
+                query = query.OrderBy(orderBy);
             var result = await query.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
             var total = await query.CountAsync();
             return new BaseQuerieResponse<T> { Items = result, Total = total, PageIndex = pageIndex, PageSize = pageSize };

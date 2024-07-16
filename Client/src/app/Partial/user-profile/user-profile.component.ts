@@ -15,11 +15,13 @@ export class UserProfileComponent {
   constructor(private readonly userService:UserService, 
     private readonly FriendService:FriendShipService,
     private route:ActivatedRoute){}
-  user:any;
+  userImage:string = "";
+  nameUser:string = "";
+  addressUser:string = "";
   userId:string = "";
   CreateFriend:CreateFriendShip = {
     receiverId: "",
-    senderUserName: "",
+    senderId: "",
     status: FriendshipStatus.Pending,
     requestedAt:new Date()
   }
@@ -31,7 +33,9 @@ export class UserProfileComponent {
       this.userId = params['id'] || this.userService.getUser().id;
     });
     this.userService.getPersionalInfor(this.userId).subscribe(res =>{
-      this.user = res;
+      this.userImage = res.image;
+      this.nameUser = res.name;
+      this.addressUser = res.address;
     })
   }
   CreateFriendShip(){

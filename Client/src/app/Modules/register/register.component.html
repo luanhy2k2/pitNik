@@ -1,0 +1,55 @@
+<section>
+    <div class="gap no-gap signin whitish medium-opacity register">
+        <div class="bg-image" style="background-image:url(./assets/images/resources/theme-bg.jpg)"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="big-ad">
+                        <figure><img src="./assets/images/logo2.png" alt=""></figure>
+                        <h1>Chào mừng bạn đã đến với PitNik</h1>
+                        <p>
+                            Pitnik là 1 trang web mạng xã hội có thể kết nối đến mọi người, người dùng có thể tạo hồ sơ
+                            cá nhân, kết nối bạn bè, chia sẻ nội dung và tham gia các nhóm.
+                            Hãy tham gia cùng chúng tôi về kết nối bạn bè trên khắp đất nước
+
+                        </p>
+                        <div class="barcode">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="we-login-register">
+                        <div class="form-title">
+                            <i class="fa fa-key"></i>Đăng kí
+
+                        </div>
+                        <div class="we-form" method="post">
+                            
+                            <input [(ngModel)] = "registerReq.email" name="email" type="text" placeholder="Email">
+                            <input [(ngModel)] = "registerReq.name" name="name" type="text" placeholder="Họ và tên">
+                            <input [(ngModel)] = "registerReq.address" name="address" type="text" placeholder="Địa chỉ">
+                            <input [(ngModel)] = "registerReq.birthday" name="date" type="datetime-local">
+                            <input [(ngModel)] = "registerReq.phoneNumber" name="phoneNumber" type="text" placeholder="Số điện thoại">
+                            <input [(ngModel)] = "registerReq.userName" name="userName" type="text" placeholder="Tài khoản">
+                            <input [(ngModel)] = "registerReq.password" name="passWord" type="password" placeholder="Mật khẩu">
+                            <input [(ngModel)] = "registerReq.confirmPassword" name="ConfirmpassWord" type="password" placeholder="Xác thực mật khẩu">
+                            <button type="submit" (click)="Register()">Register</button>
+                            <a class="forgot underline" href="#" title="">forgot password?</a>
+                        </div>
+                        <a data-ripple="" title="" href="#" class="with-smedia facebook"><i
+                                class="fa fa-facebook"></i></a>
+                        <a data-ripple="" title="" href="#" class="with-smedia twitter"><i
+                                class="fa fa-twitter"></i></a>
+                        <a data-ripple="" title="" href="#" class="with-smedia instagram"><i
+                                class="fa fa-instagram"></i></a>
+                        <a data-ripple="" title="" href="#" class="with-smedia google"><i
+                                class="fa fa-google-plus"></i></a>
+                        <span>already have an account? <a class="we-account underline" href="#" title="">Sign
+                                in</a></span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

@@ -2020,7 +2020,7 @@ a.learnmore:hover{
     left: 20px;
     position: absolute;
     text-decoration: none;
-    top: -10px;
+    top: -20px;
 }
 
 .we-video-info > ul li span.like {
@@ -2368,9 +2368,9 @@ for some reason nth-child(1) is always busy and elements starting from 2 */
 
 .comet-avatar {
     display: inline-block;
-    max-width: 36px;
+    max-width: 45px;
     vertical-align: top;
-    width: 36px;
+    width: 45px;
 }
 
 .we-comment {
@@ -2483,9 +2483,9 @@ for some reason nth-child(1) is always busy and elements starting from 2 */
 
 li.post-comment .comet-avatar {
     display: inline-block;
-    max-width: 30px;
+    max-width: 45px;
     vertical-align: top;
-    width: 30px;
+    width: 45px;
 }
 
 .post-comt-box {
@@ -4984,7 +4984,7 @@ canvas {
 .chat-thumb {
     display: inline-block;
     vertical-align: top;
-    width: 28px;
+    width: 30px;
 }
 
 .notification-event {

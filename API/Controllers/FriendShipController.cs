@@ -23,7 +23,7 @@ namespace API.Controllers
         [HttpPost("Create")]
         public async Task<ActionResult> Create(CreateFriendShipDto createFriendShipDto)
         {
-            createFriendShipDto.SenderUserName = User.Identity.Name;
+            createFriendShipDto.SenderId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var result = await _mediator.Send(new CreateFriendShipCommand { CreateFriendShipDto = createFriendShipDto });
             return Ok(result);
         }

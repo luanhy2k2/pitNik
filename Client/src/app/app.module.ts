@@ -22,6 +22,7 @@ import { GroupProfileComponent } from './Partial/group-profile/group-profile.com
 import { InvitationComponent } from './Modules/group/invitation/invitation.component';
 import { SidebarLeftComponent } from './Partial/sidebar-left/sidebar-left.component';
 import { SidebarRightComponent } from './Partial/sidebar-right/sidebar-right.component';
+import { RegisterComponent } from './Modules/register/register.component';
 
 export function initializeApp(signalrService: SignalRService) {
   return () => signalrService.startConnection();
@@ -45,6 +46,7 @@ export function initializeApp(signalrService: SignalRService) {
     InvitationComponent,
     SidebarLeftComponent,
     SidebarRightComponent,
+    RegisterComponent,
    
   ],
   imports: [
