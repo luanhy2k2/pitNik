@@ -25,11 +25,11 @@ export class FriendShipService {
     }
     return this.httpClient.get<BaseQueriesResponse<FriendShip>>(`${this.apiUrl}/api/FriendShip/Get`, { params,headers: this.userService.addHeaderToken()});
   }
-  create(FriendShip: CreateFriendShip): Observable<BaseCommandResponse> {
-    return this.httpClient.post<BaseCommandResponse>(`${this.apiUrl}/api/FriendShip/Create`, FriendShip,{headers: this.userService.addHeaderToken()});
+  create(FriendShip: CreateFriendShip): Observable<BaseCommandResponse<CreateFriendShip>> {
+    return this.httpClient.post<BaseCommandResponse<CreateFriendShip>>(`${this.apiUrl}/api/FriendShip/Create`, FriendShip,{headers: this.userService.addHeaderToken()});
   }
-  Update(FriendShip: UpdateStatusFriend): Observable<BaseCommandResponse> {
-    return this.httpClient.post<BaseCommandResponse>(`${this.apiUrl}/api/FriendShip/Update`, FriendShip,{headers: this.userService.addHeaderToken()});
+  Update(FriendShip: UpdateStatusFriend): Observable<BaseCommandResponse<CreateFriendShip>> {
+    return this.httpClient.post<BaseCommandResponse<CreateFriendShip>>(`${this.apiUrl}/api/FriendShip/Update`, FriendShip,{headers: this.userService.addHeaderToken()});
   }
   GetMyFriend(UserId:string, pageIndex:number, pageSize:number,keyword:string): Observable<BaseQueriesResponse<MyFriend>> {
     let params = new HttpParams()

@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.FriendShip.Handlers.Commands
 {
-    public class CreateFriendShipCommandHandler : BaseFeatures, IRequestHandler<CreateFriendShipCommand, BaseCommandResponse>
+    public class CreateFriendShipCommandHandler : BaseFeatures, IRequestHandler<CreateFriendShipCommand, BaseCommandResponse<CreateFriendShipDto>>
     {
         private readonly IMapper _mapper;
         private readonly ISignalRNotificationService<CreateFriendShipDto> _notificationService;
@@ -25,14 +25,14 @@ namespace Application.Features.FriendShip.Handlers.Commands
             _notificationService = notificationService;
         }
 
-        public async Task<BaseCommandResponse> Handle(CreateFriendShipCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse<CreateFriendShipDto>> Handle(CreateFriendShipCommand request, CancellationToken cancellationToken)
         {
             try
             {
                 var receiver = await _pitNikRepo.Account.GetAllQueryable().FirstOrDefaultAsync(x => x.Id == request.CreateFriendShipDto.ReceiverId);
                 if (receiver == null)
                 {
-                    return new BaseCommandResponse("Người nhận không tồn tại", false);
+                    return new BaseCommandResponse<CreateFriendShipDto>("Người nhận không tồn tại", false);
                 }
                 var existFriendShip = await _pitNikRepo.FriendShip.GetAllQueryable()
                     .Where(x => (x.SenderId == request.CreateFriendShipDto.SenderId || x.SenderId == request.CreateFriendShipDto.ReceiverId)
@@ -40,9 +40,9 @@ namespace Application.Features.FriendShip.Handlers.Commands
                 if (existFriendShip != null)
                 {
                     if (existFriendShip.Status == FriendshipStatus.Accepted)
-                        return new BaseCommandResponse("2 bạn đã trở thành bạn bè rồi!");
+                        return new BaseCommandResponse<CreateFriendShipDto>("2 bạn đã trở thành bạn bè rồi!");
                     if (existFriendShip.Status == FriendshipStatus.Pending)
-                        return new BaseCommandResponse("Vui lòng chờ họ chấp nhận!");
+                        return new BaseCommandResponse<CreateFriendShipDto>("Vui lòng chờ họ chấp nhận!");
                 }
                 var friendShip = new Friendship
                 {
@@ -55,7 +55,7 @@ namespace Application.Features.FriendShip.Handlers.Commands
 
                 await _pitNikRepo.FriendShip.Create(friendShip);
                 await _notificationService.SendTo(receiver.UserName , "addFriendship", request.CreateFriendShipDto);
-                return new BaseCommandResponse("Gửi lời mời kết bạn thành công");
+                return new BaseCommandResponse<CreateFriendShipDto>("Gửi lời mời kết bạn thành công");
 
             }
 

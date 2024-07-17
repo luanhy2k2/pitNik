@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Interactions.Request.Commands
 {
-    public class ReactCommand:IRequest<BaseCommandResponse>
+    public class ReactCommand:IRequest<BaseCommandResponse<ReactResponseDto>>
     {
         public CreateInteractionDto CreateInteractionDto { get; set; }
     }

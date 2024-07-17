@@ -27,7 +27,7 @@ export class ConversationService {
   getByFriendId(id:string): Observable<Conversation> {
     return this.httpClient.get<Conversation>(`${this.apiUrl}/api/Conversation/GetByFriendId/${id}`,{headers: this.userService.addHeaderToken()});
   }
-  createConversation(request:CreateConversation): Observable<BaseCommandResponse> {
-    return this.httpClient.post<BaseCommandResponse>(`${this.apiUrl}/api/Conversation/Create`, request,{headers: this.userService.addHeaderToken()});
+  createConversation(request:CreateConversation): Observable<BaseCommandResponse<Conversation>> {
+    return this.httpClient.post<BaseCommandResponse<Conversation>>(`${this.apiUrl}/api/Conversation/Create`, request,{headers: this.userService.addHeaderToken()});
   }
 }

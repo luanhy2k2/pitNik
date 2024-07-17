@@ -42,7 +42,7 @@ export class PostService {
     }
     return this.httpClient.get<BaseQueriesResponse<Post>>(`${this.apiUrl}/api/Post/GetPostOfGroup`, { params,headers: this.userService.addHeaderToken()});
   }
-  createPost(post: CreatePost): Observable<BaseCommandResponse> {
+  createPost(post: CreatePost): Observable<BaseCommandResponse<Post>> {
     const formData: FormData = new FormData();
     formData.append('Id', post.id.toString());
     formData.append('Created', post.created.toISOString());
@@ -52,7 +52,7 @@ export class PostService {
       formData.append('GroupId',post.groupId.toString())
     post.files.forEach(file => formData.append('Files', file, file.name));
 
-    return this.httpClient.post<BaseCommandResponse>(`${this.apiUrl}/api/Post/Create`, formData,{headers: this.userService.addHeaderToken()});
+    return this.httpClient.post<BaseCommandResponse<Post>>(`${this.apiUrl}/api/Post/Create`, formData,{headers: this.userService.addHeaderToken()});
   }
   getById(postId:number): Observable<Post> {
     return this.httpClient.get<Post>(`${this.apiUrl}/api/Post/GetById/${postId}`, {headers: this.userService.addHeaderToken()});

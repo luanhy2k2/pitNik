@@ -24,7 +24,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Post.Handles.Commands
 {
-    public class CreatePostCommandHandler : BaseFeatures, IRequestHandler<CreatePostCommand, BaseCommandResponse>
+    public class CreatePostCommandHandler : BaseFeatures, IRequestHandler<CreatePostCommand, BaseCommandResponse<PostDto>>
     {
         private readonly IMapper _mapper;
         private readonly IBackgroundJobClient _jobClient;
@@ -44,23 +44,28 @@ namespace Application.Features.Post.Handles.Commands
             _mediator = mediator;
         }
 
-        public async Task<BaseCommandResponse> Handle(CreatePostCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse<PostDto>> Handle(CreatePostCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                if(request.CreatePostDto.GroupId != 0)
+                var user = await _pitNikRepo.Account.GetAllQueryable().FirstOrDefaultAsync(x => x.Id == request.CreatePostDto.UserId);
+                if(user == null)
+                {
+                    return new BaseCommandResponse<PostDto>("Nguời đăng không tồn tại!", false);
+                }
+                if(request.CreatePostDto.GroupId != null)
                 {
                     var isJoinGroup = await _pitNikRepo.GroupMember.GetAllQueryable()
                         .Where(x =>x.GroupId == request.CreatePostDto.GroupId && x.UserId == request.CreatePostDto.UserId && x.Status == GroupMemberStatus.Accepted).FirstOrDefaultAsync();  
                     if (isJoinGroup == null)
                     {
-                        return new BaseCommandResponse("Bạn chưa tham gia vào nhóm", false);
+                        return new BaseCommandResponse<PostDto>("Bạn chưa tham gia vào nhóm", false);
                     }
                 }
                 var post = _mapper.Map<Core.Entities.Post>(request.CreatePostDto);
                 post.Created = DateTime.Now;
                 await _pitNikRepo.Post.Create(post);
-
+                
                 if (request.CreatePostDto.Files != null && request.CreatePostDto.Files.Count > 0)
                 {
                     foreach (var file in request.CreatePostDto.Files)
@@ -89,9 +94,28 @@ namespace Application.Features.Post.Handles.Commands
                         await _pitNikRepo.ImagePost.Create(newImage);
                     }
                 }
+                var postDto = new PostDto
+                {
+                    Id = post.Id,
+                    GroupId = post.GroupId,
+                    UserId = user.Id,
+                    NameUser = user.Name,
+                    ImageUser = user.Image,
+                    Created = TimeHelper.GetRelativeTime(post.Created),
+                    Image = await _pitNikRepo.ImagePost.GetAllQueryable().Where(x => x.PostId == post.Id).Select(x => x.Image).ToListAsync(),
+                    Content = post.Content,
+                    TotalComment = 0,
+                    IsReact = false,
+                    TotalReactions = 0,
+                };
                 var friendId = await _pitNikRepo.FriendShip.GetAllQueryable().
                     Where(x => (x.SenderId == request.CreatePostDto.UserId || x.ReceiverId == request.CreatePostDto.UserId)
                     && x.Status == FriendshipStatus.Accepted).Select(x => x.SenderId == request.CreatePostDto.UserId ? x.ReceiverId : x.SenderId).ToListAsync();
+                if(request.CreatePostDto.GroupId != null)
+                {
+                    var members = await _pitNikRepo.GroupMember.GetAllQueryable().Where(x => x.GroupId == request.CreatePostDto.GroupId && friendId.Contains(x.UserId)).Select(x => x.UserId).ToListAsync();
+                    friendId = members;
+                }
                 foreach(var item in friendId)
                 {
                     var notification = new CreateNotificationDto
@@ -105,7 +129,7 @@ namespace Application.Features.Post.Handles.Commands
 
                      _jobClient.Enqueue(() => CreateNotificationJob(notification));
                 }
-                return new BaseCommandResponse("Tạo bài viết thành công!");
+                return new BaseCommandResponse<PostDto>("Tạo bài viết thành công!",postDto);
             }
             catch (Exception ex)
             {

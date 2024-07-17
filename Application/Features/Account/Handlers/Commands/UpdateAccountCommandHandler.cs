@@ -1,4 +1,5 @@
-﻿using Application.Features.Account.Requests.Commands;
+﻿using Application.DTOs.Account;
+using Application.Features.Account.Requests.Commands;
 using Core.Common;
 using Core.Interface.Persistence;
 using Core.Model;
@@ -14,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Account.Handles.Commands
 {
-    public class UpdateAccountCommandHandler : IRequestHandler<UpdateAccountCommand, BaseCommandResponse>
+    public class UpdateAccountCommandHandler : IRequestHandler<UpdateAccountCommand, BaseCommandResponse<AccountDto>>
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IWebHostEnvironment _environment;
@@ -23,7 +24,7 @@ namespace Application.Features.Account.Handles.Commands
             _userManager = userManager;
             _environment = webHostEnvironment;
         }
-        public async Task<BaseCommandResponse> Handle(UpdateAccountCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse<AccountDto>> Handle(UpdateAccountCommand request, CancellationToken cancellationToken)
         {
             try
             {
@@ -31,7 +32,7 @@ namespace Application.Features.Account.Handles.Commands
                 var user = await _userManager.FindByIdAsync(request.UpdateAccountDto.Id);
                 if (user == null)
                 {
-                    return new BaseCommandResponse("User not found.", false);
+                    return new BaseCommandResponse<AccountDto>("User not found.", false);
                 }
 
                 // If a new image is provided
@@ -70,16 +71,16 @@ namespace Application.Features.Account.Handles.Commands
                 var result = await _userManager.UpdateAsync(user);
                 if (!result.Succeeded)
                 {
-                    return new BaseCommandResponse("Failed to update user information.", false);
+                    return new BaseCommandResponse<AccountDto>("Failed to update user information.", false);
                 }
 
-                return new BaseCommandResponse("User information updated successfully.", true);
+                return new BaseCommandResponse<AccountDto>("User information updated successfully.", true);
             }
             catch (Exception ex)
             {
                 // Log the exception (using a logger would be better here)
                 // logger.LogError(ex, "An error occurred while updating user information.");
-                return new BaseCommandResponse($"An error occurred: {ex.Message}", false);
+                return new BaseCommandResponse<AccountDto>($"An error occurred: {ex.Message}", false);
             }
         }
 

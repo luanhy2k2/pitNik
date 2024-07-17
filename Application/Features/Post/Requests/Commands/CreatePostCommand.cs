@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Post.Requests.Commands
 {
-    public class CreatePostCommand: IRequest<BaseCommandResponse>
+    public class CreatePostCommand: IRequest<BaseCommandResponse<PostDto>>
     {
         public CreatePostDto CreatePostDto { get; set; }
     }

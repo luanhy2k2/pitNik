@@ -39,16 +39,16 @@ export class MessageService {
     }
     return this.httpClient.get<BaseQueriesResponse<Message>>(`${this.apiUrl}/api/Message/Get`, { params,headers: this.userService.addHeaderToken()});
   }
-  create(message: CreateMessage): Observable<BaseCommandResponse> {
+  create(message: CreateMessage): Observable<BaseCommandResponse<Message>> {
     const formData: FormData = new FormData();
     formData.append('ConversationId', message.conversationId.toString());
     formData.append('Content', message.content);
     
     message.files.forEach(file => formData.append('Files', file, file.name));
-    return this.httpClient.post<BaseCommandResponse>(`${this.apiUrl}/api/Message/Create`, formData,{headers: this.userService.addHeaderToken()});
+    return this.httpClient.post<BaseCommandResponse<Message>>(`${this.apiUrl}/api/Message/Create`, formData,{headers: this.userService.addHeaderToken()});
   }
-  updateMessageReadStatus(request: UpdateMessageReadStatus): Observable<BaseCommandResponse> {
-    return this.httpClient.post<BaseCommandResponse>(`${this.apiUrl}/api/Message/UpdateStatusRead/${request.conversationId}/${request.status}`, {},{headers: this.userService.addHeaderToken()});
+  updateMessageReadStatus(request: UpdateMessageReadStatus): Observable<BaseCommandResponse<Message>> {
+    return this.httpClient.post<BaseCommandResponse<Message>>(`${this.apiUrl}/api/Message/UpdateStatusRead/${request.conversationId}/${request.status}`, {},{headers: this.userService.addHeaderToken()});
   }
   LoadMessageConverstion(conversionId: number) {
     this.isHidden = !this.isHidden;

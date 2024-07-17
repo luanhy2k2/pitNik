@@ -71,6 +71,7 @@ export class IndexComponent {
     imageUser:"",
     comment:[],
     content:"",
+    groupId:0,
     totalComment:0,
     pageIndexComment:1,
     pageSizeComment:15,
@@ -79,6 +80,7 @@ export class IndexComponent {
     created:new Date
   }
   showModal: boolean = false;
+  private currentPostIds: Set<string> = new Set();
   ngOnInit() {
     this.route.queryParams.subscribe(res => {
       var postId = res['postId'];
@@ -92,11 +94,19 @@ export class IndexComponent {
     this.LoadPost();
     this.signalRService.commentAdded$.subscribe(res =>{
       this.postDetail.comment.push(res);
-      console.log(res);
+      this.postDetail.totalComment++;
     })
     this.signalRService.reactAdded$.subscribe(res =>{
-      console.log(res);
-      this.LoadPost();
+      if(this.postDetail.id == res.postId){
+        if(res.isReact == false){
+          this.postDetail.isReact = false
+          this.postDetail.totalReactions--;
+        }
+        else{
+          this.postDetail.isReact = true;
+          this.postDetail.totalReactions++ 
+        }
+      }
     })
     this.signalRService.postAdded$.subscribe(res =>{
       this.LoadPost();
@@ -114,6 +124,7 @@ export class IndexComponent {
       }
     );
   }
+
   LoadPostDetail(idPost:number){
     if(idPost != null){
       this.showModal = true;
@@ -127,9 +138,14 @@ export class IndexComponent {
         })
       })
     }
-    
   }
   ClosePostDetail(){
+    for(let i = 0; i<this.Posts.items.length; i++){
+      if(this.Posts.items[i].id == this.postDetail.id){
+        this.Posts.items[i] = this.postDetail;
+        break;
+      }
+    }
     this.showModal = false;
     this.signalRService.LeaveRoom(`Post_${this.postDetail.id}`)
   }
@@ -177,11 +193,15 @@ export class IndexComponent {
   AddPost(): void {
     this.postService.createPost(this.CreatePost).subscribe(
       response => {
-        console.log('Post created successfully', response);
-        this.LoadPost(); // Refresh posts
-        this.CreatePost.content = "";
-        this.CreatePost.files = [];
-        this.imageSrcs = [];
+        if(response.success == true){
+          this.Posts.items.unshift(response.object);
+          this.CreatePost.content = "";
+          this.CreatePost.files = [];
+          this.imageSrcs = [];
+        }
+        if(response.success == false){
+          alert(response.message);
+        }
       },
       error => {
         console.error('Error creating post', error);
@@ -193,7 +213,22 @@ export class IndexComponent {
     this.CreateReact.emojiId = emojiId;
     this.InteractionService.React(this.CreateReact).subscribe(
       response => {
-        console.log('Tương tác thành công!', response);
+        if(response.success == true){
+          if(this.postDetail.id != postId){
+            for(let post of this.Posts.items){
+              if(post.id == postId){
+                if(response.object.isReact == false){
+                  post.isReact = false
+                  post.totalReactions--;
+                }
+                else{
+                  post.isReact = true;
+                  post.totalReactions++ 
+                }
+              }
+            }
+          }
+        }
       },
       error => {
         console.error('Đã có lỗi xảy ra', error);

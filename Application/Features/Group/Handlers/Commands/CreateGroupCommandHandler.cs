@@ -10,10 +10,12 @@ using SixLabors.ImageSharp.Formats.Png;
 using System.IO;
 using static System.Net.Mime.MediaTypeNames;
 using Image = SixLabors.ImageSharp.Image;
+using AutoMapper;
+using Application.DTOs.Group;
 
 namespace Application.Features.Group.Handlers.Commands
 {
-    public class CreateGroupCommandHandler : BaseFeatures, IRequestHandler<CreateGroupCommand, BaseCommandResponse>
+    public class CreateGroupCommandHandler : BaseFeatures, IRequestHandler<CreateGroupCommand, BaseCommandResponse<GroupDto>>
     {
         private readonly IWebHostEnvironment _environment;
         public CreateGroupCommandHandler(IPitNikRepositoryWrapper pitNikRepo, IWebHostEnvironment environment) : base(pitNikRepo)
@@ -21,7 +23,7 @@ namespace Application.Features.Group.Handlers.Commands
             _environment = environment;
         }
 
-        public async Task<BaseCommandResponse> Handle(CreateGroupCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse<GroupDto>> Handle(CreateGroupCommand request, CancellationToken cancellationToken)
         {
             try
             {
@@ -70,11 +72,20 @@ namespace Application.Features.Group.Handlers.Commands
                     Status = GroupMemberStatus.Accepted
                 };
                 await _pitNikRepo.GroupMember.Create(member);
-                return new BaseCommandResponse("Tạo nhóm thành công!");
+                var groupDto = new GroupDto
+                {
+                    Id = group.Id,
+                    Name = group.Name,
+                    Description = group.Description,
+                    Background = group.Background,
+                    TotalMember = 1,
+                    IsJoined = true,
+                };
+                return new BaseCommandResponse<GroupDto>("Tạo nhóm thành công!", groupDto);
             }
             catch(Exception ex)
             {
-                return new BaseCommandResponse(ex.Message, false);
+                return new BaseCommandResponse<GroupDto>(ex.Message, false);
             }
         }
     }

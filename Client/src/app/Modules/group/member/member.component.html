@@ -12,7 +12,7 @@
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="align-left">
-                                                <h5>Ocean Motel Favers <span>99</span></h5>
+                                                <h5>Thành viên <span>{{members.total}}</span></h5>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -78,7 +78,7 @@
 
                                             </div>
                                             <a class="send-mesg" href="#" title="">Message</a> <br />
-                                            <a class="send-mesg" title="">Quản trị viên</a>
+                                            <a *ngIf="member.isCreate" class="send-mesg" title="">Quản trị viên</a>
                                         </div>
                                     </div>
                                 </div>

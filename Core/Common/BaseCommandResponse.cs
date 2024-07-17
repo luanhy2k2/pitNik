@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Core.Common
 {
-    public class BaseCommandResponse
+    public class BaseCommandResponse<T>
     {
         public BaseCommandResponse()
         {
@@ -18,7 +18,7 @@ namespace Core.Common
             Message = message;
             Success = true;
         }
-        public BaseCommandResponse(string message, Object model)
+        public BaseCommandResponse(string message, T model)
         {
             Errors = new List<string>();
             Message = message;
@@ -43,6 +43,6 @@ namespace Core.Common
         public bool Success { get; set; } = true;
         public string Message { get; set; }
         public List<string> Errors { get; set; }
-        public Object Object { get; set; }
+        public T Object { get; set; }
     }
 }

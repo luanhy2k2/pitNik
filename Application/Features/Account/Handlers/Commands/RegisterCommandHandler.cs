@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Account.Handles.Commands
 {
-    public class RegisterCommandHandler : BaseFeatures, IRequestHandler<RegisterCommand, BaseCommandResponse>
+    public class RegisterCommandHandler : BaseFeatures, IRequestHandler<RegisterCommand, BaseCommandResponse<string>>
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IWebHostEnvironment _environment;
@@ -24,11 +24,11 @@ namespace Application.Features.Account.Handles.Commands
             _environment = webHostEnvironment;
         }
 
-        public async Task<BaseCommandResponse> Handle(RegisterCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse<string>> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
             if(request.Register.Password != request.Register.ConfirmPassword)
             {
-                return new BaseCommandResponse("Vui lòng nhập mật khẩu tương ứng!");
+                return new BaseCommandResponse<string>("Vui lòng nhập mật khẩu tương ứng!");
             }
             var existingUserName = await _userManager.FindByNameAsync(request.Register.UserName);
             if(existingUserName != null)
@@ -86,7 +86,7 @@ namespace Application.Features.Account.Handles.Commands
                     WorkAndExperience = ""
                 };
                 await _pitNikRepo.InforUser.Create(infor);
-                return new BaseCommandResponse("Đăng kí tài khoản thành công!");
+                return new BaseCommandResponse<string>("Đăng kí tài khoản thành công!");
             }
             else
             {

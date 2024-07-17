@@ -20,13 +20,13 @@ namespace API.Controllers
             _mediator = mediator;
         }
         [HttpPost("register")]
-        public async Task<ActionResult<BaseCommandResponse>> Register([FromForm] CreateAccountDto model)
+        public async Task<ActionResult> Register([FromForm] CreateAccountDto model)
         {
             var result = await _mediator.Send(new RegisterCommand { Register = model });
             return Ok(result);
         }
         [HttpPost("UpdatePersionalInfor")]
-        public async Task<ActionResult<BaseCommandResponse>> Update([FromForm] UpdateAccountDto model)
+        public async Task<ActionResult> Update([FromForm] UpdateAccountDto model)
         {
             var result = await _mediator.Send(new UpdateAccountCommand {UpdateAccountDto = model });
             return Ok(result);
@@ -75,9 +75,21 @@ namespace API.Controllers
             }
         }
         [HttpPost("UpdateGeneralInfor")]
-        public async Task<ActionResult<BaseCommandResponse>> UpdateUserInfor([FromBody] UpdateUserInfor model)
+        public async Task<ActionResult> UpdateUserInfor([FromBody] UpdateUserInfor model)
         {
             var result = await _mediator.Send(new UpdateUserInforCommand { UpdateUserInfor = model });
+            return Ok(result);
+        }
+        [HttpGet("GetImageOfUser")]
+        public async Task<ActionResult<BaseQuerieResponse<AccountDto>>> GetImageOfUser([FromQuery] GetImagesOfUserRequest request)
+        {
+            var result = await _mediator.Send(new GetImagesOfUserRequest
+            {
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize,
+                Keyword = request.Keyword,
+                UserId = request.UserId
+            });
             return Ok(result);
         }
     }

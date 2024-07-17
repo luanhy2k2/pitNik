@@ -6,7 +6,8 @@ export interface Comment{
     content:string,
     postId:number,
     id:number,
-    created:Date
+    created:Date,
+    imageUser:string
 }
 export const defaultCommentQuery: BaseQueriesResponse<Comment> = {
     pageIndex: 1,

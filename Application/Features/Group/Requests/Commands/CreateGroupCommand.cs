@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Group.Requests.Commands
 {
-    public class CreateGroupCommand:IRequest<BaseCommandResponse>
+    public class CreateGroupCommand:IRequest<BaseCommandResponse<GroupDto>>
     {
         public string Creator { get; set; }
         public CreateGroupDto Group { get; set; }

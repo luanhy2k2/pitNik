@@ -47,22 +47,22 @@ export class GroupService {
     }
     return this.httpClient.get<BaseQueriesResponse<GroupMember>>(`${this.apiUrl}/api/Group/GetMemberOfGroup`, { params,headers: this.userService.addHeaderToken()});
   }
-  create(group: CreateGroup): Observable<BaseCommandResponse> {
+  create(group: CreateGroup): Observable<BaseCommandResponse<Group>> {
     const formData: FormData = new FormData();
     formData.append('Name', group.name);
     formData.append('Description', group.description);
     formData.append('BackGround', group.background, group.background.name);
-    return this.httpClient.post<BaseCommandResponse>(`${this.apiUrl}/api/Group/CreateGroup`, formData,{headers: this.userService.addHeaderToken()});
+    return this.httpClient.post<BaseCommandResponse<Group>>(`${this.apiUrl}/api/Group/CreateGroup`, formData,{headers: this.userService.addHeaderToken()});
   }
-  JoinGroup(JoinGroup: JoinGroup): Observable<BaseCommandResponse> {
-    return this.httpClient.post<BaseCommandResponse>(`${this.apiUrl}/api/Group/JoinGroup`, JoinGroup,{headers: this.userService.addHeaderToken()});
+  JoinGroup(JoinGroup: JoinGroup): Observable<BaseCommandResponse<JoinGroup>> {
+    return this.httpClient.post<BaseCommandResponse<JoinGroup>>(`${this.apiUrl}/api/Group/JoinGroup`, JoinGroup,{headers: this.userService.addHeaderToken()});
   }
-  UpdateStatusInvitation(id:number, status:GroupMemberStatus): Observable<BaseCommandResponse> {
+  UpdateStatusInvitation(id:number, status:GroupMemberStatus): Observable<BaseCommandResponse<GroupMember>> {
     var invitation = {
       id: id,
       memberStatus:status
     }
-    return this.httpClient.post<BaseCommandResponse>(`${this.apiUrl}/api/Group/UpdateStatusInvitation`, invitation,{headers: this.userService.addHeaderToken()});
+    return this.httpClient.post<BaseCommandResponse<GroupMember>>(`${this.apiUrl}/api/Group/UpdateStatusInvitation`, invitation,{headers: this.userService.addHeaderToken()});
   }
   getInvitation(groupId:number,pageIndex:number, pageSize:number, keyword:string): Observable<BaseQueriesResponse<Invitation>> {
     let params = new HttpParams()

@@ -35,7 +35,7 @@ namespace Application.Features.Post.Handles.Queries
                             ImageUser = us.Image,
                             NameUser = us.Name,
                             Content = p.Content,
-                            Created = p.Created.ToString(),
+                            Created = TimeHelper.GetRelativeTime(p.Created),
                             Image = _pitNikRepo.ImagePost.GetAllQueryable().Where(x=>x.PostId == p.Id).Select(x=>x.Image).ToList(),
                             TotalReactions = _pitNikRepo.Interactions.GetAllQueryable().Where(x=>x.PostId == p.Id).Count(),
                             TotalComment = _pitNikRepo.Comment.GetAllQueryable().Where(x=>x.PostId == p.Id).Count(),

@@ -68,6 +68,7 @@ export class GroupComponent {
     userId:"",
     nameUser:"",
     id:0,
+    groupId:0,
     image:[],
     imageUser:"",
     comment:[],
@@ -124,6 +125,12 @@ export class GroupComponent {
     })
   }
   ClosePostDetail(){
+    for(let i = 0; i<this.Posts.items.length; i++){
+      if(this.Posts.items[i].id == this.postDetail.id){
+        this.Posts.items[i] = this.postDetail;
+        break;
+      }
+    }
     this.showModal = false;
     this.signalRService.LeaveRoom(`Post_${this.postDetail.id}`)
   }
@@ -156,8 +163,8 @@ export class GroupComponent {
     this.CreatePost.groupId = this.idGroup;
     this.postService.createPost(this.CreatePost).subscribe(
       response => {
-        if(response.success ==true){
-          this.loadPost(); // Refresh posts
+        if(response.success == true){
+          this.Posts.items.unshift(response.object);
           this.CreatePost.content = "";
           this.CreatePost.files = [];
           this.imageSrcs = [];
@@ -192,7 +199,22 @@ export class GroupComponent {
     this.CreateReact.emojiId = emojiId;
     this.InteractionService.React(this.CreateReact).subscribe(
       response => {
-        console.log('Tương tác thành công!', response);
+        if(response.success == true){
+          if(this.postDetail.id != postId){
+            for(let post of this.Posts.items){
+              if(post.id == postId){
+                if(response.object.isReact == false){
+                  post.isReact = false
+                  post.totalReactions--;
+                }
+                else{
+                  post.isReact = true;
+                  post.totalReactions++ 
+                }
+              }
+            }
+          }
+        }
       },
       error => {
         console.error('Đã có lỗi xảy ra', error);

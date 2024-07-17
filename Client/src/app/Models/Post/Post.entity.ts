@@ -6,6 +6,7 @@ export interface Post{
     imageUser:string,
     nameUser:string,
     content:string,
+    groupId:number,
     totalReactions:number,
     totalComment:number,
     isReact:boolean,

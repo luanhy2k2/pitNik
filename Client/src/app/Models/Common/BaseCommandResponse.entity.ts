@@ -1,7 +1,7 @@
-export interface BaseCommandResponse {
+export interface BaseCommandResponse<T> {
     id:string,
     success:boolean,
     message:string,
     errors:string[],
-    object:any
+    object:T
 }

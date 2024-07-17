@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Account.Requests.Commands
 {
-    public class UpdateUserInforCommand:IRequest<BaseCommandResponse>
+    public class UpdateUserInforCommand:IRequest<BaseCommandResponse<UserInforDto>>
     {
         public UpdateUserInfor UpdateUserInfor {  get; set; }
     }

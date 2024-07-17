@@ -309,8 +309,8 @@
                                 <ul class="we-comet">
                                     <li *ngFor="let comment of postDetail.comment">
                                         <div class="comet-avatar">
-                                            <img *ngIf="displayImageUser != ''" 
-                                            [src]="displayImageUser ? 'https://localhost:7261/Users/' + displayImageUser : './assets/images/userDefault.png'" 
+                                            <img *ngIf="comment.imageUser != ''" 
+                                            [src]="displayImageUser ? 'https://localhost:7261/Users/' + comment.imageUser : './assets/images/userDefault.png'" 
                                             style="width: 45px; height: 45px;" 
                                             alt="">
                                         </div>

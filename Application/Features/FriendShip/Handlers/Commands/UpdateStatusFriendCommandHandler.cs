@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.FriendShip.Handlers.Commands
 {
-    public class UpdateStatusFriendCommandHandler : BaseFeatures, IRequestHandler<UpdateStatusFriendCommand, BaseCommandResponse>
+    public class UpdateStatusFriendCommandHandler : BaseFeatures, IRequestHandler<UpdateStatusFriendCommand, BaseCommandResponse<UpdateFriendShipDto>>
     {
         private readonly IMediator _mediator;
         public UpdateStatusFriendCommandHandler(IPitNikRepositoryWrapper pitNikRepo, IMediator mediator ) : base(pitNikRepo)
@@ -27,14 +27,14 @@ namespace Application.Features.FriendShip.Handlers.Commands
             _mediator = mediator;
         }
 
-        public async Task<BaseCommandResponse> Handle(UpdateStatusFriendCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse<UpdateFriendShipDto>> Handle(UpdateStatusFriendCommand request, CancellationToken cancellationToken)
         {
             try
             {
                 var data = await _pitNikRepo.FriendShip.getById(request.UpdateFriendShipDto.Id);
                 if (data == null)
                 {
-                    return new BaseCommandResponse("Dữ liệu trả về không tồn tại", false);
+                    return new BaseCommandResponse<UpdateFriendShipDto>("Dữ liệu trả về không tồn tại", false);
                 }
                 data.Status = request.UpdateFriendShipDto.Status;
                 data.RequestedAt = DateTime.Now;
@@ -42,7 +42,7 @@ namespace Application.Features.FriendShip.Handlers.Commands
                 var receiver = await _pitNikRepo.Account.GetAllQueryable().FirstOrDefaultAsync(x => x.Id == data.ReceiverId);
                 if (sender == null || receiver == null)
                 {
-                    return new BaseCommandResponse("Người gửi hoặc người nhận không tồn tại!", false);
+                    return new BaseCommandResponse<UpdateFriendShipDto>("Người gửi hoặc người nhận không tồn tại!", false);
                 }
                 var notification = new CreateNotificationDto
                 {
@@ -84,24 +84,24 @@ namespace Application.Features.FriendShip.Handlers.Commands
                         }
                     };
                     await _pitNikRepo.Conversation.Create(conversation);
-                    return new BaseCommandResponse("Cập nhật trạng thái thành công!", true);
+                    return new BaseCommandResponse<UpdateFriendShipDto>("Cập nhật trạng thái thành công!", true);
                 }
 
                 else if (request.UpdateFriendShipDto?.Status == FriendshipStatus.Rejected)
                 {
                     notification.Content = $"{receiver.Name} đã từ chối lời mời kết bạn của bạn";
                     await _mediator.Send(new CreateNotificationCommand { CreateDto = notification });
-                    return new BaseCommandResponse("Từ chối kết bạn thành công!");
+                    return new BaseCommandResponse<UpdateFriendShipDto>("Từ chối kết bạn thành công!");
                 }
                 else
                 {
-                    return new BaseCommandResponse("Không có gì thay đổi");
+                    return new BaseCommandResponse<UpdateFriendShipDto>("Không có gì thay đổi");
                 }
 
             }
             catch(Exception ex)
             {
-                return new BaseCommandResponse($"{ex.Message}",false);
+                return new BaseCommandResponse<UpdateFriendShipDto>($"{ex.Message}",false);
             }
             
         }

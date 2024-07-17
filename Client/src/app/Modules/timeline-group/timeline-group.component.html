@@ -51,7 +51,7 @@
                             <div class="central-meta padding30">
                                 <div class="row">
                                     <div class="col-lg-2 col-md-4 col-sm-4">
-                                        <div class="addgroup">
+                                        <div (click)="openPopup()" class="addgroup">
                                             <div class="item-upload">
                                                 <i class="fa fa-plus-circle"></i>
                                                 <div class="upload-meta">
@@ -103,9 +103,9 @@
         </div>
     </div>	
 </section>
-<div class="popup-wraper4">
+<div [ngClass]="{ 'active': isPopupActive }" class="popup-wraper4" >
     <div class="popup creat-group">
-        <span class="popup-closed"><i class="ti-close"></i></span>
+        <span class="popup-closed"><i class="ti-close" (click)="closePopup()"></i></span>
         <div class="popup-meta">
             <div class="popup-head">
                 <h5>Tạo nhóm</h5>
@@ -115,7 +115,7 @@
                     
                     <div class="change-photo">
                         <figure>
-                            <img *ngIf="backgroundSrcs" [src]="backgroundSrcs" style="width: 60px;height: 60px;" />
+                            <img alt="" *ngIf="backgroundSrcs" [src]="backgroundSrcs" style="width: 60px;height: 60px;" />
                     
                         </figure>
                         <div class="edit-img">

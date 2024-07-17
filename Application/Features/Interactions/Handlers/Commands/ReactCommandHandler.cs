@@ -17,38 +17,45 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Interactions.Handlers.Commands
 {
-    public class ReactCommandHandler : BaseFeatures, IRequestHandler<ReactCommand, BaseCommandResponse>
+    public class ReactCommandHandler : BaseFeatures, IRequestHandler<ReactCommand, BaseCommandResponse<ReactResponseDto>>
     {
         private readonly IMapper _mapper;
         private readonly IMediator _mediator;
-        private readonly ISignalRNotificationService<CreateInteractionDto> _notificationService;
-        public ReactCommandHandler(IPitNikRepositoryWrapper pitNikRepo, IMediator mediator, IMapper mapper, ISignalRNotificationService<CreateInteractionDto> notificationService):base(pitNikRepo)
+        private readonly ISignalRNotificationService<ReactResponseDto> _notificationService;
+        public ReactCommandHandler(IPitNikRepositoryWrapper pitNikRepo, IMediator mediator, IMapper mapper, ISignalRNotificationService<ReactResponseDto> notificationService):base(pitNikRepo)
         {
             _mapper = mapper;
             _notificationService = notificationService;
             _mediator = mediator;
         }
-        public async Task<BaseCommandResponse> Handle(ReactCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse<ReactResponseDto>> Handle(ReactCommand request, CancellationToken cancellationToken)
         {
             try
             {
                 var post = await _pitNikRepo.Post.getById(request.CreateInteractionDto.PostId);
                 if(post == null)
                 {
-                    return new BaseCommandResponse("Bài viết không tồn tại!", false);
+                    return new BaseCommandResponse<ReactResponseDto>("Bài viết không tồn tại!", false);
                 }
                 var oldReact = await _pitNikRepo.Interactions.GetAllQueryable()
                     .Where(x => x.UserId == request.CreateInteractionDto.UserId && x.PostId == request.CreateInteractionDto.PostId).FirstOrDefaultAsync();
+                var reactRes = new ReactResponseDto
+                {
+                    PostId = post.Id,
+                    Emoji = request.CreateInteractionDto.EmojiId,
+                    IsReact = true
+                };
                 if(oldReact != null)
                 {
                     await _pitNikRepo.Interactions.Delete(oldReact.Id);
-                    await _notificationService.SendAll("addReact", request.CreateInteractionDto);
-                    return new BaseCommandResponse("Bỏ tương tác thành công!");
+                    reactRes.IsReact = false;
+                    await _notificationService.SendToGroup($"Post_{post.Id}","addReact", reactRes);
+                    return new BaseCommandResponse<ReactResponseDto>("Bỏ tương tác thành công!", reactRes);
                 }
                 request.CreateInteractionDto.Created = DateTime.UtcNow;
                 var react = _mapper.Map<Core.Entities.Interactions>(request.CreateInteractionDto);
                 await _pitNikRepo.Interactions.Create(react);
-                await _notificationService.SendAll("addReact", request.CreateInteractionDto);
+                await _notificationService.SendToGroup($"Post_{request.CreateInteractionDto.PostId}" , "addReact", reactRes);
                 if(post.UserId != request.CreateInteractionDto.UserId)
                 {
                     var notification = new CreateNotificationDto
@@ -62,7 +69,7 @@ namespace Application.Features.Interactions.Handlers.Commands
                     };
                     await _mediator.Send(new CreateNotificationCommand { CreateDto = notification });
                 } 
-                return new BaseCommandResponse("Tương tác thành công!");
+                return new BaseCommandResponse<ReactResponseDto>("Tương tác thành công!", reactRes);
             }
             catch(Exception ex)
             {

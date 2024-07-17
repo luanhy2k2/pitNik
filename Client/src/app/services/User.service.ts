@@ -19,7 +19,7 @@ export class UserService {
         this.currentUserSubject = new BehaviorSubject<any>(user);
         this.currentUser = this.currentUserSubject.asObservable();
     }
-    register(user: Register): Observable<BaseCommandResponse> {
+    register(user: Register): Observable<BaseCommandResponse<string>> {
         const formData: FormData = new FormData();
         formData.append('Name', user.name);
         formData.append('Address', user.address);
@@ -31,7 +31,7 @@ export class UserService {
         formData.append('ConfirmPassword', user.confirmPassword);
         formData.append('Birthday', user.birthday.toString());
         // formData.append('Image', user.image);
-        return this.httpClient.post<BaseCommandResponse>(`${host}/api/Account/register`, formData)
+        return this.httpClient.post<BaseCommandResponse<string>>(`${host}/api/Account/register`, formData)
     }
     ResetPassword(email: string, code: string, password: string): Observable<any> {
         const request = {
@@ -72,10 +72,10 @@ export class UserService {
     getGeneralInfor(userId: string): Observable<GeneralInfo> {
         return this.httpClient.get<GeneralInfo>(`${host}/api/Account/GetUserInfor/${userId}`)
     }
-    updateGeneralInfor(request: GeneralInfo): Observable<BaseCommandResponse> {
-        return this.httpClient.post<BaseCommandResponse>(`${host}/api/Account/UpdateGeneralInfor`, request, { headers: this.addHeaderToken() })
+    updateGeneralInfor(request: GeneralInfo): Observable<BaseCommandResponse<GeneralInfo>> {
+        return this.httpClient.post<BaseCommandResponse<GeneralInfo>>(`${host}/api/Account/UpdateGeneralInfor`, request, { headers: this.addHeaderToken() })
     }
-    updatePersionalInfor(request: UpdatePersionalInfor): Observable<BaseCommandResponse> {
+    updatePersionalInfor(request: UpdatePersionalInfor): Observable<BaseCommandResponse<UpdatePersionalInfor>> {
         const formData: FormData = new FormData();
         formData.append('Id', request.id.toString());
         formData.append('Name', request.name);
@@ -86,7 +86,7 @@ export class UserService {
         formData.append('UserName', request.userName);
         formData.append('Birthday', request.birthDay.toString());
         formData.append('Image', request.image, request.image.name);
-        return this.httpClient.post<BaseCommandResponse>(`${host}/api/Account/UpdatePersionalInfor`, formData, { headers: this.addHeaderToken() })
+        return this.httpClient.post<BaseCommandResponse<UpdatePersionalInfor>>(`${host}/api/Account/UpdatePersionalInfor`, formData, { headers: this.addHeaderToken() })
     }
     getPersionalInfor(userId: string): Observable<Account> {
         return this.httpClient.get<Account>(`${host}/api/Account/GetById/${userId}`)
@@ -100,5 +100,15 @@ export class UserService {
             'Authorization': `Bearer ${this.getUser().token}`
         });
         return headers;
+    }
+    getImagesOfUser(userId: string, pageIndex: number, pageSize: number, keyword: string): Observable<BaseQueriesResponse<string>> {
+        let params = new HttpParams()
+            .set('UserId', userId)
+            .set('PageIndex', pageIndex.toString())
+            .set('PageSize', pageSize.toString());
+        if (keyword) {
+            params = params.set('Keyword', keyword);
+        }
+        return this.httpClient.get<BaseQueriesResponse<string>>(`${host}/api/Account/GetImageOfUser`,{params})
     }
 }

@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Message.Handlers.Command
 {
-    public class CreateMessageCommandHandler : BaseFeatures, IRequestHandler<CreateMessageCommand, BaseCommandResponse>
+    public class CreateMessageCommandHandler : BaseFeatures, IRequestHandler<CreateMessageCommand, BaseCommandResponse<MessageDto>>
     {
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _environment;
@@ -29,14 +29,14 @@ namespace Application.Features.Message.Handlers.Command
             _mapper = mapper;
         }
 
-        public async Task<BaseCommandResponse> Handle(CreateMessageCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse<MessageDto>> Handle(CreateMessageCommand request, CancellationToken cancellationToken)
         {
             try
             {
                 // Kiểm tra các trường trong request.CreateMessageDto
                 if (string.IsNullOrEmpty(request.CreateMessageDto.Content) && request.CreateMessageDto.Files == null)
                 {
-                    return new BaseCommandResponse("Thông tin tin nhắn không hợp lệ!", false);
+                    return new BaseCommandResponse<MessageDto>("Thông tin tin nhắn không hợp lệ!", false);
                 }
                 var conversation = await _pitNikRepo.Conversation.getById(request.CreateMessageDto.ConversationId);
                 if (conversation == null)
@@ -72,7 +72,7 @@ namespace Application.Features.Message.Handlers.Command
                     .FirstOrDefaultAsync(x => x.UserName == request.SenderUserName);
                 if (sender == null)
                 {
-                    return new BaseCommandResponse("Người gửi không tồn tại!", false);
+                    return new BaseCommandResponse<MessageDto>("Người gửi không tồn tại!", false);
                 }
 
                 var message = new Core.Entities.Message
@@ -111,11 +111,11 @@ namespace Application.Features.Message.Handlers.Command
                 };
                 await _notificationService.SendToGroup(request.CreateMessageDto.ConversationId.ToString() , "newMessage", messageDto);
 
-                return new BaseCommandResponse("Gửi tin nhắn thành công!", messageDto);
+                return new BaseCommandResponse<MessageDto>("Gửi tin nhắn thành công!", messageDto);
             }
             catch (Exception ex)
             {
-                return new BaseCommandResponse($"Lỗi: {ex.Message}", false);
+                return new BaseCommandResponse<MessageDto>($"Lỗi: {ex.Message}", false);
             }
         }
 

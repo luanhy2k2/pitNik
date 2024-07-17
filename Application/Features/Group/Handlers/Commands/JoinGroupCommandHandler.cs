@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Group.Handlers.Commands
 {
-    public class JoinGroupCommandHandler : BaseFeatures, IRequestHandler<JoinGroupCommand, BaseCommandResponse>
+    public class JoinGroupCommandHandler : BaseFeatures, IRequestHandler<JoinGroupCommand, BaseCommandResponse<JoinGroupDto>>
     {
 
         private readonly IMapper _mapper;
@@ -29,14 +29,14 @@ namespace Application.Features.Group.Handlers.Commands
             _mapper = mapper;
         }
 
-        public async Task<BaseCommandResponse> Handle(JoinGroupCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse<JoinGroupDto>> Handle(JoinGroupCommand request, CancellationToken cancellationToken)
         {
             try
             {
                 var userApplying = await _pitNikRepo.Account.GetAllQueryable().FirstOrDefaultAsync(x => x.Id == request.JoinGroupDto.UserId);
                 if(userApplying == null)
                 {
-                    return new BaseCommandResponse("Người xin tham gia không tồn tại!");
+                    return new BaseCommandResponse<JoinGroupDto>("Người xin tham gia không tồn tại!");
                 }
                 var newMember = new GroupMember
                 {
@@ -49,7 +49,7 @@ namespace Application.Features.Group.Handlers.Commands
                 var group = await _pitNikRepo.Group.getById(request.JoinGroupDto.GroupId);
                 if(group == null)
                 {
-                    return new BaseCommandResponse("Nhóm không tồn tại không tồn tại!");
+                    return new BaseCommandResponse<JoinGroupDto>("Nhóm không tồn tại không tồn tại!");
                 }
                 var query = await _pitNikRepo.GroupMember.Create(newMember);
                 var CreatorGroup = await _pitNikRepo.Group.GetAllQueryable().Where(x => x.Id == request.JoinGroupDto.GroupId)
@@ -68,11 +68,11 @@ namespace Application.Features.Group.Handlers.Commands
                     PostId = null
                 };
                 await _mediator.Send(new CreateNotificationCommand { CreateDto = notification});
-                return new BaseCommandResponse("Gửi đơn thành công!");
+                return new BaseCommandResponse<JoinGroupDto>("Gửi đơn thành công!");
             }
             catch(Exception ex)
             {
-                return new BaseCommandResponse(ex.Message, false);
+                return new BaseCommandResponse<JoinGroupDto>(ex.Message, false);
             }
         }
     }

@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Notification.Handlers.Commands
 {
-    public class CreateNotificationCommandHandler : BaseFeatures, IRequestHandler<CreateNotificationCommand, BaseCommandResponse>
+    public class CreateNotificationCommandHandler : BaseFeatures, IRequestHandler<CreateNotificationCommand, BaseCommandResponse<NotificationDto>>
     {
         private readonly IMapper _mapper;
         private readonly ISignalRNotificationService<NotificationDto> _notificationService;  
@@ -27,14 +27,14 @@ namespace Application.Features.Notification.Handlers.Commands
             _notificationService = notificationService;
         }
 
-        public async Task<BaseCommandResponse> Handle(CreateNotificationCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse<NotificationDto>> Handle(CreateNotificationCommand request, CancellationToken cancellationToken)
         {
             try
             {
                 var receiver = await _pitNikRepo.Account.GetAllQueryable().FirstOrDefaultAsync(x => x.Id == request.CreateDto.ReceiverId);
                 if (receiver == null)
                 {
-                    return new BaseCommandResponse("Người nhận không tồn tại", false);
+                    return new BaseCommandResponse<NotificationDto>("Người nhận không tồn tại", false);
                 }
                 var notification = _mapper.Map<Core.Entities.Notification>(request.CreateDto);
                 var notificationDto = _mapper.Map<NotificationDto>(notification);
@@ -44,11 +44,11 @@ namespace Application.Features.Notification.Handlers.Commands
                 notificationDto.Sender = senderDto;
                 await _pitNikRepo.Notification.Create(notification);
                 await _notificationService.SendTo( receiver.UserName , "createNotification", notificationDto);
-                return new BaseCommandResponse("Gửi thông báo thành công");
+                return new BaseCommandResponse<NotificationDto>("Gửi thông báo thành công");
             }
             catch(Exception ex)
             {
-                return new BaseCommandResponse($"{ex.Message}", false);
+                return new BaseCommandResponse<NotificationDto>($"{ex.Message}", false);
             }
         }
     }

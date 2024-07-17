@@ -1,4 +1,5 @@
-﻿using Application.Features.Message.Requests.Commands;
+﻿using Application.DTOs.Message;
+using Application.Features.Message.Requests.Commands;
 using Core.Common;
 using Core.Entities;
 using Core.Interface.Infrastructure;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Message.Handlers.Command
 {
-    public class UpdateMessageReadStatusCommandHandler : BaseFeatures, IRequestHandler<UpdateMessageReadStatusCommand, BaseCommandResponse>
+    public class UpdateMessageReadStatusCommandHandler : BaseFeatures, IRequestHandler<UpdateMessageReadStatusCommand, BaseCommandResponse<MessageDto>>
     {
         private readonly ISignalRNotificationService<MessageReadStatus> _signalRNotification;
         public UpdateMessageReadStatusCommandHandler(IPitNikRepositoryWrapper pitNikRepo, ISignalRNotificationService<MessageReadStatus> signalRNotification) : base(pitNikRepo)
@@ -21,7 +22,7 @@ namespace Application.Features.Message.Handlers.Command
             _signalRNotification = signalRNotification;
         }
 
-        public async Task<BaseCommandResponse> Handle(UpdateMessageReadStatusCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse<MessageDto>> Handle(UpdateMessageReadStatusCommand request, CancellationToken cancellationToken)
         {
             try
             {
@@ -29,7 +30,7 @@ namespace Application.Features.Message.Handlers.Command
                     .Where(x =>x.ConversationId == request.ConversionId).OrderByDescending(x => x.Created).FirstOrDefaultAsync();
                 if (message == null)
                 {
-                    return new BaseCommandResponse("Tin nhắn không tồn tại!", false);
+                    return new BaseCommandResponse<MessageDto>("Tin nhắn không tồn tại!", false);
                 }
                 var messageReadStatus = new MessageReadStatus
                 {
@@ -41,12 +42,12 @@ namespace Application.Features.Message.Handlers.Command
                 };
                 await _pitNikRepo.MessageReadStatus.Create(messageReadStatus);
                 await _signalRNotification.SendToGroup(request.ConversionId.ToString(),"updateMessageReadStatus", messageReadStatus);
-                return new BaseCommandResponse("Cập nhật trạng thái thành công!");
+                return new BaseCommandResponse<MessageDto>("Cập nhật trạng thái thành công!");
 
             }
             catch(Exception ex)
             {
-                return new BaseCommandResponse(ex.Message, false);
+                return new BaseCommandResponse<MessageDto>(ex.Message, false);
             }
         }
     }

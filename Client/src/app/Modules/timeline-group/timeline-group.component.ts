@@ -70,7 +70,8 @@ export class TimelineGroupComponent {
       res =>{
         if(res.success == true){
           alert("Tạo nhóm thành công!");
-          this.loadMyGroup();
+          this.groups.items.unshift(res.object);
+          this.myGroups.items.unshift(res.object)
         }  
       }
     )
@@ -82,5 +83,12 @@ export class TimelineGroupComponent {
         alert("Gửi yêu cầu tham gia thành công!");
       }
     })
+  }
+  isPopupActive: boolean = false;
+  openPopup() {
+    this.isPopupActive = true;
+  }
+  closePopup() {
+    this.isPopupActive = false;
   }
 }

@@ -79,6 +79,7 @@ export class SearchComponent {
   showModal: boolean = false;
   postDetail:Post = {
     userId:"",
+    groupId:0,
     nameUser:"",
     id:0,
     image:[],

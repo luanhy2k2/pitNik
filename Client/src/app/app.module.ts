@@ -23,6 +23,7 @@ import { InvitationComponent } from './Modules/group/invitation/invitation.compo
 import { SidebarLeftComponent } from './Partial/sidebar-left/sidebar-left.component';
 import { SidebarRightComponent } from './Partial/sidebar-right/sidebar-right.component';
 import { RegisterComponent } from './Modules/register/register.component';
+import { ImagesComponent } from './Modules/about/images/images.component';
 
 export function initializeApp(signalrService: SignalRService) {
   return () => signalrService.startConnection();
@@ -47,7 +48,7 @@ export function initializeApp(signalrService: SignalRService) {
     SidebarLeftComponent,
     SidebarRightComponent,
     RegisterComponent,
-   
+    ImagesComponent
   ],
   imports: [
     BrowserModule,

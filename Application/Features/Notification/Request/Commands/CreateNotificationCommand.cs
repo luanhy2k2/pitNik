@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Notification.Request.Commands
 {
-    public class CreateNotificationCommand:IRequest<BaseCommandResponse>
+    public class CreateNotificationCommand:IRequest<BaseCommandResponse<NotificationDto>>
     {
         public CreateNotificationDto CreateDto { get; set; }
     }

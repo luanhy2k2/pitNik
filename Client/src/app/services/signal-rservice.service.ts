@@ -13,6 +13,7 @@ import { FriendShip } from '../Models/FriendShip/FriendShip.entity';
 import { CreateInteraction } from '../Models/Interaction/CreateInteraction.entity';
 import { Post } from '../Models/Post/Post.entity';
 import { CreatePost } from '../Models/Post/CreatePost.entity';
+import { ReactRes } from '../Models/Interaction/ReactRes.entity';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,7 @@ export class SignalRService {
   private profileAddedSource = new Subject<any>();
   private userOnDisconnectedSource = new Subject<string>();
   private postAddedSource = new Subject<CreatePost>();
-  private reactAddedSource = new Subject<CreateInteraction>();
+  private reactAddedSource = new Subject<ReactRes>();
   private commentAddedSource = new Subject<Comment>();
   private notificationAddedSource = new Subject<Notification>();
   private messageAddedSource = new Subject<Message>();
@@ -77,6 +78,7 @@ export class SignalRService {
   }
   async joinRoom(roomName: string) {
     try {
+      console.log("joined room:",roomName)
       return await this.connection.invoke("Join", roomName);
     } catch (err) {
       throw err; // Re-throw the error to be handled by the caller if necessary
@@ -84,9 +86,10 @@ export class SignalRService {
   }
   async LeaveRoom(roomName: string) {
     try {
+      console.log("leaved room success:", roomName)
       return await this.connection.invoke("Leave", roomName);
     } catch (err) {
-      console.error('Error while joining room:', err);
+      console.error('Error while leaving room:', err);
       throw err; // Re-throw the error to be handled by the caller if necessary
     }
   }

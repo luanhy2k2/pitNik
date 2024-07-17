@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Account.Requests.Commands
 {
-    public class RegisterCommand: IRequest<BaseCommandResponse>
+    public class RegisterCommand: IRequest<BaseCommandResponse<string>>
     {
         public CreateAccountDto Register {  get; set; }
     }

@@ -29,6 +29,7 @@ namespace Application.Features.Comment.Handlers.Queries
                             Content = cm.Content,
                             Id = cm.Id,
                             NameUser = us.Name,
+                            ImageUser = us.Image,
                             PostId = cm.PostId,
                             Created = TimeHelper.GetRelativeTime(cm.Created),
                             UserId = cm.UserId,

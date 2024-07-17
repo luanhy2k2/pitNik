@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Conversation.Handler.Commands
 {
-    public class CreateConversationCommandHandler : BaseFeatures, IRequestHandler<CreateConversationCommand, BaseCommandResponse>
+    public class CreateConversationCommandHandler : BaseFeatures, IRequestHandler<CreateConversationCommand, BaseCommandResponse<ConversationDto>>
     {
         private readonly IMapper _mapper;
         public CreateConversationCommandHandler(IPitNikRepositoryWrapper pitNikRepo, IMapper mapper) : base(pitNikRepo)
@@ -21,13 +21,13 @@ namespace Application.Features.Conversation.Handler.Commands
             _mapper = mapper;
         }
 
-        public async Task<BaseCommandResponse> Handle(CreateConversationCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse<ConversationDto>> Handle(CreateConversationCommand request, CancellationToken cancellationToken)
         {
             try
             {
                 if(request.OtherMemberId == null)
                 {
-                    return new BaseCommandResponse("Không có thành viên tham gia!", false);
+                    return new BaseCommandResponse<ConversationDto>("Không có thành viên tham gia!", false);
                 }
                 var members = new List<ConversationMember>
                 {
@@ -56,11 +56,11 @@ namespace Application.Features.Conversation.Handler.Commands
                 var conversationDto = _mapper.Map<ConversationDto>(conversation);
                 conversationDto.Id = conversation.Id;
                 conversationDto.Created = TimeHelper.GetRelativeTime(conversation.Created);
-                return new BaseCommandResponse("Tạo cuộc hội thoại thành công",conversationDto);
+                return new BaseCommandResponse<ConversationDto>("Tạo cuộc hội thoại thành công",conversationDto);
             }
             catch(Exception ex)
             {
-                return new BaseCommandResponse(ex.Message,false);
+                return new BaseCommandResponse<ConversationDto>(ex.Message,false);
             }
         }
     }

@@ -23,7 +23,7 @@ export class NotificationService {
     }
     return this.httpClient.get<BaseQueriesResponse<Notification>>(`${this.apiUrl}/api/Notification/GetNotification`, { params,headers: this.userService.addHeaderToken()});
   }
-  UpdateReadStatus(request:UpdateStatusReadNotification):Observable<BaseCommandResponse>{
-    return this.httpClient.post<BaseCommandResponse>(`${this.apiUrl}/api/Notification/UpdateReadStatus`, request,{headers: this.userService.addHeaderToken()});
+  UpdateReadStatus(request:UpdateStatusReadNotification):Observable<BaseCommandResponse<Notification>>{
+    return this.httpClient.post<BaseCommandResponse<Notification>>(`${this.apiUrl}/api/Notification/UpdateReadStatus`, request,{headers: this.userService.addHeaderToken()});
   }
 }

@@ -1,4 +1,5 @@
-﻿using Core.Common;
+﻿using Application.DTOs.Message;
+using Core.Common;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Message.Requests.Commands
 {
-    public class UpdateMessageReadStatusCommand:IRequest<BaseCommandResponse>
+    public class UpdateMessageReadStatusCommand:IRequest<BaseCommandResponse<MessageDto>>
     {
         public bool Status {  get; set; }
         public string UserId {  get; set; }

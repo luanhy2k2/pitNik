@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Comment.Requests.Commands
 {
-    public class CreateCommentCommand:IRequest<BaseCommandResponse>
+    public class CreateCommentCommand:IRequest<BaseCommandResponse<CommentDto>>
     {
         public CreateCommentDto CreateCommentDto { get; set; }
     }

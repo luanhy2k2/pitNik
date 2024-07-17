@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.FriendShip.Request.Commands
 {
-    public class UpdateStatusFriendCommand:IRequest<BaseCommandResponse>
+    public class UpdateStatusFriendCommand:IRequest<BaseCommandResponse<UpdateFriendShipDto>>
     {
         public UpdateFriendShipDto UpdateFriendShipDto { get; set; }
     }

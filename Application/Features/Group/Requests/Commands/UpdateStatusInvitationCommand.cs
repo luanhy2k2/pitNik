@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Group.Requests.Commands
 {
-    public class UpdateStatusInvitationCommand : IRequest<BaseCommandResponse>
+    public class UpdateStatusInvitationCommand : IRequest<BaseCommandResponse<UpdateStatusInvitationDto>>
     {
         public UpdateStatusInvitationDto StatusMember { get; set; }
     }

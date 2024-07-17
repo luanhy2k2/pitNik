@@ -13,27 +13,27 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Notification.Handlers.Commands
 {
-    public class UpdateStatusReadNotificationCommandHandler : BaseFeatures, IRequestHandler<UpdateStatusReadNotificationCommand, BaseCommandResponse>
+    public class UpdateStatusReadNotificationCommandHandler : BaseFeatures, IRequestHandler<UpdateStatusReadNotificationCommand, BaseCommandResponse<NotificationDto>>
     {
         public UpdateStatusReadNotificationCommandHandler(IPitNikRepositoryWrapper pitNikRepo) : base(pitNikRepo)
         {   
         }
-        public async Task<BaseCommandResponse> Handle(UpdateStatusReadNotificationCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse<NotificationDto>> Handle(UpdateStatusReadNotificationCommand request, CancellationToken cancellationToken)
         {
             try
             {
                 var notification = await _pitNikRepo.Notification.getById(request.UpdateStatusReadDto.Id);
                 if (notification == null)
                 {
-                    return new BaseCommandResponse("Thông báo không tồn tại", false);
+                    return new BaseCommandResponse<NotificationDto>("Thông báo không tồn tại", false);
                 }
                 notification.IsSeen = request.UpdateStatusReadDto.Status;
                 await _pitNikRepo.Notification.Update(notification);
-                return new BaseCommandResponse("Cập nhật trạng thái đã xem thành công!");
+                return new BaseCommandResponse<NotificationDto>("Cập nhật trạng thái đã xem thành công!");
             }
             catch(Exception ex)
             {
-                return new BaseCommandResponse($"{ex.Message}", false);
+                return new BaseCommandResponse<NotificationDto>($"{ex.Message}", false);
             }
         }
     }

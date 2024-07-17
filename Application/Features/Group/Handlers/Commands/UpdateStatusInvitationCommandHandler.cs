@@ -1,4 +1,5 @@
-﻿using Application.DTOs.Notification;
+﻿using Application.DTOs.Group;
+using Application.DTOs.Notification;
 using Application.Features.Group.Requests.Commands;
 using Application.Features.Notification.Request.Commands;
 using Core.Common;
@@ -14,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Group.Handlers.Commands
 {
-    public class UpdateStatusInvitationCommandHandler : BaseFeatures, IRequestHandler<UpdateStatusInvitationCommand, BaseCommandResponse>
+    public class UpdateStatusInvitationCommandHandler : BaseFeatures, IRequestHandler<UpdateStatusInvitationCommand, BaseCommandResponse<UpdateStatusInvitationDto>>
     {
         private readonly IMediator _mediator;
         public UpdateStatusInvitationCommandHandler(IPitNikRepositoryWrapper pitNikRepo, IMediator mediator) : base(pitNikRepo)
@@ -22,14 +23,14 @@ namespace Application.Features.Group.Handlers.Commands
             _mediator = mediator;
         }
 
-        public async Task<BaseCommandResponse> Handle(UpdateStatusInvitationCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse<UpdateStatusInvitationDto>> Handle(UpdateStatusInvitationCommand request, CancellationToken cancellationToken)
         {
             try
             {
                 var data = await _pitNikRepo.GroupMember.getById(request.StatusMember.Id);
                 if (data == null)
                 {
-                    return new BaseCommandResponse("Thông tin không tồn tại", false);
+                    return new BaseCommandResponse<UpdateStatusInvitationDto>("Thông tin không tồn tại", false);
                 }
                 var CreatorGroup = await _pitNikRepo.GroupMember.GetAllQueryable().Where(x => x.GroupId == data.GroupId && x.IsCreate == true)
                     .Select(x => x.User).FirstOrDefaultAsync();
@@ -51,11 +52,11 @@ namespace Application.Features.Group.Handlers.Commands
                     await _pitNikRepo.GroupMember.Delete(data.Id);
                 }
                 await _mediator.Send(new CreateNotificationCommand { CreateDto = notification });
-                return new BaseCommandResponse("Cập nhật trạng thái thành công!");
+                return new BaseCommandResponse<UpdateStatusInvitationDto>("Cập nhật trạng thái thành công!");
             }
             catch(Exception ex)
             {
-                return new BaseCommandResponse(ex.Message, false);
+                return new BaseCommandResponse<UpdateStatusInvitationDto>(ex.Message, false);
             }
         }
     }
