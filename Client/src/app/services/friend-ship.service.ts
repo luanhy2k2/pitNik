@@ -14,7 +14,7 @@ import { MyFriend } from '../Models/FriendShip/Myfriend.entity';
   providedIn: 'root'
 })
 export class FriendShipService {
-  private apiUrl = "https://localhost:7261";
+  private apiUrl = "http://pitnik.somee.com";
   constructor(private readonly httpClient: HttpClient,private readonly userService:UserService) { }
   getPagedData(pageIndex:number, pageSize:number,keyword:string): Observable<BaseQueriesResponse<FriendShip>> {
     let params = new HttpParams()

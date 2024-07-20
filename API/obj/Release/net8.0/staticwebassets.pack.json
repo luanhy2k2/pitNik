@@ -1,0 +1,121 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Project.net\\pitNik\\API\\wwwroot\\Groups\\0_10847189_458439227652952_7159736634825005371_o.jpg",
+      "PackagePath": "staticwebassets\\Groups\\0_10847189_458439227652952_7159736634825005371_o.jpg"
+    },
+    {
+      "Id": "C:\\Project.net\\pitNik\\API\\wwwroot\\Groups\\0_35356766_711642512344080_5722752001582825472_n.jpg",
+      "PackagePath": "staticwebassets\\Groups\\0_35356766_711642512344080_5722752001582825472_n.jpg"
+    },
+    {
+      "Id": "C:\\Project.net\\pitNik\\API\\wwwroot\\Groups\\0_tải xuống (2).jfif",
+      "PackagePath": "staticwebassets\\Groups\\0_tải xuống (2).jfif"
+    },
+    {
+      "Id": "C:\\Project.net\\pitNik\\API\\wwwroot\\Groups\\0_tải xuống (4).jfif",
+      "PackagePath": "staticwebassets\\Groups\\0_tải xuống (4).jfif"
+    },
+    {
+      "Id": "C:\\Project.net\\pitNik\\API\\wwwroot\\Messages\\2_20240706032753.jpg",
+      "PackagePath": "staticwebassets\\Messages\\2_20240706032753.jpg"
+    },
+    {
+      "Id": "C:\\Project.net\\pitNik\\API\\wwwroot\\Messages\\2_20240706041952_album11.jpg",
+      "PackagePath": "staticwebassets\\Messages\\2_20240706041952_album11.jpg"
+    },
+    {
+      "Id": "C:\\Project.net\\pitNik\\API\\wwwroot\\Users\\04894db7-b48e-40ee-a64a-cc234bbf307c_tải xuống (1).jfif",
+      "PackagePath": "staticwebassets\\Users\\04894db7-b48e-40ee-a64a-cc234bbf307c_tải xuống (1).jfif"
+    },
+    {
+      "Id": "C:\\Project.net\\pitNik\\API\\wwwroot\\Users\\2138262c-61b0-4a31-9719-290c0f87fe58_z4564039225215_6dd5f55924f1ebce0605f5fa189c6739.jpg",
+      "PackagePath": "staticwebassets\\Users\\2138262c-61b0-4a31-9719-290c0f87fe58_z4564039225215_6dd5f55924f1ebce0605f5fa189c6739.jpg"
+    },
+    {
+      "Id": "C:\\Project.net\\pitNik\\API\\wwwroot\\Users\\3567fe0c-5855-4257-ac54-8a67a4b336d4_tải xuống (1).jfif",
+      "PackagePath": "staticwebassets\\Users\\3567fe0c-5855-4257-ac54-8a67a4b336d4_tải xuống (1).jfif"
+    },
+    {
+      "Id": "C:\\Project.net\\pitNik\\API\\wwwroot\\Users\\7bcfc07f-a837-43e1-9de9-68db9dea5a65_images.jfif",
+      "PackagePath": "staticwebassets\\Users\\7bcfc07f-a837-43e1-9de9-68db9dea5a65_images.jfif"
+    },
+    {
+      "Id": "C:\\Project.net\\pitNik\\API\\wwwroot\\Users\\9db79f61-cd7c-45d5-ab0a-07632c43b613_tải xuống (1).jfif",
+      "PackagePath": "staticwebassets\\Users\\9db79f61-cd7c-45d5-ab0a-07632c43b613_tải xuống (1).jfif"
+    },
+    {
+      "Id": "C:\\Project.net\\pitNik\\API\\wwwroot\\Users\\d3e0c93a-699d-4e62-a482-25cc5717cd55_album11.jpg",
+      "PackagePath": "staticwebassets\\Users\\d3e0c93a-699d-4e62-a482-25cc5717cd55_album11.jpg"
+    },
+    {
+      "Id": "C:\\Project.net\\pitNik\\API\\wwwroot\\Users\\d728e210-630d-4191-8b0a-bec9ea3aaeb2_tải xuống.jfif",
+      "PackagePath": "staticwebassets\\Users\\d728e210-630d-4191-8b0a-bec9ea3aaeb2_tải xuống.jfif"
+    },
+    {
+      "Id": "C:\\Project.net\\pitNik\\API\\wwwroot\\Users\\tải xuống.jfif",
+      "PackagePath": "staticwebassets\\Users\\tải xuống.jfif"
+    },
+    {
+      "Id": "C:\\Project.net\\pitNik\\API\\wwwroot\\uploads\\10_35356766_711642512344080_5722752001582825472_n.jpg",
+      "PackagePath": "staticwebassets\\uploads\\10_35356766_711642512344080_5722752001582825472_n.jpg"
+    },
+    {
+      "Id": "C:\\Project.net\\pitNik\\API\\wwwroot\\uploads\\11_tải xuống (3).jfif",
+      "PackagePath": "staticwebassets\\uploads\\11_tải xuống (3).jfif"
+    },
+    {
+      "Id": "C:\\Project.net\\pitNik\\API\\wwwroot\\uploads\\12_Capture.PNG",
+      "PackagePath": "staticwebassets\\uploads\\12_Capture.PNG"
+    },
+    {
+      "Id": "C:\\Project.net\\pitNik\\API\\wwwroot\\uploads\\13_tải xuống (5).jfif",
+      "PackagePath": "staticwebassets\\uploads\\13_tải xuống (5).jfif"
+    },
+    {
+      "Id": "C:\\Project.net\\pitNik\\API\\wwwroot\\uploads\\5_album11.jpg",
+      "PackagePath": "staticwebassets\\uploads\\5_album11.jpg"
+    },
+    {
+      "Id": "C:\\Project.net\\pitNik\\API\\wwwroot\\uploads\\6_z4564039225215_6dd5f55924f1ebce0605f5fa189c6739.jpg",
+      "PackagePath": "staticwebassets\\uploads\\6_z4564039225215_6dd5f55924f1ebce0605f5fa189c6739.jpg"
+    },
+    {
+      "Id": "C:\\Project.net\\pitNik\\API\\wwwroot\\uploads\\8_IMG_9424.jpg",
+      "PackagePath": "staticwebassets\\uploads\\8_IMG_9424.jpg"
+    },
+    {
+      "Id": "C:\\Project.net\\pitNik\\API\\wwwroot\\uploads\\9_35356766_711642512344080_5722752001582825472_n.jpg",
+      "PackagePath": "staticwebassets\\uploads\\9_35356766_711642512344080_5722752001582825472_n.jpg"
+    },
+    {
+      "Id": "C:\\Project.net\\pitNik\\API\\wwwroot\\uploads\\album1.jpg",
+      "PackagePath": "staticwebassets\\uploads\\album1.jpg"
+    },
+    {
+      "Id": "C:\\Project.net\\pitNik\\API\\wwwroot\\uploads\\album11.jpg",
+      "PackagePath": "staticwebassets\\uploads\\album11.jpg"
+    },
+    {
+      "Id": "C:\\Project.net\\pitNik\\API\\wwwroot\\uploads\\images.jfif",
+      "PackagePath": "staticwebassets\\uploads\\images.jfif"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\staticwebassets\\msbuild.API.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\staticwebassets\\msbuild.build.API.props",
+      "PackagePath": "build\\API.props"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.API.props",
+      "PackagePath": "buildMultiTargeting\\API.props"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\staticwebassets\\msbuild.buildTransitive.API.props",
+      "PackagePath": "buildTransitive\\API.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

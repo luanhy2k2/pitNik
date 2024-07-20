@@ -67,7 +67,7 @@ namespace API.Controllers
             var result = await _mediator.Send(new ConfirmEmailCommand { Email = email, Token = token });
             if(result.Success == true)
             {
-                return Redirect($"http://localhost:4200/login");
+                return Redirect($"https://pitnik.vercel.app/login");
             }
             else
             {

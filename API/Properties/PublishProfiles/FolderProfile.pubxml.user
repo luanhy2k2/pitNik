@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121.
+-->
+<Project>
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <_PublishTargetUrl>C:\Project.net\Publish</_PublishTargetUrl>
+    <History>True|2024-07-17T18:08:22.0151869Z;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="DefaultConnection">
+      <Value>packet size=4096%3buser id=luanhy2k2_SQLLogin_1%3bpwd=ma5q98qi1b%3bdata source=pitNikSql.mssql.somee.com%3bpersist security info=False%3binitial catalog=pitNikSql%3bTrustServerCertificate=True</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+  <ItemGroup>
+    <EFMigrations Include="Infrastructure.Persistence.PitNikDbContext">
+      <Value>packet size=4096%3buser id=luanhy2k2_SQLLogin_1%3bpwd=ma5q98qi1b%3bdata source=pitNikSql.mssql.somee.com%3bpersist security info=False%3binitial catalog=pitNikSql%3bTrustServerCertificate=True</Value>
+    </EFMigrations>
+  </ItemGroup>
+</Project>

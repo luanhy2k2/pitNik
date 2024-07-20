@@ -142,14 +142,12 @@ namespace Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Background")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -767,7 +765,7 @@ namespace Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("Core.Model.ApplicationUser", "User")
-                        .WithMany()
+                        .WithMany("GroupMembers")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -829,7 +827,7 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Core.Entities.InforUser", b =>
                 {
                     b.HasOne("Core.Model.ApplicationUser", "User")
-                        .WithMany()
+                        .WithMany("InforUsers")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1015,6 +1013,13 @@ namespace Infrastructure.Migrations
                     b.Navigation("ImagePosts");
 
                     b.Navigation("Interactions");
+                });
+
+            modelBuilder.Entity("Core.Model.ApplicationUser", b =>
+                {
+                    b.Navigation("GroupMembers");
+
+                    b.Navigation("InforUsers");
                 });
 #pragma warning restore 612, 618
         }

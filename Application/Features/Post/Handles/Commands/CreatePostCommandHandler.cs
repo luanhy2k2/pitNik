@@ -1,26 +1,17 @@
 ﻿using Application.DTOs.Notification;
 using Application.DTOs.Post;
 using Application.Features.Notification.Request.Commands;
-using Application.Features.Post.Notifications.Notifications;
 using Application.Features.Post.Requests.Commands;
 using AutoMapper;
 using Core.Common;
 using Core.Entities;
-using Core.Interface.Infrastructure;
 using Core.Interface.Persistence;
 using Core.Model;
 using Hangfire;
-using Infrastructure.Hubs;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Application.Features.Post.Handles.Commands
 {

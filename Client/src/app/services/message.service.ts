@@ -13,7 +13,7 @@ import { UpdateMessageReadStatus } from '../Models/Message/UpdateMessageReadStat
   providedIn: 'root'
 })
 export class MessageService {
-  private apiUrl = "https://localhost:7261";
+  private apiUrl = "http://pitnik.somee.com";
   Messages:BaseQueriesResponse<Message> = {
     pageIndex:1,
     pageSize:20,

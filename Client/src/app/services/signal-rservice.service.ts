@@ -44,7 +44,7 @@ export class SignalRService {
   listFriendIdConnected$ = this.listFriendIdConnectedSource.asObservable();
   constructor(private userService: UserService) {
     this.connection = new signalR.HubConnectionBuilder()
-      .withUrl('https://localhost:7261/chatHub', {
+      .withUrl('http://pitnik.somee.com/chatHub', {
         accessTokenFactory: () => {
           const user = this.userService.getUser();
           return user ? user.token : '';

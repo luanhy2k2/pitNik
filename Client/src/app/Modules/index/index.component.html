@@ -14,7 +14,7 @@
                                     <figure>
                                         
                                             <img *ngIf="displayImageUser != ''" 
-                                            [src]="displayImageUser ? 'https://localhost:7261/Users/' + displayImageUser : './assets/images/userDefault.png'" 
+                                            [src]="displayImageUser ? 'http://pitnik.somee.com/Users/' + displayImageUser : './assets/images/userDefault.png'" 
                                             style="width: 45px; height: 45px;" 
                                             alt="">
                                     </figure>
@@ -77,7 +77,7 @@
                                     <div class="user-post">
                                         <div class="friend-info">
                                             <figure>
-                                                <img src="https://localhost:7261/Users/{{post.imageUser}}" alt="">
+                                                <img src="http://pitnik.somee.com/Users/{{post.imageUser}}" alt="">
                                             </figure>
                                             <div [routerLink]="['/about']" [queryParams]="{id:post.userId}"
                                                 class="friend-name">
@@ -111,7 +111,7 @@
                                                                 <figure *ngFor=" let x of post.image">
                                                                     <a href="#" title="" data-toggle="modal"
                                                                         data-target="#img-comt">
-                                                                        <img src="https://localhost:7261/Uploads/{{x}}"
+                                                                        <img src="http://pitnik.somee.com/Uploads/{{x}}"
                                                                             alt="">
                                                                     </a>
                                                                 </figure>
@@ -240,7 +240,7 @@
                     <div class="user-post">
                         <div  class="friend-info">
                             <figure>
-                                <img [src]="" src="https://localhost:7261/Users/{{postDetail.imageUser}}" alt="">
+                                <img [src]="" src="http://pitnik.somee.com/Users/{{postDetail.imageUser}}" alt="">
                             </figure>
                             <div [routerLink]="['/about']" [queryParams]="{id:postDetail.userId}" class="friend-name">
                                 <div class="more">
@@ -266,7 +266,7 @@
                                             <div style="display: flex; width: 100%;">
                                                 <figure *ngFor=" let x of postDetail.image">
                                                     <a href="#" title="" data-toggle="modal" data-target="#img-comt">
-                                                    <img src="https://localhost:7261/Uploads/{{x}}" alt="">
+                                                    <img src="http://pitnik.somee.com/Uploads/{{x}}" alt="">
                                                     </a>
                                                 </figure> 
                                             </div>
@@ -310,7 +310,7 @@
                                     <li *ngFor="let comment of postDetail.comment">
                                         <div class="comet-avatar">
                                             <img *ngIf="comment.imageUser != ''" 
-                                            [src]="displayImageUser ? 'https://localhost:7261/Users/' + comment.imageUser : './assets/images/userDefault.png'" 
+                                            [src]="displayImageUser ? 'http://pitnik.somee.com/Users/' + comment.imageUser : './assets/images/userDefault.png'" 
                                             style="width: 45px; height: 45px;" 
                                             alt="">
                                         </div>
@@ -331,7 +331,7 @@
                                     <li class="post-comment">
                                         <div class="comet-avatar">
                                             <img *ngIf="displayImageUser != ''" 
-                                            [src]="displayImageUser ? 'https://localhost:7261/Users/' + displayImageUser : './assets/images/userDefault.png'" 
+                                            [src]="displayImageUser ? 'http://pitnik.somee.com/Users/' + displayImageUser : './assets/images/userDefault.png'" 
                                             style="width: 45px; height: 45px;" 
                                             alt="">
                                         </div>

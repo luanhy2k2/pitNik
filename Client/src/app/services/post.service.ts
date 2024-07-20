@@ -12,7 +12,7 @@ import { BaseCommandResponse } from '../Models/Common/BaseCommandResponse.entity
   providedIn: 'root'
 })
 export class PostService {
-  private apiUrl = "https://localhost:7261";
+  private apiUrl = "http://pitnik.somee.com";
   constructor(private readonly httpClient: HttpClient,private readonly userService:UserService) { }
   Search(pageIndex:number,pageSize:number,keyword:string): Observable<BaseQueriesResponse<Post>> {
     let params = new HttpParams()

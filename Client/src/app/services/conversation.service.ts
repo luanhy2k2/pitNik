@@ -13,7 +13,7 @@ import { CreateConversation } from '../Models/Conversation/CreateConversation.en
   providedIn: 'root'
 })
 export class ConversationService {
-  private apiUrl = "https://localhost:7261";
+  private apiUrl = "http://pitnik.somee.com";
   constructor(private readonly httpClient: HttpClient,private readonly userService:UserService) { }
   getPagedData(pageIndex:number, pageSize:number, keyword:string): Observable<BaseQueriesResponse<Conversation>> {
     let params = new HttpParams()

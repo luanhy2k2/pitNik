@@ -10,7 +10,7 @@ import { ReactRes } from '../Models/Interaction/ReactRes.entity';
   providedIn: 'root'
 })
 export class InteractionsService {
-  private apiUrl = "https://localhost:7261";
+  private apiUrl = "http://pitnik.somee.com";
   constructor(private readonly HttpClient:HttpClient, private readonly userService:UserService) { }
   React(react:CreateInteraction):Observable<BaseCommandResponse<ReactRes>>{
     react.userId = this.userService.getUser().id;

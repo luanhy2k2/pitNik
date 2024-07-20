@@ -26,6 +26,12 @@ namespace API.Controllers
             var result = await _mediator.Send(new CreatePostCommand { CreatePostDto = model });
             return Ok(result);
         }
+        [HttpPost("Update")]
+        public async Task<ActionResult> Create([FromForm] UpdatePostDto model)
+        {
+            var result = await _mediator.Send(new UpdatePostCommand { UpdatePostDto = model });
+            return Ok(result);
+        }
         [HttpGet("Search")]
         public async Task<ActionResult> Search([FromQuery] BasePagingDto model)
         {
@@ -54,6 +60,12 @@ namespace API.Controllers
         public async Task<ActionResult> GetById(int id)
         {
             var result = await _mediator.Send(new GetPostDetailRequest { PostId = id, UserName = User.Identity.Name });
+            return Ok(result);
+        }
+        [HttpDelete("Delete/{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var result = await _mediator.Send(new DeletePostCommand { PostId = id, UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value });
             return Ok(result);
         }
     }

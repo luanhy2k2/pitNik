@@ -13,7 +13,7 @@ import { commentRequest } from '../Models/Comment/commentRequest.entity';
   providedIn: 'root'
 })
 export class CommentService {
-  private apiUrl = "https://localhost:7261";
+  private apiUrl = "http://pitnik.somee.com";
   constructor(private readonly httpClient: HttpClient,private readonly userService:UserService) { }
   getPagedData(pageIndex:number, pageSize:number,postId:number): Observable<BaseQueriesResponse<Comment>> {
     let params = new HttpParams()

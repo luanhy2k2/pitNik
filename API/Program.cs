@@ -15,7 +15,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsPolicy",
             builder => builder
-                .WithOrigins("http://localhost:4200", "https://ban-may-tinh-ui.vercel.app") // Thêm nguồn gốc của client
+                .WithOrigins("http://localhost:4200", "https://pitnik.vercel.app") // Thêm nguồn gốc của client
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .AllowCredentials());

@@ -14,7 +14,7 @@ import { GroupMemberStatus } from '../Models/Group/AddGroupMember.entity';
   providedIn: 'root'
 })
 export class GroupService {
-  private apiUrl = "https://localhost:7261";
+  private apiUrl = "http://pitnik.somee.com";
   constructor(private readonly httpClient: HttpClient,private readonly userService:UserService) { }
   getMyGroup(pageIndex:number, pageSize:number, keyword:string): Observable<BaseQueriesResponse<Group>> {
     let params = new HttpParams()
