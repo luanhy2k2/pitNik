@@ -33,6 +33,7 @@ namespace Application.Features.Comment.Handlers.Queries
                             PostId = cm.PostId,
                             Created = TimeHelper.GetRelativeTime(cm.Created),
                             UserId = cm.UserId,
+                            TotalReply = cm.ReplyComments.Count(),
                         };
             var comment = query.Where(x => x.PostId == request.PostId);
             var result = await comment.Skip((request.PageIndex - 1) * request.PageSize).Take(request.PageSize).ToListAsync();

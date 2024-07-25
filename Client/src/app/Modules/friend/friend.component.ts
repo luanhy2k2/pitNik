@@ -29,8 +29,9 @@ export class FriendComponent {
   LoadMyFriends(){
     this.route.queryParams.subscribe(params => {
       this.userId = params['id'] || this.userService.getUser().id;
+      this.friendService.userId = this.userId;
     });
-    this.friendService.GetMyFriend(this.userId, this.MyFriends.pageIndex,this.MyFriends.pageSize,this.MyFriends.keyword).subscribe(res =>{
+    this.friendService.GetFriendOfUser(this.MyFriends.pageIndex,this.MyFriends.pageSize,this.MyFriends.keyword).subscribe(res =>{
       this.MyFriends.items = res.items,
       this.MyFriends.total = res.total
     })

@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Post.Requests.Queries
 {
-    public class GetMyPostRequest:BasePagingDto, IRequest<BaseQuerieResponse<PostDto>>
+    public class GetPostOfUserRequest:BasePagingDto, IRequest<BaseQuerieResponse<PostDto>>
     {
-        public string CurrentUserId { get; set; }
+        public string UserId { get; set; }
     }
 }

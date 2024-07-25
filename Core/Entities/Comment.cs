@@ -21,5 +21,6 @@ namespace Core.Entities
         public virtual Post Post { get; set; }
         [ForeignKey("UserId")]
         public virtual ApplicationUser User { get; set; }
+        public virtual ICollection<ReplyComment> ?ReplyComments { get; set; }
     }
 }

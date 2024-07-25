@@ -18,17 +18,17 @@ namespace Infrastructure.Persistence.Repositories
         {
             _context = context;
         }
-        public async Task<T> Create(T entity)
+        public async Task<bool> Create(T entity)
         {
             try
             {
                 await _context.Set<T>().AddAsync(entity);
                 await _context.SaveChangesAsync();
-                return entity;
+                return true;
             }
             catch(Exception ex)
             {
-                throw new Exception(ex.Message);
+                return false;
             }
             
         }

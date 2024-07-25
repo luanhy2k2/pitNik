@@ -34,9 +34,12 @@
     font-weight: 500;
     color: #343a40;
     background-color: #f8f9fa;
- 
+    
 }
-
+a:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
 .modal-body {
     padding: 1rem;
     max-height: 600px;

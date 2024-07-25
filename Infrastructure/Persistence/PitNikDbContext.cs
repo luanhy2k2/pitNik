@@ -10,6 +10,7 @@ namespace Infrastructure.Persistence
     {
         public PitNikDbContext(DbContextOptions<PitNikDbContext> options) : base(options) { }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<ReplyComment> ReplyComments { get; set; }
         public DbSet<Conversation> Conversations { get; set; }
         public DbSet<Friendship> Friendships { get; set; }
         public DbSet<Group> Groups { get; set; }

@@ -24,6 +24,7 @@ import { SidebarLeftComponent } from './Partial/sidebar-left/sidebar-left.compon
 import { SidebarRightComponent } from './Partial/sidebar-right/sidebar-right.component';
 import { RegisterComponent } from './Modules/register/register.component';
 import { ImagesComponent } from './Modules/about/images/images.component';
+import { PostComponent } from './Modules/about/post/post.component';
 
 export function initializeApp(signalrService: SignalRService) {
   return () => signalrService.startConnection();
@@ -48,7 +49,8 @@ export function initializeApp(signalrService: SignalRService) {
     SidebarLeftComponent,
     SidebarRightComponent,
     RegisterComponent,
-    ImagesComponent
+    ImagesComponent,
+    PostComponent
   ],
   imports: [
     BrowserModule,

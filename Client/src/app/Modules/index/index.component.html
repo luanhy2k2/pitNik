@@ -14,14 +14,14 @@
                                     <figure>
                                         
                                             <img *ngIf="displayImageUser != ''" 
-                                            [src]="displayImageUser ? 'http://pitnik.somee.com/Users/' + displayImageUser : './assets/images/userDefault.png'" 
+                                            [src]="displayImageUser ? 'https://localhost:7261/Users/' + displayImageUser : './assets/images/userDefault.png'" 
                                             style="width: 45px; height: 45px;" 
                                             alt="">
                                     </figure>
                                     <div class="newpst-input">
                                         <div>
                                             <textarea rows="2" placeholder="Share some what you are thinking?"
-                                                [(ngModel)]="CreatePost.content" name="messageContent"></textarea>
+                                                [(ngModel)]="CreatePostReq.content" name="messageContent"></textarea>
                                             <div *ngIf="imageSrcs.length > 0" style="margin-top: 10px">
                                                 <img *ngFor="let imageSrc of imageSrcs" [src]="imageSrc"
                                                     style="max-width: 100%; margin-top: 10px; margin-right: 10px;" />
@@ -77,7 +77,7 @@
                                     <div class="user-post">
                                         <div class="friend-info">
                                             <figure>
-                                                <img src="http://pitnik.somee.com/Users/{{post.imageUser}}" alt="">
+                                                <img src="https://localhost:7261/Users/{{post.imageUser}}" alt="">
                                             </figure>
                                             <div [routerLink]="['/about']" [queryParams]="{id:post.userId}"
                                                 class="friend-name">
@@ -111,7 +111,7 @@
                                                                 <figure *ngFor=" let x of post.image">
                                                                     <a href="#" title="" data-toggle="modal"
                                                                         data-target="#img-comt">
-                                                                        <img src="http://pitnik.somee.com/Uploads/{{x}}"
+                                                                        <img src="https://localhost:7261/Uploads/{{x}}"
                                                                             alt="">
                                                                     </a>
                                                                 </figure>
@@ -240,7 +240,7 @@
                     <div class="user-post">
                         <div  class="friend-info">
                             <figure>
-                                <img [src]="" src="http://pitnik.somee.com/Users/{{postDetail.imageUser}}" alt="">
+                                <img [src]="" src="https://localhost:7261/Users/{{postDetail.imageUser}}" alt="">
                             </figure>
                             <div [routerLink]="['/about']" [queryParams]="{id:postDetail.userId}" class="friend-name">
                                 <div class="more">
@@ -266,7 +266,7 @@
                                             <div style="display: flex; width: 100%;">
                                                 <figure *ngFor=" let x of postDetail.image">
                                                     <a href="#" title="" data-toggle="modal" data-target="#img-comt">
-                                                    <img src="http://pitnik.somee.com/Uploads/{{x}}" alt="">
+                                                    <img src="https://localhost:7261/Uploads/{{x}}" alt="">
                                                     </a>
                                                 </figure> 
                                             </div>
@@ -307,23 +307,84 @@
                             </div>
                             <div style="display: block; width: 100%;" class="coment-area">
                                 <ul class="we-comet">
-                                    <li *ngFor="let comment of postDetail.comment">
+                                    <li style="border-bottom: 1px solid #ede9e9;" *ngFor="let comment of postDetail.comment">
                                         <div class="comet-avatar">
                                             <img *ngIf="comment.imageUser != ''" 
-                                            [src]="displayImageUser ? 'http://pitnik.somee.com/Users/' + comment.imageUser : './assets/images/userDefault.png'" 
+                                            [src]="displayImageUser ? 'https://localhost:7261/Users/' + comment.imageUser : './assets/images/userDefault.png'" 
                                             style="width: 45px; height: 45px;" 
                                             alt="">
                                         </div>
                                         <div class="we-comment">
                                             <h5><a href="time-line.html" title="">{{comment.nameUser}}</a></h5>
+                                            <br>
                                             <p>{{comment.content}}</p>
+                                          
                                             <div class="inline-itms">
                                                 <span>{{comment.created}}</span>
-                                                <a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>
+                                                <a class="we-reply" (click)="ReplyComment(comment.id, comment.userId,comment.nameUser)" title="Reply"><i class="fa fa-reply"></i></a>
                                                 <a href="#" title=""><i class="fa fa-heart"></i><span>20</span></a>
                                             </div>
+                                        </div> 
+                                        <div *ngFor="let reply of comment.Reply" style="margin-left: 45px; display: flex;">
+                                            <div class="comet-avatar">
+                                                <img *ngIf="reply.responderImage; else nullUserImage;" style="height: 45px; width: 45px;" alt="author" src="https://localhost:7261/Users/{{reply.responderImage}}">
+                                                <ng-template #nullUserImage>
+                                                    <img style="height: 45px; width: 45px;" alt="author" src="./assets/images/userDefault.png">
+                                                </ng-template>
+                                            </div>
+                                            <div class="we-comment">
+                                                <h5><a href="time-line.html" title="">{{reply.responderName}}</a></h5>
+                                                <br>
+                                                <p><a style="color: #515365;" title="">{{reply.commenterName}}</a> {{reply.content}}</p>
+                                        
+                                                <div class="inline-itms">
+                                                    <span>{{reply.created}}</span>
+                                                    <a (click)="ReplyComment(comment.id, reply.responderId, reply.responderName)" class="we-reply" title="Reply"><i  class="fa fa-reply"></i></a>
+                                                    <!-- <a href="#" title=""><i class="fa fa-heart"></i><span>20</span></a> -->
+                                                </div>
+                                            </div>
+                                            
                                         </div>
-
+                                        <a id="commentId_{{comment.id}}" *ngIf="comment.totalReply > 0" style="margin-left: 45px;"><span style="padding-left: 10px;" (click)="loadReplyComment(comment.id)">Hiển thị thêm phản hồi</span></a>
+                                        <div id="formReply_{{comment.id}}" style="margin-left: 50px; display: none;" class="post-comment">
+                                            <div class="comet-avatar">
+                                                <img *ngIf="displayImageUser != ''" 
+                                                [src]="displayImageUser ? 'https://localhost:7261/Users/' + displayImageUser : './assets/images/userDefault.png'" 
+                                                style="width: 45px; height: 45px;" 
+                                                alt="">
+                                            </div>
+                                            <div class="post-comt-box">
+                                                <form #commentForm="ngForm" (ngSubmit)="AddReplyComment(comment.id)">
+                                                    <textarea id="contentReply_{{comment.id}}" name="contentReply"></textarea>
+                                                    <div class="add-smiles">
+                                                    <div class="uploadimage">
+                                                        <i class="fa fa-image"></i>
+                                                        <label class="fileContainer">
+                                                        <input type="file" />
+                                                        </label>
+                                                    </div>
+                                                    <span class="em em-expressionless" title="add icon"></span>
+                                                    <div class="smiles-bunch">
+                                                        <i class="em em---1"></i>
+                                                        <i class="em em-smiley"></i>
+                                                        <i class="em em-anguished"></i>
+                                                        <i class="em em-laughing"></i>
+                                                        <i class="em em-angry"></i>
+                                                        <i class="em em-astonished"></i>
+                                                        <i class="em em-blush"></i>
+                                                        <i class="em em-disappointed"></i>
+                                                        <i class="em em-worried"></i>
+                                                        <i class="em em-kissing_heart"></i>
+                                                        <i class="em em-rage"></i>
+                                                        <i class="em em-stuck_out_tongue"></i>
+                                                    </div>
+                                                    </div>
+                                                    <button type="submit">Post Comment</button>
+                                                </form>
+                                                    
+                                            </div>
+                                        </div>  
+                                        <!-- reply comment -->                    
                                     </li>
                                     <li>
                                         <a class="showmore underline" title="" (click)="LoadMoreComment(postDetail.id)">more comments+</a>
@@ -331,13 +392,13 @@
                                     <li class="post-comment">
                                         <div class="comet-avatar">
                                             <img *ngIf="displayImageUser != ''" 
-                                            [src]="displayImageUser ? 'http://pitnik.somee.com/Users/' + displayImageUser : './assets/images/userDefault.png'" 
+                                            [src]="displayImageUser ? 'https://localhost:7261/Users/' + displayImageUser : './assets/images/userDefault.png'" 
                                             style="width: 45px; height: 45px;" 
                                             alt="">
                                         </div>
                                         <div class="post-comt-box">
-                                            <form #commentForm="ngForm" (ngSubmit)="AddComment(postDetail.id)">
-                                                <textarea name="content" [(ngModel)]="CreateComment.content" placeholder="Post your comment"></textarea>
+                                            <form #commentForm="ngForm" (ngSubmit)="AddComment()">
+                                                <textarea name="content" [(ngModel)]="CreateCommentReq.content" placeholder="Post your comment"></textarea>
                                                 <div class="add-smiles">
                                                 <div class="uploadimage">
                                                     <i class="fa fa-image"></i>
@@ -369,30 +430,7 @@
                                 </ul>
                             </div>
                         </div>
-                        <div  class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                <h5 style="display: flex; margin-left: auto; justify-content: center;" class="modal-title" id="exampleModalLabel">
-                                    Bài viết của Đinh Thành Luân
-                                </h5>
-                                </div>
-                                <div class="modal-body">
-                                <div class="form-container">
-                                
-                                </div>
-                                </div>
-                                <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                    Close
-                                </button>
-                                <button type="button" class="btn btn-primary" >
-                                    Save
-                                </button>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
+                       
                     </div>
                 </div>
             </div>

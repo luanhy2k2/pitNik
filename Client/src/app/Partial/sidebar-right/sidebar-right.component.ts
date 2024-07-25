@@ -27,12 +27,14 @@ export class SidebarRightComponent {
     keyword:"",
     total:0
   }
+  userId:string = "";
   ngOnInit(){
     this.LoadGeneralInfo();
     this.LoadMyGroup();
   }
   LoadGeneralInfo(){
-    this.UserService.getGeneralInfor(this.UserService.getUser().id).subscribe(res =>{
+    this.userId = this.UserService.getUser().id;
+    this.UserService.getGeneralInfor(this.userId).subscribe(res =>{
       this.GeneralInfo = res;
     })
   }

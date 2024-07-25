@@ -12,6 +12,7 @@ import { MemberComponent } from './Modules/group/member/member.component';
 import { InvitationComponent } from './Modules/group/invitation/invitation.component';
 import { RegisterComponent } from './Modules/register/register.component';
 import { ImagesComponent } from './Modules/about/images/images.component';
+import { PostComponent } from './Modules/about/post/post.component';
 
 const routes: Routes = [
   {
@@ -55,6 +56,10 @@ const routes: Routes = [
   {
     path: 'images',
     component: ImagesComponent,
+  },
+  {
+    path: 'Post',
+    component: PostComponent,
   },
   {
     path: 'groupMember',

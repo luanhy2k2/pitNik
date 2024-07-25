@@ -14,7 +14,8 @@ import { MyFriend } from '../Models/FriendShip/Myfriend.entity';
   providedIn: 'root'
 })
 export class FriendShipService {
-  private apiUrl = "http://pitnik.somee.com";
+  private apiUrl = "https://localhost:7261";
+  userId:string = "";
   constructor(private readonly httpClient: HttpClient,private readonly userService:UserService) { }
   getPagedData(pageIndex:number, pageSize:number,keyword:string): Observable<BaseQueriesResponse<FriendShip>> {
     let params = new HttpParams()
@@ -31,11 +32,11 @@ export class FriendShipService {
   Update(FriendShip: UpdateStatusFriend): Observable<BaseCommandResponse<CreateFriendShip>> {
     return this.httpClient.post<BaseCommandResponse<CreateFriendShip>>(`${this.apiUrl}/api/FriendShip/Update`, FriendShip,{headers: this.userService.addHeaderToken()});
   }
-  GetMyFriend(UserId:string, pageIndex:number, pageSize:number,keyword:string): Observable<BaseQueriesResponse<MyFriend>> {
+  GetFriendOfUser(pageIndex:number, pageSize:number,keyword:string): Observable<BaseQueriesResponse<MyFriend>> {
     let params = new HttpParams()
       .set('PageIndex', pageIndex.toString())
       .set('PageSize', pageSize.toString())
-      .set('CurrentUserId', UserId);
+      .set('CurrentUserId', this.userId);
     if (keyword) {
       params = params.set('Keyword', keyword);
     }

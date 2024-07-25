@@ -27,9 +27,13 @@ namespace API.Controllers
             return Ok(result);
         }
         [HttpPost("Update")]
-        public async Task<ActionResult> Create([FromForm] UpdatePostDto model)
+        public async Task<ActionResult> Update([FromForm] UpdatePostDto model)
         {
-            var result = await _mediator.Send(new UpdatePostCommand { UpdatePostDto = model });
+            var result = await _mediator.Send(new UpdatePostCommand { 
+                UpdatePostDto = model,
+                CurrentUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value,
+                
+            });
             return Ok(result);
         }
         [HttpGet("Search")]
@@ -42,6 +46,13 @@ namespace API.Controllers
         public async Task<ActionResult> GetPost([FromQuery] BasePagingDto model)
         {
             var result = await _mediator.Send(new GetPostsRequest { Keyword = model.Keyword, UserName = User.Identity.Name, PageIndex = model.PageIndex, PageSize = model.PageSize });
+            return Ok(result);
+        }
+        [HttpGet("GetPostOfUser")]
+        public async Task<ActionResult> GetPostOfCurrentUser([FromQuery] GetPostOfUserRequest model)
+        {
+
+            var result = await _mediator.Send(new GetPostOfUserRequest { Keyword = model.Keyword, UserId = model.UserId, PageIndex = model.PageIndex, PageSize = model.PageSize });
             return Ok(result);
         }
         [HttpGet("GetPostOfGroup")]

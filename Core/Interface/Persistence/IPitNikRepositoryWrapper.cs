@@ -11,6 +11,7 @@ namespace Core.Interface.Persistence
         IAccountRepository Account { get; }
         IInforUserRepository InforUser { get; }
         ICommentRepository Comment { get; }
+        IReplyCommentRepository ReplyComment { get; }
         IConversationRepository Conversation { get; }
         IConversationMemberRepository ConversationMember { get; }
         IFriendShipRepository FriendShip { get; }

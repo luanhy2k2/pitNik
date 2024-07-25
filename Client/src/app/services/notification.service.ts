@@ -12,7 +12,7 @@ import { UpdateStatusReadNotification } from '../Models/Notification/UpdateStatu
   providedIn: 'root'
 })
 export class NotificationService {
-  private apiUrl = "http://pitnik.somee.com";
+  private apiUrl = "https://localhost:7261";
   constructor(private readonly httpClient: HttpClient,private readonly userService:UserService) { }
   getPagedData(pageIndex:number, pageSize:number,keyword:string): Observable<BaseQueriesResponse<Notification>> {
     let params = new HttpParams()

@@ -1,0 +1,153 @@
+.isReact {
+    color: orange;
+}
+/* Modal styles */
+.modal-dialog {
+    max-width: 60%; /* Adjust the percentage as needed for desired width */
+    margin: 1.75rem auto;
+}
+
+.modal-content {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+// .modal-header  {
+//     background-color: #f8f9fa;
+//     border-bottom: 1px solid #dee2e6;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+// }
+.modal-header .modal-title {
+    flex: 1;
+    text-align: center;
+    font-family: inherit;
+    margin-left: -30px; /* Adjust this value as needed */
+  }
+  .modal-header .btn-close {
+    position: absolute;
+    right: 10px;
+  }
+.modal-title {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #343a40;
+    background-color: #f8f9fa;
+ 
+}
+
+.modal-body {
+    padding: 1rem;
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    background-color: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+@media (max-width: 576px) {
+    .modal-dialog {
+        max-width: 90%; /* Make modal width smaller on smaller screens */
+        margin: 1rem;
+    }
+
+    .modal-content {
+        border-radius: 0.5rem;
+    }
+
+    .modal-header,
+    .modal-footer {
+        padding: 0.5rem;
+    }
+
+    .modal-title {
+        font-size: 1rem;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        font-size: 0.875rem;
+        padding: 0.5rem 1rem;
+    }
+}
+
+/* Additional styles for better aesthetics */
+.modal-body .form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.modal-body .form-container input,
+.modal-body .form-container textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+}
+
+.modal-body .form-container button {
+    align-self: flex-end;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.25rem;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.modal-body .form-container button:hover {
+    background-color: #0056b3;
+}
+.image-container {
+    position: relative;
+    display: inline-block;
+    margin: 10px; /* Adjust as needed */
+}
+
+.image-container img {
+    display: block;
+    width: 100%; /* Adjust as needed */
+    height: auto; /* Adjust as needed */
+}
+
+.close-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    width: 24px; /* Adjust as needed */
+    height: 24px; /* Adjust as needed */
+    text-align: center;
+    line-height: 24px; /* Center the text vertically */
+    color: black;
+}
+
+.close-button:hover {
+    background-color: rgba(255, 0, 0, 0.8); /* Change color on hover */
+    color: white;
+}
+

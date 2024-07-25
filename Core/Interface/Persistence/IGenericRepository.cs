@@ -12,7 +12,7 @@ namespace Core.Interface.Persistence
     {
         Task<BaseQuerieResponse<T>> GetAll(int pageIndex, int pageSize, Expression<Func<T, bool>> conditions,string orderBy);
         Task<T> getById(int id);
-        Task<T> Create(T entity);
+        Task<bool> Create(T entity);
         Task<T> Update(T entity);
         Task<T> Delete(int id);
         IQueryable<T> GetAllQueryable();

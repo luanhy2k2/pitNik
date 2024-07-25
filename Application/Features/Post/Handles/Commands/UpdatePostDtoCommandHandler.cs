@@ -31,31 +31,34 @@ namespace Application.Features.Post.Handles.Commands
                 return new BaseCommandResponse<PostDto>("Bài viết không tồn tại!", false);
             }
 
-            post.Content = request.UpdatePostDto.Content;
-
-            var existingImages = await _pitNikRepo.ImagePost.GetAllQueryable()
-                                    .Where(x => x.PostId == request.UpdatePostDto.Id)
-                                    .ToListAsync();
-
-            var existingImageNames = existingImages.Select(x => x.Image).ToList();
-            var updatedImageNames = request.UpdatePostDto.Files.Select(f => $"{post.Id}_{f.FileName}").ToList();
-
-            // Xóa các file không còn trong danh sách cập nhật
-            foreach (var existingImage in existingImages)
+            if (post.UserId != request.CurrentUserId)
             {
-                if (!updatedImageNames.Contains(existingImage.Image))
+                return new BaseCommandResponse<PostDto>("Bạn không có quyền!", false);
+            }
+
+            post.Content = request.UpdatePostDto.Content;
+            if (request.UpdatePostDto.ImageNameDelete != null && request.UpdatePostDto.ImageNameDelete.Count > 0)
+            {
+                foreach (var item in request.UpdatePostDto.ImageNameDelete)
                 {
-                    var filePath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads", existingImage.Image);
-                    if (System.IO.File.Exists(filePath))
+                    var imagePost = await _pitNikRepo.ImagePost.GetAllQueryable()
+                                       .Where(x => x.Image == item && x.PostId == request.UpdatePostDto.Id)
+                                       .FirstOrDefaultAsync();
+
+                    if (imagePost != null)
                     {
-                        System.IO.File.Delete(filePath);
+                        await _pitNikRepo.ImagePost.Delete(imagePost.Id);
+                        var filePath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads", item);
+                        if (File.Exists(filePath))
+                        {
+                            File.Delete(filePath);
+                        }
                     }
-                    await _pitNikRepo.ImagePost.Delete(existingImage.Id);
                 }
             }
 
             // Thêm hoặc cập nhật các file mới
-            if (request.UpdatePostDto.Files.Count > 0)
+            if (request.UpdatePostDto.Files != null && request.UpdatePostDto.Files.Count > 0)
             {
                 foreach (var file in request.UpdatePostDto.Files)
                 {
@@ -68,29 +71,19 @@ namespace Application.Features.Post.Handles.Commands
                     var fileName = $"{post.Id}_{file.FileName}";
                     var filePath = Path.Combine(folderPath, fileName);
 
-                    if (!existingImageNames.Contains(fileName))
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
                     {
-                        if (!System.IO.File.Exists(filePath))  // Kiểm tra nếu file không tồn tại
-                        {
-                            using (var fileStream = new FileStream(filePath, FileMode.Create))
-                            {
-                                await file.CopyToAsync(fileStream);
-                            }
-                        }
-
-                        var newImage = new ImagePost
-                        {
-                            Image = fileName,
-                            PostId = post.Id,
-                            Created = DateTime.Now,
-                        };
-
-                        await _pitNikRepo.ImagePost.Create(newImage);
+                        await file.CopyToAsync(fileStream);
                     }
-                    else
+
+                    var newImage = new ImagePost
                     {
-                        Console.WriteLine($"File {fileName} đã tồn tại trong cơ sở dữ liệu, bỏ qua upload.");
-                    }
+                        Image = fileName,
+                        PostId = post.Id,
+                        Created = DateTime.Now,
+                    };
+
+                    await _pitNikRepo.ImagePost.Create(newImage);
                 }
             }
 
@@ -108,8 +101,9 @@ namespace Application.Features.Post.Handles.Commands
                                     .ToListAsync()
             };
 
-            return new BaseCommandResponse<PostDto>("Cập nhật bài viết thành công!",postDto);
+            return new BaseCommandResponse<PostDto>("Cập nhật bài viết thành công!", postDto);
         }
+
 
     }
 }

@@ -45,7 +45,7 @@
             <ul class="followers">
                 <li *ngFor="let item of groups.items">
                     <figure>
-                        <img style="width: 40px; height: 40px;" src="http://pitnik.somee.com/Groups/{{item.background}}" alt="">
+                        <img style="width: 40px; height: 40px;" src="https://localhost:7261/Groups/{{item.background}}" alt="">
                     </figure>
                     <div class="friend-meta">
                         <h4 [routerLink]="['/group']" [queryParams]="{ id: item.id }" style="width: 100%;"><a title="">{{item.name}}</a></h4>

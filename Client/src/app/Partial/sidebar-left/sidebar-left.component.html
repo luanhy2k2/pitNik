@@ -39,7 +39,7 @@
                 <li *ngFor="let item of friends.items">
                     <figure>
                         <img *ngIf="item.image; else nullImageUser;" style="height: 40px; width: 40px;"
-                          alt="author" src="http://pitnik.somee.com/Users/{{item.image}}">
+                          alt="author" src="https://localhost:7261/Users/{{item.image}}">
                         <ng-template #nullImageUser>
                           <img style="height: 40px; width: 40px;" alt="author" src="./assets/images/userDefault.png">
                         </ng-template>

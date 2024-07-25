@@ -26,6 +26,9 @@ namespace Infrastructure.Persistence.Repositories
         private ICommentRepository _commentRepository;
         public ICommentRepository Comment => _commentRepository ??= new CommentRepository(_context);
 
+        private IReplyCommentRepository _replyCommentRepository;
+        public IReplyCommentRepository ReplyComment => _replyCommentRepository ??= new ReplyCommentRepository(_context);
+
         private IConversationRepository _conversationRepository;
         public IConversationRepository Conversation => _conversationRepository ??= new ConversationRepository(_context);
         private IConversationMemberRepository _conversationMemberRepository;

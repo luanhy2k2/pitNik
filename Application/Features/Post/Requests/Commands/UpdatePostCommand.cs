@@ -12,5 +12,6 @@ namespace Application.Features.Post.Requests.Commands
     public class UpdatePostCommand:IRequest<BaseCommandResponse<PostDto>>
     {
         public UpdatePostDto UpdatePostDto { get; set; }
+        public string CurrentUserId { get; set; }
     }
 }

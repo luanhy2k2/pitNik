@@ -1,4 +1,5 @@
 import { BaseQueriesResponse } from "../Common/BaseQueriesResponse.entity";
+import { ReplyComment } from "./reply-comment";
 
 export interface Comment{
     userId:string,
@@ -7,7 +8,11 @@ export interface Comment{
     postId:number,
     id:number,
     created:Date,
-    imageUser:string
+    imageUser:string,
+    totalReply:number,
+    PageIndexReplyComment:number,
+    Reply:ReplyComment[],
+    totalPageReply:number
 }
 export const defaultCommentQuery: BaseQueriesResponse<Comment> = {
     pageIndex: 1,

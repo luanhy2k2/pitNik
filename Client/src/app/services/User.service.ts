@@ -7,7 +7,7 @@ import { Account, GeneralInfo, } from "../Models/Account/Account.entity";
 import { UpdateGenerallInfor, UpdatePersionalInfor } from "../Models/Account/UpdateAccount.entity";
 import { BaseCommandResponse } from "../Models/Common/BaseCommandResponse.entity";
 import { Register } from "../Models/Account/Register.entity";
-const host = "http://pitnik.somee.com"
+const host = "https://localhost:7261"
 @Injectable({
     providedIn: 'root'
 })

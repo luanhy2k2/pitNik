@@ -50,6 +50,7 @@ export class AboutComponent {
   ngOnInit(){
     this.route.queryParams.subscribe(params => {
       this.userId = params['id'] || this.UserService.getUser().id;
+      this.FriendService.userId = this.userId
     });
     
     this.LoadGeneralInfo(this.userId);
@@ -67,7 +68,7 @@ export class AboutComponent {
     })
   }
   LoadMyFriends(){
-    this.FriendService.GetMyFriend(this.userId, this.MyFriends.pageIndex,this.MyFriends.pageSize,this.MyFriends.keyword).subscribe(res =>{
+    this.FriendService.GetFriendOfUser( this.MyFriends.pageIndex,this.MyFriends.pageSize,this.MyFriends.keyword).subscribe(res =>{
       this.MyFriends.items = res.items,
       this.MyFriends.total = res.total
     })

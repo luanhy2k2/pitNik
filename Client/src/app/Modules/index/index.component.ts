@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ClipboardService } from 'ngx-clipboard';
 import { commentRequest } from 'src/app/Models/Comment/commentRequest.entity';
 import { CreateComment } from 'src/app/Models/Comment/create-comment.entity';
+import { CreateReplyComment } from 'src/app/Models/Comment/create-reply-comment';
 import { BaseQueriesResponse } from 'src/app/Models/Common/BaseQueriesResponse.entity';
 import { CreateInteraction } from 'src/app/Models/Interaction/CreateInteraction.entity';
 import { BasePaging } from 'src/app/Models/Paging.entity';
@@ -10,6 +11,7 @@ import { CreatePost } from 'src/app/Models/Post/CreatePost.entity';
 import { Post } from 'src/app/Models/Post/Post.entity';
 import { UserService } from 'src/app/services/User.service';
 import { CommentService } from 'src/app/services/comment.service';
+import { FriendShipService } from 'src/app/services/friend-ship.service';
 import { InteractionsService } from 'src/app/services/interactions.service';
 import { PostService } from 'src/app/services/post.service';
 import { SignalRService } from 'src/app/services/signal-rservice.service';
@@ -23,13 +25,14 @@ import { SignalRService } from 'src/app/services/signal-rservice.service';
 export class IndexComponent {
   constructor(
     private readonly postService: PostService,
-    private readonly route:ActivatedRoute,
+    private readonly route: ActivatedRoute,
     private readonly InteractionService: InteractionsService,
     private readonly CommentService: CommentService,
-    private readonly UserService:UserService,
-    private readonly signalRService:SignalRService,
-    private clipboard:ClipboardService
-  ) {}
+    private readonly UserService: UserService,
+    private readonly signalRService: SignalRService,
+    private readonly friendShipService: FriendShipService,
+    private clipboard: ClipboardService
+  ) { }
   Posts: BaseQueriesResponse<Post> = {
     pageIndex: 1,
     pageSize: 5,
@@ -41,46 +44,47 @@ export class IndexComponent {
     pageIndex: 1,
     pageSize: 5,
   }
-  CreatePost: CreatePost = {
+  CreatePostReq: CreatePost = {
     userId: '',
     content: '',
     files: [],
-    groupId:0,
+    groupId: 0,
     id: 0,
     created: new Date()
   };
-  CreateReact: CreateInteraction = {
+  CreateReactReq: CreateInteraction = {
     userId: "",
     postId: 0,
     emojiId: 0,
     created: new Date()
-  }
-  CreateComment: CreateComment = {
+  };
+  CreateCommentReq: CreateComment = {
     userId: "",
     content: "",
     postId: 0,
     created: new Date()
-  }
+  };
+  CreateReplyCommentReq: CreateReplyComment[] = [];
   imageSrcs: (string | ArrayBuffer | null)[] = [];
-  displayImageUser:string = "";
-  postDetail:Post = {
-    userId:"",
-    nameUser:"",
-    id:0,
-    image:[],
-    imageUser:"",
-    comment:[],
-    content:"",
-    groupId:0,
-    totalComment:0,
-    pageIndexComment:1,
-    pageSizeComment:15,
-    totalReactions:0,
-    isReact:false,
-    created:new Date
+  displayImageUser: string = "";
+  postDetail: Post = {
+    userId: "",
+    nameUser: "",
+    id: 0,
+    image: [],
+    imageUser: "",
+    comment: [],
+    content: "",
+    groupId: 0,
+    totalComment: 0,
+    pageIndexComment: 1,
+    pageSizeComment: 15,
+    totalReactions: 0,
+    isReact: false,
+    created: new Date
   }
   showModal: boolean = false;
-  private currentPostIds: Set<string> = new Set();
+  maxPageReply: boolean = false;
   ngOnInit() {
     this.route.queryParams.subscribe(res => {
       var postId = res['postId'];
@@ -91,24 +95,25 @@ export class IndexComponent {
         this.showModal = false;
       }
     });
+    this.friendShipService.userId = this.UserService.getUser().id;
     this.LoadPost();
-    this.signalRService.commentAdded$.subscribe(res =>{
+    this.signalRService.commentAdded$.subscribe(res => {
       this.postDetail.comment.push(res);
       this.postDetail.totalComment++;
     })
-    this.signalRService.reactAdded$.subscribe(res =>{
-      if(this.postDetail.id == res.postId){
-        if(res.isReact == false){
+    this.signalRService.reactAdded$.subscribe(res => {
+      if (this.postDetail.id == res.postId) {
+        if (res.isReact == false) {
           this.postDetail.isReact = false
           this.postDetail.totalReactions--;
         }
-        else{
+        else {
           this.postDetail.isReact = true;
-          this.postDetail.totalReactions++ 
+          this.postDetail.totalReactions++
         }
       }
     })
-    this.signalRService.postAdded$.subscribe(res =>{
+    this.signalRService.postAdded$.subscribe(res => {
       this.LoadPost();
     })
     this.LoadCurrentUser();
@@ -125,11 +130,11 @@ export class IndexComponent {
     );
   }
 
-  LoadPostDetail(idPost:number){
-    if(idPost != null){
+  LoadPostDetail(idPost: number) {
+    if (idPost != null) {
       this.showModal = true;
       this.signalRService.joinRoom(`Post_${idPost}`);
-      this.postService.getById(idPost).subscribe(res =>{
+      this.postService.getById(idPost).subscribe(res => {
         this.postDetail = res;
         this.postDetail.pageIndexComment = 1;
         this.postDetail.pageSizeComment = 15;
@@ -139,15 +144,85 @@ export class IndexComponent {
       })
     }
   }
-  ClosePostDetail(){
-    for(let i = 0; i<this.Posts.items.length; i++){
-      if(this.Posts.items[i].id == this.postDetail.id){
+  ClosePostDetail() {
+    for (let i = 0; i < this.Posts.items.length; i++) {
+      if (this.Posts.items[i].id == this.postDetail.id) {
         this.Posts.items[i] = this.postDetail;
         break;
       }
     }
     this.showModal = false;
     this.signalRService.LeaveRoom(`Post_${this.postDetail.id}`)
+  }
+  loadReplyComment(commentId: number) {
+    for (let i = 0; i < this.postDetail.comment.length; i++) {
+      if (this.postDetail.comment[i].id == commentId) {
+        if (this.postDetail.comment[i].PageIndexReplyComment) {
+          this.postDetail.comment[i].PageIndexReplyComment++;
+          if (this.postDetail.comment[i].PageIndexReplyComment > this.postDetail.comment[i].totalPageReply) {
+            var load = document.getElementById(`commentId_${commentId}`);
+            if (load !== null && load !== undefined) {
+              load.style.display = "none";
+            }
+            break;
+          }
+        } else {
+          this.postDetail.comment[i].PageIndexReplyComment = 1;
+        }
+        this.CommentService.getReplyComment(this.postDetail.comment[i].PageIndexReplyComment, commentId).subscribe(res => {
+          if (this.postDetail.comment[i].Reply) {
+            this.postDetail.comment[i].Reply = this.postDetail.comment[i].Reply.concat(res.items);
+          }
+          else
+            this.postDetail.comment[i].Reply = res.items;
+          this.postDetail.comment[i].totalPageReply = Math.ceil(res.total / 1);
+        });
+        break;
+      }
+    }
+  }
+  ReplyComment(commentId:number, commenterid:string,commentername:string){
+    var existReq = this.CreateReplyCommentReq.find(e =>e.commentId == commentId);
+    if(existReq){
+      existReq.commenterId = commenterid;
+    }
+    else{
+      const req: CreateReplyComment = {
+        commentId: commentId,
+        commenterId: commenterid,
+        content:""
+      }
+      this.CreateReplyCommentReq.push(req);
+    }
+    var div = document.getElementById(`formReply_${commentId}`);
+    if (div !== null && div !== undefined) {
+      div.style.display = "block";
+      var textarea = document.getElementById(`contentReply_${commentId}`)  as HTMLTextAreaElement;
+      if (textarea !== null && textarea !== undefined){
+        textarea.placeholder  = "Phản hồi bình luận của" + commentername
+      }
+    }
+  }
+  AddReplyComment(commentId:number){
+    var textarea = document.getElementById(`contentReply_${commentId}`) as HTMLTextAreaElement;
+      if (textarea !== null && textarea !== undefined){
+        for(let item of this.CreateReplyCommentReq){
+          if(item.commentId == commentId){
+            item.content = textarea.value;
+            this.CommentService.createReplyComment(item).subscribe(res =>{
+              item.content = "";
+              textarea.value = "";
+              for(let comment of this.postDetail.comment){
+                if(comment.id == commentId){
+                  comment.Reply.push(res.object);
+                  break;
+                }
+              }
+            })
+          }
+        }
+      }
+      
   }
   LoadMoreComment(postId: number) {
     this.Posts.items.forEach(element => {
@@ -159,24 +234,24 @@ export class IndexComponent {
       }
     });
   }
-  LoadCurrentUser(){
+  LoadCurrentUser() {
     var userId = this.UserService.getUser().id;
-    this.UserService.getPersionalInfor(userId).subscribe(res =>{
+    this.UserService.getPersionalInfor(userId).subscribe(res => {
       this.displayImageUser = res.image
     })
   }
-  AddComment(postId: number) {
-    this.CreateComment.postId = postId;
-    this.CommentService.create(this.CreateComment).subscribe(res => {
-      this.CreateComment.postId = 0;
-      this.CreateComment.content = "";
+  AddComment() {
+    this.CreateCommentReq.postId = this.postDetail.id;
+    this.CommentService.create(this.CreateCommentReq).subscribe(res => {
+      this.CreateCommentReq.postId = 0;
+      this.CreateCommentReq.content = "";
     })
   }
   onFilesSelected(event: Event): void {
     const fileInput = event.target as HTMLInputElement;
     if (fileInput.files) {
       Array.from(fileInput.files).forEach(file => {
-        this.CreatePost.files.push(file); // Update CreatePost object
+        this.CreatePostReq.files.push(file); // Update CreatePost object
         if (file.type.startsWith('image/')) {
           const reader = new FileReader();
           reader.onload = (e: ProgressEvent<FileReader>) => {
@@ -191,15 +266,15 @@ export class IndexComponent {
     console.log(this.imageSrcs);
   }
   AddPost(): void {
-    this.postService.createPost(this.CreatePost).subscribe(
+    this.postService.createPost(this.CreatePostReq).subscribe(
       response => {
-        if(response.success == true){
+        if (response.success == true) {
           this.Posts.items.unshift(response.object);
-          this.CreatePost.content = "";
-          this.CreatePost.files = [];
+          this.CreatePostReq.content = "";
+          this.CreatePostReq.files = [];
           this.imageSrcs = [];
         }
-        if(response.success == false){
+        if (response.success == false) {
           alert(response.message);
         }
       },
@@ -209,22 +284,23 @@ export class IndexComponent {
     );
   }
   React(postId: number, emojiId: number): void {
-    this.CreateReact.postId = postId;
-    this.CreateReact.emojiId = emojiId;
-    this.InteractionService.React(this.CreateReact).subscribe(
+    this.CreateReactReq.postId = postId;
+    this.CreateReactReq.emojiId = emojiId;
+    this.InteractionService.React(this.CreateReactReq).subscribe(
       response => {
-        if(response.success == true){
-          if(this.postDetail.id != postId){
-            for(let post of this.Posts.items){
-              if(post.id == postId){
-                if(response.object.isReact == false){
+        if (response.success == true) {
+          if (this.postDetail.id != postId) {
+            for (let post of this.Posts.items) {
+              if (post.id == postId) {
+                if (response.object.isReact == false) {
                   post.isReact = false
                   post.totalReactions--;
                 }
-                else{
+                else {
                   post.isReact = true;
-                  post.totalReactions++ 
+                  post.totalReactions++
                 }
+                break;
               }
             }
           }

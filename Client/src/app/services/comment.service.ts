@@ -8,12 +8,15 @@ import { CreateComment } from '../Models/Comment/create-comment.entity';
 import { BaseQueriesResponse } from '../Models/Common/BaseQueriesResponse.entity';
 import { Comment } from '../Models/Comment/comment.entity';
 import { commentRequest } from '../Models/Comment/commentRequest.entity';
+import { ReplyComment } from '../Models/Comment/reply-comment';
+import { CreateReplyComment } from '../Models/Comment/create-reply-comment';
+import { BaseCommandResponse } from '../Models/Common/BaseCommandResponse.entity';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommentService {
-  private apiUrl = "http://pitnik.somee.com";
+  private apiUrl = "https://localhost:7261";
   constructor(private readonly httpClient: HttpClient,private readonly userService:UserService) { }
   getPagedData(pageIndex:number, pageSize:number,postId:number): Observable<BaseQueriesResponse<Comment>> {
     let params = new HttpParams()
@@ -23,8 +26,14 @@ export class CommentService {
     
     return this.httpClient.get<BaseQueriesResponse<Comment>>(`${this.apiUrl}/api/Comment/GetComment`, { params,headers: this.userService.addHeaderToken()});
   }
-  create(comment: CreateComment): Observable<any> {
+  getReplyComment(pageIndex:number, CommentId:number): Observable<BaseQueriesResponse<ReplyComment>> {
+    return this.httpClient.get<BaseQueriesResponse<ReplyComment>>(`${this.apiUrl}/api/Comment/GetReplyComment/${CommentId}/${pageIndex}`, {headers: this.userService.addHeaderToken()});
+  }
+  create(comment: CreateComment): Observable<BaseCommandResponse<Comment>> {
     comment.userId = this.userService.getUser().id;
-    return this.httpClient.post(`${this.apiUrl}/api/Comment/Create`, comment,{headers: this.userService.addHeaderToken()});
+    return this.httpClient.post<BaseCommandResponse<Comment>>(`${this.apiUrl}/api/Comment/Create`, comment,{headers: this.userService.addHeaderToken()});
+  }
+  createReplyComment(reply: CreateReplyComment): Observable<BaseCommandResponse<ReplyComment>> {
+    return this.httpClient.post<BaseCommandResponse<ReplyComment>>(`${this.apiUrl}/api/Comment/CreateReply`, reply,{headers: this.userService.addHeaderToken()});
   }
 }

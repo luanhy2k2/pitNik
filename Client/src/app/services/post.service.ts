@@ -7,12 +7,13 @@ import { CreatePost } from '../Models/Post/CreatePost.entity';
 import { BaseQueriesResponse } from '../Models/Common/BaseQueriesResponse.entity';
 import { Post } from '../Models/Post/Post.entity';
 import { BaseCommandResponse } from '../Models/Common/BaseCommandResponse.entity';
+import { UpdatePost } from '../Models/Post/update-post';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostService {
-  private apiUrl = "http://pitnik.somee.com";
+  private apiUrl = "https://localhost:7261";
   constructor(private readonly httpClient: HttpClient,private readonly userService:UserService) { }
   Search(pageIndex:number,pageSize:number,keyword:string): Observable<BaseQueriesResponse<Post>> {
     let params = new HttpParams()
@@ -42,6 +43,16 @@ export class PostService {
     }
     return this.httpClient.get<BaseQueriesResponse<Post>>(`${this.apiUrl}/api/Post/GetPostOfGroup`, { params,headers: this.userService.addHeaderToken()});
   }
+  getPostOfUser(userId:string,pageIndex:number,pageSize:number,keyword:string): Observable<BaseQueriesResponse<Post>> {
+    let params = new HttpParams()
+      .set('UserId', userId.toString())
+      .set('PageIndex', pageIndex.toString())
+      .set('PageSize', pageSize.toString());
+    if (keyword) {
+      params = params.set('Keyword', keyword);
+    }
+    return this.httpClient.get<BaseQueriesResponse<Post>>(`${this.apiUrl}/api/Post/GetPostOfUser`, { params,headers: this.userService.addHeaderToken()});
+  }
   createPost(post: CreatePost): Observable<BaseCommandResponse<Post>> {
     const formData: FormData = new FormData();
     formData.append('Id', post.id.toString());
@@ -53,6 +64,14 @@ export class PostService {
     post.files.forEach(file => formData.append('Files', file, file.name));
 
     return this.httpClient.post<BaseCommandResponse<Post>>(`${this.apiUrl}/api/Post/Create`, formData,{headers: this.userService.addHeaderToken()});
+  }
+  updatePost(post: UpdatePost): Observable<BaseCommandResponse<Post>> {
+    const formData: FormData = new FormData();
+    formData.append('Id', post.id.toString());
+    formData.append('Content', post.content);
+    post.files.forEach(file => formData.append('Files', file, file.name));
+    post.imageNameDelete.forEach(image => formData.append('ImageNameDelete', image));
+    return this.httpClient.post<BaseCommandResponse<Post>>(`${this.apiUrl}/api/Post/Update`, formData,{headers: this.userService.addHeaderToken()});
   }
   getById(postId:number): Observable<Post> {
     return this.httpClient.get<Post>(`${this.apiUrl}/api/Post/GetById/${postId}`, {headers: this.userService.addHeaderToken()});

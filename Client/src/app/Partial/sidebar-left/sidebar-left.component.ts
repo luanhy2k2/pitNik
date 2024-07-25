@@ -20,9 +20,7 @@ import { SignalRService } from 'src/app/services/signal-rservice.service';
 })
 export class SidebarLeftComponent {
   constructor(private readonly signalRService: SignalRService,
-    private readonly userService: UserService,
     private readonly friendShervice: FriendShipService,
-    private readonly conversationService:ConversationService,
     private readonly messageService:MessageService,
     private readonly Router: Router) { }
   friends: BaseQueriesResponse<MyFriend> = {
@@ -76,8 +74,7 @@ export class SidebarLeftComponent {
     })
   }
   loadMyFriend() {
-    var currentUserId = this.userService.getUser().id;
-    this.friendShervice.GetMyFriend(currentUserId, this.friends.pageIndex, this.friends.pageSize, this.friends.keyword).subscribe(res => {
+    this.friendShervice.GetFriendOfUser( this.friends.pageIndex, this.friends.pageSize, this.friends.keyword).subscribe(res => {
       this.friends = res;
     })
   }
