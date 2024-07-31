@@ -28,8 +28,11 @@ namespace Infrastructure.Hubs
         {
             get { return Context.User.Identity.Name; }
         }
-     
 
+        public async Task SendSignal(string signal)
+        {
+            await Clients.Others.SendAsync("receiveSignal", signal);
+        }
         public static IReadOnlyDictionary<string, string> ConnectionMap => _connectionMap;
         public async Task Join(string roomName)
         {
@@ -151,6 +154,30 @@ namespace Infrastructure.Hubs
         public List<string> GetConnectedUsers(string name)
         {
             return _connections.Where(x =>x.Name.Contains(name)).Select(x =>x.Id).ToList();
+        }
+        public async Task CallUser()
+        {
+            await Clients.All.SendAsync("ReceiveCall");
+        }
+
+        public async Task AnswerCall()
+        {
+            await Clients.All.SendAsync("CallAnswered");
+        }
+
+        public async Task SendICECandidate( string candidate)
+        {
+            await Clients.All.SendAsync("ReceiveICECandidate", candidate);
+        }
+
+        public async Task SendOffer( string offer)
+        {
+            await Clients.All.SendAsync("ReceiveOffer", offer);
+        }
+
+        public async Task SendAnswer( string answer)
+        {
+            await Clients.All.SendAsync("ReceiveAnswer", answer);
         }
     }
 }

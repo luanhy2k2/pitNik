@@ -15,27 +15,135 @@
 
   <div class="postoverlay"></div>
 
-  <div class="responsive-header">
-    <div class="mh-head first Sticky">
-      <span class="mh-btns-left">
-        <a class="" href="#menu"><i class="fa fa-align-justify"></i></a>
+  <div  class="responsive-header">
+    <div style="background-color: #34465d;padding-left: 10px;" class="mh-head first Sticky">
+      <span style="float: left; padding-top: 10px; " class="mh-text">
+        <a routerLink="/" title=""><img src="./assets/images/logo.png" alt=""></a>
       </span>
-      <span class="mh-text">
-        <a href="newsfeed.html" title=""><img src="./assets/images/logo2.png" alt=""></a>
-      </span>
+     
+      <div style="float: right; width: 50%;" class="top-area">
+        <ul style="display: flex; float: right; padding-top: 10px;" class="setting-area">
+          <li class="liResonsive">
+            <a href="#" title="Friend Requests" data-ripple="">
+              <i class="fa fa-user"></i><em class="bg-red">{{CountFriendShipPending()}}</em>
+            </a>
+            <div class="dropdowns">
+              <span>5 New Requests <a href="#" title="">View all Requests</a></span>
+              <ul class="drops-menu">
+                <li *ngFor="let x of FriendPending.items">
+                  <div>
+                    <figure>
+                      <img *ngIf="x.senderImage; else nullUserImage;" class="image" style="max-height: 30px; width: 100%;"
+                        src="https://localhost:7261/Users/{{x.senderImage}}" alt="">
+                      <ng-template #nullUserImage>
+                        <img alt="" class="image" style="max-height: 30px; width: 100%;"
+                          src="./assets/images/userDefault.png">
+                      </ng-template>
+                    </figure>
+                    <div class="mesg-meta">
+                      <h6><a href="#" title="">{{x.senderName}}</a></h6>
+                      <span><b>Amy</b> is mutule friend</span>
+                      <i>yesterday</i>
+                    </div>
+                    <div class="add-del-friends">
+                      <a (click)="UpdateFriendStatus(x.id,1)" title=""><i class="fa fa-heart"></i></a>
+                      <a (click)="UpdateFriendStatus(x.id,2)" href="#" title=""><i class="fa fa-trash"></i></a>
+                    </div>
+                  </div>
+                </li>
+  
+              </ul>
+              <a href="friend-requests.html" title="" class="more-mesg">View All</a>
+            </div>
+          </li>
+          <li class="liResonsive">
+            <a href="#" title="Notification" data-ripple="">
+              <i class="fa fa-bell"></i><em class="bg-purple">{{UnreadNotificationCount()}}</em>
+            </a>
+            <div class="dropdowns">
+              <span>4 New Notifications <a href="#" title="">Mark all as read</a></span>
+              <ul class="drops-menu">
+                <li *ngFor=" let no of Notifications.items">
+                  <a (click)="UpdateReadStatusNotification(no.id, true)" title="">
+                    <figure>
+                      <img *ngIf="no.sender.image; else nullUserImage;" style="height: 45px; width: 45px;" alt="author"
+                        src="https://localhost:7261/Users/{{no.sender.image}}">
+                      <ng-template #nullUserImage>
+                        <img style="height: 45px; width: 45px;" src="./assets/images/userDefault.png">
+                      </ng-template>
+                      <span class="status f-online"></span>
+                    </figure>
+                    <div class="mesg-meta">
+                      <h6>{{no.sender.name}}</h6>
+                      <span [ngClass]="{'bold': no.isSeen == false}">{{no.content}}</span>
+                      <i>{{no.created}}</i>
+                    </div>
+                  </a>
+                </li>
+  
+              </ul>
+              <a title="" class="more-mesg">View All</a>
+            </div>
+          </li>
+          <li class="liResonsive">
+            <a href="#" title="Messages" data-ripple=""><i class="fa fa-commenting"></i><em
+                class="bg-blue">{{UnreadConversationCount()}}</em></a>
+            <div class="dropdowns">
+              <span>5 New Messages <a href="#" title="">Mark all as read</a></span>
+              <ul class="drops-menu">
+                <li *ngFor="let cvt of Conversations.items">
+                  <ng-container *ngFor="let member of cvt.member">
+                    <div *ngIf="member.isCurrentUser == false">
+                      <a (click)="LoadMessageConverstion(cvt.id)" class="show-mesg" href="#" title="">
+                        <figure>
+                          <img *ngIf="member.image; else nullImageConversation;" style="height: 45px; width: 45px;"
+                            alt="author" src="https://localhost:7261/Users/{{member.image}}">
+                          <ng-template #nullImageConversation>
+                            <img style="height: 45px; width: 45px;" alt="author" src="./assets/images/userDefault.png">
+                          </ng-template>
+                          <span *ngIf="cvt.isOnline" class="status f-online"></span>
+                        </figure>
+                        <div class="mesg-meta">
+                          <h6>{{ member.name }}</h6>
+                          <span [ngClass]="{'bold': cvt.isSeen == false}"> {{cvt.message}}</span>
+                          <i>{{cvt.timeMessage}}</i>
+                        </div>
+                      </a>
+                    </div>
+  
+                  </ng-container>
+  
+                </li>
+  
+              </ul>
+              <a href="chat-messenger.html" title="" class="more-mesg">View All</a>
+            </div>
+          </li>
+          <li class="liResonsive"><a [routerLink]="['/groups']"><i class="fas fa-users"></i></a>
+  
+          </li>
+         
+        </ul>
+      </div>
       <span class="mh-btns-right">
-        <a class="fa fa-sliders" href="#shoppingbag"></a>
+        <div class="user-img">
+          <img [routerLink]="['/about']" *ngIf="user"
+          [src]="user.image ? 'https://localhost:7261/Users/' + user.image : './assets/images/userDefault.png'"
+          style="width: 45px; height: 40px; border-radius: 100%;" alt="">
+        </div>
+        
       </span>
     </div>
-    <div class="mh-head second">
+   
+    <div style="background-color: #34465d;" class="mh-head second">
       <form class="mh-form">
         <input placeholder="search" />
         <a href="#/" class="fa fa-search"></a>
       </form>
     </div>
+    
 
-
-  </div><!-- responsive header -->
+  </div>
 
   <div class="topbar stick">
     <div class="logo">

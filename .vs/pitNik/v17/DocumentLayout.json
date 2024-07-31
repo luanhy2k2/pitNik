@@ -3,20 +3,8 @@
   "WorkspaceRootPath": "C:\\Project.net\\pitNik\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|c:\\project.net\\pitnik\\application\\features\\comment\\handlers\\commands\\createreplycommentcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|solutionrelative:application\\features\\comment\\handlers\\commands\\createreplycommentcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E58E86E4-4674-4EA6-9AD8-E9278AE07C74}|API\\API.csproj|c:\\project.net\\pitnik\\api\\controllers\\commentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E58E86E4-4674-4EA6-9AD8-E9278AE07C74}|API\\API.csproj|solutionrelative:api\\controllers\\commentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|c:\\project.net\\pitnik\\application\\features\\comment\\handlers\\commands\\createcommentcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|solutionrelative:application\\features\\comment\\handlers\\commands\\createcommentcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|c:\\project.net\\pitnik\\application\\features\\comment\\handlers\\queries\\getreplycommentrequesthandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|solutionrelative:application\\features\\comment\\handlers\\queries\\getreplycommentrequesthandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|c:\\project.net\\pitnik\\application\\features\\post\\handles\\commands\\createpostcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|solutionrelative:application\\features\\post\\handles\\commands\\createpostcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,56 +14,20 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "CreateCommentCommandHandler.cs",
-              "DocumentMoniker": "C:\\Project.net\\pitNik\\Application\\Features\\Comment\\Handlers\\Commands\\CreateCommentCommandHandler.cs",
-              "RelativeDocumentMoniker": "Application\\Features\\Comment\\Handlers\\Commands\\CreateCommentCommandHandler.cs",
-              "ToolTip": "C:\\Project.net\\pitNik\\Application\\Features\\Comment\\Handlers\\Commands\\CreateCommentCommandHandler.cs",
-              "RelativeToolTip": "Application\\Features\\Comment\\Handlers\\Commands\\CreateCommentCommandHandler.cs",
-              "ViewState": "AQIAAAoAAAAAAAAAAAAkwBoAAAAJAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-24T21:37:28.726Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "CreateReplyCommentCommandHandler.cs",
-              "DocumentMoniker": "C:\\Project.net\\pitNik\\Application\\Features\\Comment\\Handlers\\Commands\\CreateReplyCommentCommandHandler.cs",
-              "RelativeDocumentMoniker": "Application\\Features\\Comment\\Handlers\\Commands\\CreateReplyCommentCommandHandler.cs",
-              "ToolTip": "C:\\Project.net\\pitNik\\Application\\Features\\Comment\\Handlers\\Commands\\CreateReplyCommentCommandHandler.cs",
-              "RelativeToolTip": "Application\\Features\\Comment\\Handlers\\Commands\\CreateReplyCommentCommandHandler.cs",
-              "ViewState": "AQIAACgAAAAAAAAAAAAIwDAAAAA8AAAA",
+              "Title": "CreatePostCommandHandler.cs",
+              "DocumentMoniker": "C:\\Project.net\\pitNik\\Application\\Features\\Post\\Handles\\Commands\\CreatePostCommandHandler.cs",
+              "RelativeDocumentMoniker": "Application\\Features\\Post\\Handles\\Commands\\CreatePostCommandHandler.cs",
+              "ToolTip": "C:\\Project.net\\pitNik\\Application\\Features\\Post\\Handles\\Commands\\CreatePostCommandHandler.cs",
+              "RelativeToolTip": "Application\\Features\\Post\\Handles\\Commands\\CreatePostCommandHandler.cs",
+              "ViewState": "AQIAADkAAAAAAAAAAAAowEQAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-24T21:36:01.909Z",
+              "WhenOpened": "2024-07-30T04:52:58.603Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "CommentController.cs",
-              "DocumentMoniker": "C:\\Project.net\\pitNik\\API\\Controllers\\CommentController.cs",
-              "RelativeDocumentMoniker": "API\\Controllers\\CommentController.cs",
-              "ToolTip": "C:\\Project.net\\pitNik\\API\\Controllers\\CommentController.cs",
-              "RelativeToolTip": "API\\Controllers\\CommentController.cs",
-              "ViewState": "AQIAAB8AAAAAAAAAAAAwwDUAAAAJAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-24T17:45:52.903Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "GetReplyCommentRequestHandler.cs",
-              "DocumentMoniker": "C:\\Project.net\\pitNik\\Application\\Features\\Comment\\Handlers\\Queries\\GetReplyCommentRequestHandler.cs",
-              "RelativeDocumentMoniker": "Application\\Features\\Comment\\Handlers\\Queries\\GetReplyCommentRequestHandler.cs",
-              "ToolTip": "C:\\Project.net\\pitNik\\Application\\Features\\Comment\\Handlers\\Queries\\GetReplyCommentRequestHandler.cs",
-              "RelativeToolTip": "Application\\Features\\Comment\\Handlers\\Queries\\GetReplyCommentRequestHandler.cs",
-              "ViewState": "AQIAAA4AAAAAAAAAAAAowCQAAABLAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-24T17:39:25.823Z"
             }
           ]
         }

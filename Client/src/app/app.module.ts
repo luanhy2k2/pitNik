@@ -25,6 +25,7 @@ import { SidebarRightComponent } from './Partial/sidebar-right/sidebar-right.com
 import { RegisterComponent } from './Modules/register/register.component';
 import { ImagesComponent } from './Modules/about/images/images.component';
 import { PostComponent } from './Modules/about/post/post.component';
+import { VideoComponent } from './Modules/video/video.component';
 
 export function initializeApp(signalrService: SignalRService) {
   return () => signalrService.startConnection();
@@ -50,7 +51,8 @@ export function initializeApp(signalrService: SignalRService) {
     SidebarRightComponent,
     RegisterComponent,
     ImagesComponent,
-    PostComponent
+    PostComponent,
+    VideoComponent
   ],
   imports: [
     BrowserModule,

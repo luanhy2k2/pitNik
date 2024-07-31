@@ -68,5 +68,29 @@ namespace Application.Features.Account.Handles.Queries
                 signingCredentials: signingCredentials);
             return jwtSecurityToken;
         }
+    //    private async Task<JwtSecurityToken> GenerateToken(ApplicationUser user)
+    //    {
+    //        var claims = new[]
+    //        {
+    //    new Claim("user_id", user.Id),  // user_id theo yêu cầu của StreamVideo
+    //    new Claim(JwtRegisteredClaimNames.Sub, $"user/{user.Id}"), // sub: user/{user.UserName}
+    //    new Claim(JwtRegisteredClaimNames.Iat, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString()), // iat
+    //    new Claim(JwtRegisteredClaimNames.Exp, DateTimeOffset.UtcNow.AddDays(3).ToUnixTimeSeconds().ToString()), // exp
+    //    new Claim(JwtRegisteredClaimNames.Iss, "https://pronto.getstream.io")  // iss
+    //};
+
+    //        var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JwtSettings:Key"]));
+    //        var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
+
+    //        var jwtSecurityToken = new JwtSecurityToken(
+    //            issuer: _config["JwtSettings:Issuer"],
+    //            audience: _config["JwtSettings:Audience"],
+    //            expires: DateTime.UtcNow.AddDays(3),
+    //            claims: claims,
+    //            signingCredentials: signingCredentials
+    //        );
+
+    //        return jwtSecurityToken;
+    //    }
     }
 }

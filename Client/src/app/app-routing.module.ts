@@ -13,6 +13,7 @@ import { InvitationComponent } from './Modules/group/invitation/invitation.compo
 import { RegisterComponent } from './Modules/register/register.component';
 import { ImagesComponent } from './Modules/about/images/images.component';
 import { PostComponent } from './Modules/about/post/post.component';
+import { VideoComponent } from './Modules/video/video.component';
 
 const routes: Routes = [
   {
@@ -60,6 +61,10 @@ const routes: Routes = [
   {
     path: 'Post',
     component: PostComponent,
+  },
+  {
+    path: 'video',
+    component: VideoComponent,
   },
   {
     path: 'groupMember',
