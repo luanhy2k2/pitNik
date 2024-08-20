@@ -109,16 +109,16 @@ namespace Application.Features.Post.Handles.Commands
                 }
                 foreach(var item in friendId)
                 {
-                    var notification = new CreateNotificationDto
-                    {
-                        Content = "Vừa đăng 1 bài viết",
-                        Created = DateTime.Now,
-                        SenderId = request.CreatePostDto.UserId,
-                        ReceiverId = item,
-                        IsSeen = false,
-                    };
+                    //var notification = new CreateNotificationDto
+                    //{
+                    //    Content = "Vừa đăng 1 bài viết",
+                    //    Created = DateTime.Now,
+                    //    SenderId = request.CreatePostDto.UserId,
+                    //    ReceiverId = item,
+                    //    IsSeen = false,
+                    //};
 
-                     _jobClient.Enqueue(() => CreateNotificationJob(notification));
+                    // _jobClient.Enqueue(() => CreateNotificationJob(notification));
                 }
                 return new BaseCommandResponse<PostDto>("Tạo bài viết thành công!",postDto);
             }

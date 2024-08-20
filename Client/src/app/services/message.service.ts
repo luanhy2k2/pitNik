@@ -8,28 +8,96 @@ import { Message } from '../Models/Message/Message.entity';
 import { CreateMessage } from '../Models/Message/CreateMessage.entity';
 import { BaseCommandResponse } from '../Models/Common/BaseCommandResponse.entity';
 import { UpdateMessageReadStatus } from '../Models/Message/UpdateMessageReadStatus.entuty';
+import { apiUrl } from '../Environments/env';
+import { HttpTransportType, HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
+import { MessageReadStatus } from '../Models/Message/MessageReadStatus';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MessageService {
-  private apiUrl = "https://localhost:7261";
-  Messages:BaseQueriesResponse<Message> = {
-    pageIndex:1,
-    pageSize:20,
-    keyword:"",
-    items:[],
-    total:0
+  Messages: BaseQueriesResponse<Message> = {
+    pageIndex: 1,
+    pageSize: 20,
+    keyword: "",
+    items: [],
+    total: 0
   };
   imageMessageSrcs: (string | ArrayBuffer | null)[] = [];
-  CreateMessageRequest:CreateMessage = {
-    conversationId:0,
-    content:String.fromCodePoint(0x1F60A),
-    files:[]
+  CreateMessageRequest: CreateMessage = {
+    conversationId: 0,
+    content: "",
+    // files: []
   }
   isHidden: boolean = true;
-  constructor(private readonly httpClient: HttpClient,private readonly userService:UserService) { }
-  getPagedData(pageIndex:number, pageSize:number,conversationId:number, keyword:string): Observable<BaseQueriesResponse<Message>> {
+  private hubConnection: HubConnection;
+  private mesageAddedSource = new Subject<Message>();
+  messageAdded$ = this.mesageAddedSource.asObservable();
+  constructor(private readonly httpClient: HttpClient, private readonly userService: UserService) {
+    this.hubConnection = new HubConnectionBuilder()
+      .withUrl(`${apiUrl}/HubMessage`, {
+        accessTokenFactory: () => {
+          const user = this.userService.getUser();
+          return user ? user.token : '';
+        },
+        transport: HttpTransportType.LongPolling,
+      })
+      .withAutomaticReconnect()
+      .configureLogging(LogLevel.Information)
+      .build();
+  }
+  startConnection() {
+    this.hubConnection.start()
+      .then(() => {
+        console.log('Đã kết nối SignalR');
+        this.registerSignalREvents();
+      })
+      .catch(err => {
+        console.log('Lỗi khi kết nối: ', err)
+      });
+  }
+  stopConnection() {
+    if (this.hubConnection) {
+      try {
+        this.hubConnection.stop();
+        console.log('Đã ngắt kết nối SignalR');
+      } catch (err) {
+        console.log('Lỗi khi dừng kết nối: ', err);
+      }
+    }
+  }
+  async joinRoom(roomName: string) {
+    try {
+      console.log("joined room:", roomName)
+      return await this.hubConnection.invoke("Join", roomName);
+    } catch (err) {
+      throw err; // Re-throw the error to be handled by the caller if necessary
+    }
+  }
+  async LeaveRoom(roomName: string) {
+    try {
+      console.log("leaved room success:", roomName)
+      return await this.hubConnection.invoke("Leave", roomName);
+    } catch (err) {
+      console.error('Error while leaving room:', err);
+      throw err; // Re-throw the error to be handled by the caller if necessary
+    }
+  }
+  private registerSignalREvents() {
+    this.hubConnection.on('newMessage', (message) => {
+      console.log("message:", message)
+      this.mesageAddedSource.next(message);
+    });
+  }
+  async sendMessage(messsage: CreateMessage) {
+    return this.hubConnection.invoke('SendMessage', messsage)
+      .catch(error => console.log(error));
+  }
+  async UpdateMessageReadStatus(readStatus: MessageReadStatus) {
+    return this.hubConnection.invoke('UpdateMessageReadStatus', readStatus)
+      .catch(error => console.log(error));
+  }
+  getPagedData(pageIndex: number, pageSize: number, conversationId: number, keyword: string): Observable<BaseQueriesResponse<Message>> {
     let params = new HttpParams()
       .set('PageIndex', pageIndex.toString())
       .set('ConversionId', conversationId.toString())
@@ -37,18 +105,12 @@ export class MessageService {
     if (keyword) {
       params = params.set('Keyword', keyword);
     }
-    return this.httpClient.get<BaseQueriesResponse<Message>>(`${this.apiUrl}/api/Message/Get`, { params,headers: this.userService.addHeaderToken()});
+    return this.httpClient.get<BaseQueriesResponse<Message>>(`${apiUrl}/api/Message/Get`, { params });
   }
-  create(message: CreateMessage): Observable<BaseCommandResponse<Message>> {
+  UploadFile(Files: File[]): Observable<BaseCommandResponse<string>> {
     const formData: FormData = new FormData();
-    formData.append('ConversationId', message.conversationId.toString());
-    formData.append('Content', message.content);
-    
-    message.files.forEach(file => formData.append('Files', file, file.name));
-    return this.httpClient.post<BaseCommandResponse<Message>>(`${this.apiUrl}/api/Message/Create`, formData,{headers: this.userService.addHeaderToken()});
-  }
-  updateMessageReadStatus(request: UpdateMessageReadStatus): Observable<BaseCommandResponse<Message>> {
-    return this.httpClient.post<BaseCommandResponse<Message>>(`${this.apiUrl}/api/Message/UpdateStatusRead/${request.conversationId}/${request.status}`, {},{headers: this.userService.addHeaderToken()});
+    Files.forEach(file => formData.append('Files', file, file.name));
+    return this.httpClient.post<BaseCommandResponse<string>>(`${apiUrl}/api/Message/UploadFile`, formData);
   }
   LoadMessageConverstion(conversionId: number) {
     this.isHidden = !this.isHidden;

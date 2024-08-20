@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.Message;
+using Application.Features.Conversation.Request.Commands;
 using Application.Features.Message.Requests.Commands;
 using AutoMapper;
 using Core.Common;
@@ -19,14 +20,10 @@ namespace Application.Features.Message.Handlers.Command
 {
     public class CreateMessageCommandHandler : BaseFeatures, IRequestHandler<CreateMessageCommand, BaseCommandResponse<MessageDto>>
     {
-        private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _environment;
-        private readonly ISignalRNotificationService<MessageDto> _notificationService;
-        public CreateMessageCommandHandler(IPitNikRepositoryWrapper pitNikRepo, IWebHostEnvironment environment, IMapper mapper, ISignalRNotificationService<MessageDto> notificationService) : base(pitNikRepo)
+        public CreateMessageCommandHandler(IPitNikRepositoryWrapper pitNikRepo, IWebHostEnvironment environment) : base(pitNikRepo)
         {
-            _notificationService = notificationService;
             _environment = environment;
-            _mapper = mapper;
         }
 
         public async Task<BaseCommandResponse<MessageDto>> Handle(CreateMessageCommand request, CancellationToken cancellationToken)
@@ -34,40 +31,37 @@ namespace Application.Features.Message.Handlers.Command
             try
             {
                 // Kiểm tra các trường trong request.CreateMessageDto
-                if (string.IsNullOrEmpty(request.CreateMessageDto.Content) && request.CreateMessageDto.Files == null)
+                if (string.IsNullOrEmpty(request.CreateMessageDto.Content))
                 {
                     return new BaseCommandResponse<MessageDto>("Thông tin tin nhắn không hợp lệ!", false);
                 }
                 var conversation = await _pitNikRepo.Conversation.getById(request.CreateMessageDto.ConversationId);
                 if (conversation == null)
                 {
-                    
                 }
                 string Content = request.CreateMessageDto.Content;
-                if (request.CreateMessageDto.Files != null && request.CreateMessageDto.Files.Count > 0)
-                {
-                    foreach(var file in request.CreateMessageDto.Files)
-                    {
-                        var timestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
-                        var folderPath = Path.Combine(_environment.WebRootPath, "Messages");
-                        var filename = $"{request.CreateMessageDto.ConversationId}_{timestamp}_{file.FileName}";
-                        var filePath = Path.Combine(folderPath, filename);
-                        if (!Directory.Exists(folderPath))
-                        {
-                            Directory.CreateDirectory(folderPath);
-                        }
-                        using (var fileStream = new FileStream(filePath, FileMode.Create))
-                        {
-                            await file.CopyToAsync(fileStream);
-                        }
-                        Content += string.Format(
-                         "<img src=\"https://localhost:7261/Messages/{0} \">",filename
-                        );
-                    }
+                //if (request.CreateMessageDto.Files != null && request.CreateMessageDto.Files.Count > 0)
+                //{
+                //    foreach(var file in request.CreateMessageDto.Files)
+                //    {
+                //        var timestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
+                //        var folderPath = Path.Combine(_environment.WebRootPath, "Messages");
+                //        var filename = $"{request.CreateMessageDto.ConversationId}_{timestamp}_{file.FileName}";
+                //        var filePath = Path.Combine(folderPath, filename);
+                //        if (!Directory.Exists(folderPath))
+                //        {
+                //            Directory.CreateDirectory(folderPath);
+                //        }
+                //        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                //        {
+                //            await file.CopyToAsync(fileStream);
+                //        }
+                //        Content += string.Format(
+                //         "<img src=\"https://localhost:7261/Messages/{0} \">",filename
+                //        );
+                //    }
                     
-                }
-                
-
+                //}
                 var sender = await _pitNikRepo.Account.GetAllQueryable()
                     .FirstOrDefaultAsync(x => x.UserName == request.SenderUserName);
                 if (sender == null)
@@ -78,7 +72,7 @@ namespace Application.Features.Message.Handlers.Command
                 var message = new Core.Entities.Message
                 {
                     SenderId = sender.Id,
-                    Content = Content,
+                    Content = request.CreateMessageDto.Content,
                     Created = DateTime.Now,
                     ConversationId = request.CreateMessageDto.ConversationId
                 };
@@ -109,7 +103,7 @@ namespace Application.Features.Message.Handlers.Command
                     Id = message.Id,
                     ConversationId = message.ConversationId,
                 };
-                await _notificationService.SendToGroup(request.CreateMessageDto.ConversationId.ToString() , "newMessage", messageDto);
+                //await _notificationService.SendToGroup(request.CreateMessageDto.ConversationId.ToString() , "newMessage", messageDto);
 
                 return new BaseCommandResponse<MessageDto>("Gửi tin nhắn thành công!", messageDto);
             }

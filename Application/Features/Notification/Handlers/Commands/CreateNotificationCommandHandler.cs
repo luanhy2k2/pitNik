@@ -19,12 +19,10 @@ namespace Application.Features.Notification.Handlers.Commands
 {
     public class CreateNotificationCommandHandler : BaseFeatures, IRequestHandler<CreateNotificationCommand, BaseCommandResponse<NotificationDto>>
     {
-        private readonly IMapper _mapper;
-        private readonly ISignalRNotificationService<NotificationDto> _notificationService;  
-        public CreateNotificationCommandHandler(IPitNikRepositoryWrapper pitNikRepo, IMapper mapper, ISignalRNotificationService<NotificationDto> notificationService) : base(pitNikRepo)
+        private readonly IMapper _mapper; 
+        public CreateNotificationCommandHandler(IPitNikRepositoryWrapper pitNikRepo, IMapper mapper) : base(pitNikRepo)
         {
             _mapper = mapper;
-            _notificationService = notificationService;
         }
 
         public async Task<BaseCommandResponse<NotificationDto>> Handle(CreateNotificationCommand request, CancellationToken cancellationToken)
@@ -36,15 +34,24 @@ namespace Application.Features.Notification.Handlers.Commands
                 {
                     return new BaseCommandResponse<NotificationDto>("Người nhận không tồn tại", false);
                 }
-                var notification = _mapper.Map<Core.Entities.Notification>(request.CreateDto);
+                var notification = new Core.Entities.Notification
+                {
+                    Content = request.CreateDto.Content,
+                    SenderId = request.CreateDto.SenderId,
+                    ReceiverId = request.CreateDto.ReceiverId,
+                    Created = DateTime.Now,
+                    IsSeen = false,
+                };
+                if(request.CreateDto.PostId > 0)
+                    notification.PostId = request.CreateDto.PostId;
+                await _pitNikRepo.Notification.Create(notification);
                 var notificationDto = _mapper.Map<NotificationDto>(notification);
                 notificationDto.Created = TimeHelper.GetRelativeTime(notification.Created);
                 var sender = await _pitNikRepo.Account.GetAllQueryable().FirstOrDefaultAsync(x =>x.Id == request.CreateDto.SenderId);
                 var senderDto = _mapper.Map<AccountDto>(sender);
                 notificationDto.Sender = senderDto;
-                await _pitNikRepo.Notification.Create(notification);
-                await _notificationService.SendTo( receiver.UserName , "createNotification", notificationDto);
-                return new BaseCommandResponse<NotificationDto>("Gửi thông báo thành công");
+                
+                return new BaseCommandResponse<NotificationDto>("Gửi thông báo thành công", notificationDto);
             }
             catch(Exception ex)
             {

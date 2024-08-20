@@ -1,4 +1,5 @@
-﻿using Application;
+﻿using API.Hubs;
+using Application;
 using Hangfire;
 using Infrastructure.Hubs;
 using Microsoft.AspNetCore.Identity;
@@ -50,11 +51,15 @@ app.UseCors("CorsPolicy");
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapHub<ChatHub>("/chatHub");
-    endpoints.MapHangfireDashboard();
-});
+//app.UseEndpoints(endpoints =>
+//{
+//    endpoints.MapHub<ChatHub>("/chatHub");
+//    endpoints.MapHangfireDashboard();
+//});
+app.MapHub<ChatHub>("chatHub");
+app.MapHub<HubMessage>("HubMessage");
+app.MapHub<HubInteraction>("HubInteraction");
+app.MapHub<HubPresence>("HubPresence");
 app.UseStaticFiles();
 app.MapControllers();
 

@@ -6,7 +6,7 @@ import { CreateComment } from 'src/app/Models/Comment/create-comment.entity';
 import { CreateReplyComment } from 'src/app/Models/Comment/create-reply-comment';
 import { BaseQueriesResponse } from 'src/app/Models/Common/BaseQueriesResponse.entity';
 import { CreateInteraction } from 'src/app/Models/Interaction/CreateInteraction.entity';
-import { BasePaging } from 'src/app/Models/Paging.entity';
+import { CreateNotification } from 'src/app/Models/Notification/CreateNotification';
 import { CreatePost } from 'src/app/Models/Post/CreatePost.entity';
 import { Post } from 'src/app/Models/Post/Post.entity';
 import { UserService } from 'src/app/services/User.service';
@@ -14,7 +14,7 @@ import { CommentService } from 'src/app/services/comment.service';
 import { FriendShipService } from 'src/app/services/friend-ship.service';
 import { InteractionsService } from 'src/app/services/interactions.service';
 import { PostService } from 'src/app/services/post.service';
-import { SignalRService } from 'src/app/services/signal-rservice.service';
+import { PresenceService } from 'src/app/services/presence.service';
 
 
 @Component({
@@ -29,20 +29,16 @@ export class IndexComponent {
     private readonly InteractionService: InteractionsService,
     private readonly CommentService: CommentService,
     private readonly UserService: UserService,
-    private readonly signalRService: SignalRService,
     private readonly friendShipService: FriendShipService,
+    private readonly presenceService: PresenceService,
     private clipboard: ClipboardService
   ) { }
   Posts: BaseQueriesResponse<Post> = {
     pageIndex: 1,
-    pageSize: 5,
+    pageSize: 10,
     total: 0,
     items: [],
     keyword: ""
-  }
-  PagingPost: BasePaging = {
-    pageIndex: 1,
-    pageSize: 5,
   }
   CreatePostReq: CreatePost = {
     userId: '',
@@ -83,9 +79,17 @@ export class IndexComponent {
     isReact: false,
     created: new Date
   }
+  createNotificationReq:CreateNotification = {
+    senderId:"",
+    receiverId:"",
+    content:"",
+    postId:0,
+    isSeen: false
+  }
   showModal: boolean = false;
   maxPageReply: boolean = false;
   ngOnInit() {
+    this.CommentService.startConnection();
     this.route.queryParams.subscribe(res => {
       var postId = res['postId'];
       if (postId != null) {
@@ -97,32 +101,29 @@ export class IndexComponent {
     });
     this.friendShipService.userId = this.UserService.getUser().id;
     this.LoadPost();
-    this.signalRService.commentAdded$.subscribe(res => {
+    this.CommentService.commentAdded$.subscribe(res => {
       this.postDetail.comment.push(res);
       this.postDetail.totalComment++;
     })
-    this.signalRService.reactAdded$.subscribe(res => {
-      if (this.postDetail.id == res.postId) {
-        if (res.isReact == false) {
-          this.postDetail.isReact = false
-          this.postDetail.totalReactions--;
-        }
-        else {
-          this.postDetail.isReact = true;
-          this.postDetail.totalReactions++
-        }
-      }
-    })
-    this.signalRService.postAdded$.subscribe(res => {
-      this.LoadPost();
-    })
+    // this.signalRService.reactAdded$.subscribe(res => {
+    //   if (this.postDetail.id == res.postId) {
+    //     if (res.isReact == false) {
+    //       this.postDetail.isReact = false
+    //       this.postDetail.totalReactions--;
+    //     }
+    //     else {
+    //       this.postDetail.isReact = true;
+    //       this.postDetail.totalReactions++
+    //     }
+    //   }
+    // })
+
     this.LoadCurrentUser();
   };
   LoadPost() {
     this.postService.getPost(this.Posts.pageIndex, this.Posts.pageSize, this.Posts.keyword).subscribe(
       res => {
-        this.Posts.items = res.items;
-        this.Posts.total = res.total;
+        this.Posts = res;
       },
       err => {
         console.log(err);
@@ -133,7 +134,7 @@ export class IndexComponent {
   LoadPostDetail(idPost: number) {
     if (idPost != null) {
       this.showModal = true;
-      this.signalRService.joinRoom(`Post_${idPost}`);
+      this.CommentService.joinPost(`Post_${idPost}`);
       this.postService.getById(idPost).subscribe(res => {
         this.postDetail = res;
         this.postDetail.pageIndexComment = 1;
@@ -152,7 +153,7 @@ export class IndexComponent {
       }
     }
     this.showModal = false;
-    this.signalRService.LeaveRoom(`Post_${this.postDetail.id}`)
+    this.CommentService.LeavePost(`Post_${this.postDetail.id}`)
   }
   loadReplyComment(commentId: number) {
     for (let i = 0; i < this.postDetail.comment.length; i++) {
@@ -242,9 +243,15 @@ export class IndexComponent {
   }
   AddComment() {
     this.CreateCommentReq.postId = this.postDetail.id;
-    this.CommentService.create(this.CreateCommentReq).subscribe(res => {
+    this.CommentService.sendComment(this.CreateCommentReq).then(res => {
       this.CreateCommentReq.postId = 0;
       this.CreateCommentReq.content = "";
+      this.createNotificationReq.content = "Đã bình luận bài viết của bạn";
+      this.createNotificationReq.receiverId = this.postDetail.userId;
+      this.createNotificationReq.postId = this.postDetail.id;
+      this.presenceService.sendNotification(this.createNotificationReq).then(Notification =>{
+        console.log(Notification)
+      });
     })
   }
   onFilesSelected(event: Event): void {

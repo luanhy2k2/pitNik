@@ -19,11 +19,9 @@ namespace Application.Features.Comment.Handlers.Commands
     public class CreateCommentCommandHandler : BaseFeatures, IRequestHandler<CreateCommentCommand, BaseCommandResponse<CommentDto>>
     {
         private readonly IMapper _mapper;
-        private readonly ISignalRNotificationService<CommentDto> _notificationService;
-        public CreateCommentCommandHandler(IPitNikRepositoryWrapper pitNikRepo, ISignalRNotificationService<CommentDto> notificationService, IMapper mapper) : base(pitNikRepo)
+        public CreateCommentCommandHandler(IPitNikRepositoryWrapper pitNikRepo, IMapper mapper) : base(pitNikRepo)
         {
             _mapper = mapper;
-            _notificationService = notificationService;
         }
 
         public async Task<BaseCommandResponse<CommentDto>> Handle(CreateCommentCommand request, CancellationToken cancellationToken)
@@ -47,8 +45,7 @@ namespace Application.Features.Comment.Handlers.Commands
                 commentDto.NameUser = user.Name;
                 commentDto.ImageUser = user.Image;
                 commentDto.Created = TimeHelper.GetRelativeTime(comment.Created);
-                await _notificationService.SendToGroup($"Post_{request.CreateCommentDto.PostId}","addComment", commentDto);
-                return new BaseCommandResponse<CommentDto>("Bình luận thành công!");
+                return new BaseCommandResponse<CommentDto>("Bình luận thành công!", commentDto);
             }
             catch (Exception ex)
             {

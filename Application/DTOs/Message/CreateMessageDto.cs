@@ -13,6 +13,6 @@ namespace Application.DTOs.Message
     {
         public int ConversationId { get; set; }
         public string ?Content { get; set; }
-        public List<IFormFile> ?Files {  get; set; }
+        //public List<IFormFile> ?Files {  get; set; }
     }
 }

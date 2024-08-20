@@ -42,7 +42,6 @@ namespace Application.Features.Account.Handles.Queries
                 Id = user.Id,
                 Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken),
                 Name = user.Name,
-                UserName = user.UserName
             };
 
             return response;

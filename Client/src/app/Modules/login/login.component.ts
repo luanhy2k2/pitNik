@@ -9,7 +9,6 @@ import { UserService } from 'src/app/services/User.service';
 export class LoginComponent {
   constructor(
     private readonly UserService:UserService, 
-    private readonly route:Router,
   ){}
   userName:string = "";
   passWord:string = "";
@@ -17,6 +16,7 @@ export class LoginComponent {
     this.UserService.login(this.userName,this.passWord).subscribe(
       res =>{
         alert("Đăng nhập thành công!");
+        localStorage.setItem('user', JSON.stringify(res));
         window.location.href = "/";
       },
       err =>{

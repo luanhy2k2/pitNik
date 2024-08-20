@@ -37,21 +37,21 @@ namespace Application.Features.Group.Handlers.Commands
                   
                 data.Status = request.StatusMember.MemberStatus;
                 await _pitNikRepo.GroupMember.Update(data);
-                var notification = new CreateNotificationDto
-                {
-                    Content = $"{CreatorGroup.Name} đã chấp thuận lời mời tham gia của bạn",
-                    Created = DateTime.Now,
-                    SenderId = CreatorGroup.Id,
-                    ReceiverId = data.UserId,
-                    IsSeen = false,
-                    PostId = null
-                };
+                //var notification = new CreateNotificationDto
+                //{
+                //    Content = $"{CreatorGroup.Name} đã chấp thuận lời mời tham gia của bạn",
+                //    Created = DateTime.Now,
+                //    SenderId = CreatorGroup.Id,
+                //    ReceiverId = data.UserId,
+                //    IsSeen = false,
+                //    PostId = null
+                //};
                 if(request.StatusMember.MemberStatus == Core.Entities.GroupMemberStatus.Rejected)
                 {
-                    notification.Content = "Yêu cầu tham gia của bạn đã bị từ chối";
+                    //notification.Content = "Yêu cầu tham gia của bạn đã bị từ chối";
                     await _pitNikRepo.GroupMember.Delete(data.Id);
                 }
-                await _mediator.Send(new CreateNotificationCommand { CreateDto = notification });
+                //await _mediator.Send(new CreateNotificationCommand { CreateDto = notification });
                 return new BaseCommandResponse<UpdateStatusInvitationDto>("Cập nhật trạng thái thành công!");
             }
             catch(Exception ex)

@@ -16,7 +16,7 @@ import { ConversationService } from 'src/app/services/conversation.service';
 import { FriendShipService } from 'src/app/services/friend-ship.service';
 import { MessageService } from 'src/app/services/message.service';
 import { NotificationService } from 'src/app/services/notification.service';
-import { SignalRService } from 'src/app/services/signal-rservice.service';
+import { PresenceService } from 'src/app/services/presence.service';
 
 @Component({
   selector: 'app-header',
@@ -24,151 +24,154 @@ import { SignalRService } from 'src/app/services/signal-rservice.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-  constructor(private readonly FriendService:FriendShipService,
-    private readonly signalRService:SignalRService,
-    private readonly userService:UserService,
-     private readonly notificationService:NotificationService,
-     private readonly conversationService:ConversationService,
-     private readonly messageService:MessageService,
-     private readonly Router:Router){}
- 
+  constructor(private readonly FriendService: FriendShipService,
+    private readonly presenceService: PresenceService,
+    private readonly userService: UserService,
+    private readonly notificationService: NotificationService,
+    private readonly conversationService: ConversationService,
+    private readonly messageService: MessageService,
+    private readonly Router: Router) { }
   isHidden: boolean = true;
-  FriendPending:BaseQueriesResponse<FriendShip> = {
+  FriendPending: BaseQueriesResponse<FriendShip> = {
     pageIndex: 1,
     pageSize: 10,
-    items:[],
-    total:0,
-    keyword:""
+    items: [],
+    total: 0,
+    keyword: ""
   }
-  UpdateFriendStatusModel:UpdateStatusFriend = {
+  UpdateFriendStatusModel: UpdateStatusFriend = {
     id: 0,
-    status:FriendshipStatus.Pending,
-    requestedAt:new Date
+    status: FriendshipStatus.Pending,
+    requestedAt: new Date
   }
-  user:Account = {
-    id:"",
-    name:"",
-    address:"",
-    image:"",
-    userName:"",
-    phoneNumber:"",
-    email:"",
-    birthday:new Date,
-    gender:Gender.Male
+  user: Account = {
+    id: "",
+    name: "",
+    address: "",
+    image: "",
+    userName: "",
+    phoneNumber: "",
+    email: "",
+    birthday: new Date,
+    gender: Gender.Male
   }
-  Notifications:BaseQueriesResponse<Notification> = {
-    pageIndex:1,
-    pageSize:20,
-    items:[],
-    total:0,
-    keyword:""
+  Notifications: BaseQueriesResponse<Notification> = {
+    pageIndex: 1,
+    pageSize: 20,
+    items: [],
+    total: 0,
+    keyword: ""
   }
-  UpdateNotification:UpdateStatusReadNotification = {
+  UpdateNotification: UpdateStatusReadNotification = {
     id: 0,
     status: false
   }
-  Conversations:BaseQueriesResponse<Conversation> = {
+  Conversations: BaseQueriesResponse<Conversation> = {
     pageIndex: 1,
-    pageSize:20,
-    keyword:"",
+    pageSize: 20,
+    keyword: "",
     total: 0,
-    items:[]
+    items: []
   }
-  keyword:string = "";
-  Messages:BaseQueriesResponse<Message> = {
-    pageIndex:1,
-    pageSize:20,
-    keyword:"",
-    items:[],
-    total:0
+  keyword: string = "";
+  Messages: BaseQueriesResponse<Message> = {
+    pageIndex: 1,
+    pageSize: 20,
+    keyword: "",
+    items: [],
+    total: 0
   };
+  uploadImageMessage:File[] = [];
   imageMessageSrcs: (string | ArrayBuffer | null)[] = [];
-  CreateMessageRequest:CreateMessage = {
-    conversationId:0,
-    content:"",
-    files:[]
+  CreateMessageRequest: CreateMessage = {
+    conversationId: 0,
+    content: "",
+    // files: []
   };
-  toggleEmoji:boolean = false;
-  updateMessageReadStatus:UpdateMessageReadStatus = {
-    userId:"",
-    conversationId:0,
-    status:false
+  
+  toggleEmoji: boolean = false;
+  updateMessageReadStatus: UpdateMessageReadStatus = {
+    userId: "",
+    conversationId: 0,
+    status: false
   }
-  createConversationReq:CreateConversation = {
-    otherMembersId:[]
+  createConversationReq: CreateConversation = {
+    otherMembersId: []
   };
   Search() {
-    this.Router.navigate(['/search'],{ queryParams: { keyword: this.keyword } });
+    this.Router.navigate(['/search'], { queryParams: { keyword: this.keyword } });
   }
-  LoadFrienPending(){
-    this.FriendService.getPagedData(this.FriendPending.pageIndex,this.FriendPending.pageSize,this.FriendPending.keyword).subscribe(
-      res =>{
+  LoadFrienPending() {
+    this.FriendService.getPagedData(this.FriendPending.pageIndex, this.FriendPending.pageSize, this.FriendPending.keyword).subscribe(
+      res => {
         this.FriendPending.items = res.items,
-        this.FriendPending.total = res.total
+          this.FriendPending.total = res.total
       },
-      err =>{
+      err => {
         alert("Đã có lỗi xảy ra!")
       }
     )
   }
-  ngOnInit(){
+  ngOnInit() {
     this.messageService.loadConversation$.subscribe(userId => {
-      if(userId != ""){
-        this.conversationService.getByFriendId(userId).subscribe(res =>{
-          if(res != null){
+      if (userId != "") {
+        this.conversationService.getByFriendId(userId).subscribe(res => {
+          if (res != null) {
             this.LoadMessageConverstion(res.id);
           }
-          else{
+          else {
             this.createConversationReq.otherMembersId.push(userId);
-            this.conversationService.createConversation(this.createConversationReq).subscribe(conversation =>{
-              if(conversation.success == true){
-                this.signalRService.joinRoom(conversation.object.id.toString())
+            this.conversationService.createConversation(this.createConversationReq).subscribe(conversation => {
+              if (conversation.success == true) {
+                this.messageService.joinRoom(conversation.object.id.toString())
                 this.LoadMessageConverstion(conversation.object.id);
               }
             })
           }
         })
       }
-      
-    });
 
-    if(this.userService.getUser().token){
+    });
+    if (this.userService.getUser().token) {
       this.LoadNotification();
       this.LoadConversation();
       this.LoadFrienPending();
     }
-    this.signalRService.friendInvitationAdded$.subscribe(res =>{
+    this.presenceService.friendInvitationAdded$.subscribe(res => {
       this.LoadFrienPending();
     })
-    this.signalRService.notificationAdded$.subscribe(res =>{
+    this.presenceService.notificationAdded$.subscribe(res => {
       this.Notifications.items.unshift(res);
     })
-    this.signalRService.profileAdded$.subscribe(res =>{
+    this.presenceService.profileAdded$.subscribe(res => {
       this.user = res;
       console.log("currentUser:", res);
     })
-    this.signalRService.listFriendIdConnected$.subscribe(res => {
+    this.presenceService.listFriendIdConnected$.subscribe(res => {
       console.log("ListFriendConnected", res);
       for (let userId of res) {
-          for (let item of this.Conversations.items) {
-              if (item.member.some(x => x.id === userId)) {
-                  item.isOnline = true;
-                  this.signalRService.joinRoom(item.id.toString())
-              }
+        for (let item of this.Conversations.items) {
+          if (item.member.some(x => x.id === userId)) {
+            item.isOnline = true;
+            // this.signalRService.joinRoom(item.id.toString())
+            this.messageService.joinRoom(item.id.toString())
           }
+        }
       }
     });
-    this.signalRService.userConnectedAdd$.subscribe(res =>{
+    this.presenceService.userConnectedAdd$.subscribe(res => {
       console.log("add friend connected:", res);
       console.log(this.Conversations.items)
-      for(let item of this.Conversations.items){
-        if(item.member.find(x =>x.id == res)){
+      for (let item of this.Conversations.items) {
+        if (item.member.find(x => x.id == res)) {
           item.isOnline = true;
-          this.signalRService.joinRoom(item.id.toString())
+          // this.signalRService.joinRoom(item.id.toString())
+          this.messageService.joinRoom(item.id.toString());
         }
       }
     })
-    this.signalRService.messageAdded$.subscribe(message =>{
+    this.messageService.startConnection();
+    this.messageService.messageAdded$.subscribe(message => {
       for (let element of this.Conversations.items) {
         if (element.id == message.conversationId) {
           element.message = message.content;
@@ -179,22 +182,23 @@ export class HeaderComponent {
       }
       message.isSentByCurrentUser = message.sender.id == this.user.id
       message.created = "";
-      this.Messages.items.push(message); 
+      this.Messages.items.push(message);
+      console.log(message);
     })
   }
-  
+
   addEmoji(emoji: string) {
     this.CreateMessageRequest.content += emoji;
   }
-  
-  ToggleEmoji(){
+
+  ToggleEmoji() {
     this.toggleEmoji = !this.toggleEmoji;
   }
   onFilesSelected(event: Event): void {
     const fileInput = event.target as HTMLInputElement;
     if (fileInput.files) {
       Array.from(fileInput.files).forEach(file => {
-        this.CreateMessageRequest.files.push(file); // Update CreatePost object
+        this.uploadImageMessage.push(file); // Update CreatePost object
         if (file.type.startsWith('image/')) {
           const reader = new FileReader();
           reader.onload = (e: ProgressEvent<FileReader>) => {
@@ -208,64 +212,74 @@ export class HeaderComponent {
     }
     console.log(this.imageMessageSrcs);
   }
+  SendMessage() {
+    if(this.uploadImageMessage && this.uploadImageMessage.length > 0){
+      this.messageService.UploadFile(this.uploadImageMessage).subscribe(res =>{
+        this.CreateMessageRequest.content = res.object;
+        this.CreateMessage();
+      })
+    }
+    else{
+      this.CreateMessage();
+    }
+    
+  }
   CreateMessage(){
-    this.messageService.create(this.CreateMessageRequest).subscribe(res =>{
-      if(res.success == true){
-        this.CreateMessageRequest.content = "";
-        this.imageMessageSrcs = [];
-        for (let element of this.Conversations.items) {
-          if (element.id == res.object.conversationId && element.isOnline != true) {
-            element.message = res.object.content;
-            element.timeMessage = res.object.created;
-            element.isSeen = res.object.sender.id == this.user.id;
-            res.object.isSentByCurrentUser = res.object.sender.id == this.user.id
-            res.object.created = "";
-            this.Messages.items.push(res.object); 
-            break;
-          }
+    this.messageService.sendMessage(this.CreateMessageRequest)
+    .then(res => {
+      this.CreateMessageRequest.content = "";
+      this.imageMessageSrcs = [];
+      console.log(res);
+      for (let element of this.Conversations.items) {
+        if (element.id == this.CreateMessageRequest.conversationId && element.isOnline != true) {
+          element.message = this.CreateMessageRequest.content;
+          element.isSeen = true;
+          res.isSentByCurrentUser = true;
+          res.created = "";
+          this.Messages.items.push(res);
+          break;
         }
       }
     })
+    .catch(err => console.error('Error sending message: ' + err));
   }
-  LoadMessageConverstion(conversionId:number){
+  LoadMessageConverstion(conversionId: number) {
     this.isHidden = false;
     this.CreateMessageRequest.conversationId = conversionId;
-    for(let item of this.Conversations.items){
-      if(item.id == conversionId && item.isSeen == false){
+    for (let item of this.Conversations.items) {
+      if (item.id == conversionId && item.isSeen == false) {
         this.updateMessageReadStatus.conversationId = conversionId;
         this.updateMessageReadStatus.status = true;
-        this.messageService.updateMessageReadStatus(this.updateMessageReadStatus).subscribe(res =>{
-          if(res.success == true){
-            item.isSeen = true;
-          }
+        this.messageService.UpdateMessageReadStatus(this.updateMessageReadStatus).then(res => {
+          item.isSeen = true;
         })
         break;
       }
     }
-    this.messageService.getPagedData(this.Messages.pageIndex,this.Messages.pageSize, conversionId,this.Messages.keyword).subscribe(
-      res =>{
-        res.items.forEach(item =>{
+    this.messageService.getPagedData(this.Messages.pageIndex, this.Messages.pageSize, conversionId, this.Messages.keyword).subscribe(
+      res => {
+        res.items.forEach(item => {
           item.isSentByCurrentUser = item.sender.id == this.user.id;
         })
         this.Messages.items = res.items;
       })
   }
-  HiddenModalMesage(){
-    this.isHidden = true; 
+  HiddenModalMesage() {
+    this.isHidden = true;
   }
-  UpdateFriendStatus(id:number, status:FriendshipStatus){
+  UpdateFriendStatus(id: number, status: FriendshipStatus) {
     this.UpdateFriendStatusModel.id = id;
     this.UpdateFriendStatusModel.status = status;
-    this.FriendService.Update(this.UpdateFriendStatusModel).subscribe(res =>{
-      if(res.success == true){
+    this.FriendService.Update(this.UpdateFriendStatusModel).subscribe(res => {
+      if (res.success == true) {
         alert(res.message);
         for (let i = 0; i < this.FriendPending.items.length; i++) {
           if (this.FriendPending.items[i].id === id) {
-              this.FriendPending.items.splice(i, 1); 
-              break;
+            this.FriendPending.items.splice(i, 1);
+            break;
           }
         }
-        if(status == FriendshipStatus.Accepted){
+        if (status == FriendshipStatus.Accepted) {
           this.LoadConversation();
         }
       }
@@ -274,16 +288,16 @@ export class HeaderComponent {
   logOut() {
     localStorage.removeItem('user');
     alert("Đăng xuất thành công");
-    this.signalRService.stopConnection();
+    this.presenceService.stopConnection();
     this.Router.navigate(['/login']);
   }
-  LoadNotification(){
-    this.notificationService.getPagedData(this.Notifications.pageIndex, this.Notifications.pageSize,this.Notifications.keyword).subscribe(
-      res =>{
+  LoadNotification() {
+    this.notificationService.getPagedData(this.Notifications.pageIndex, this.Notifications.pageSize, this.Notifications.keyword).subscribe(
+      res => {
         this.Notifications.pageIndex = res.pageIndex,
-        this.Notifications.pageSize = res.pageSize,
-        this.Notifications.items = res.items,
-        this.Notifications.total = res.total
+          this.Notifications.pageSize = res.pageSize,
+          this.Notifications.items = res.items,
+          this.Notifications.total = res.total
       }
     )
   }
@@ -293,20 +307,20 @@ export class HeaderComponent {
   UnreadConversationCount(): number {
     return this.Conversations.items.filter(item => !item.isSeen).length;
   }
-  CountFriendShipPending():number{
+  CountFriendShipPending(): number {
     return this.FriendPending.items.length;
   }
-  LoadConversation(){
-    this.conversationService.getPagedData(this.Conversations.pageIndex, this.Conversations.pageSize, this.Conversations.keyword).subscribe(res =>{
+  LoadConversation() {
+    this.conversationService.getPagedData(this.Conversations.pageIndex, this.Conversations.pageSize, this.Conversations.keyword).subscribe(res => {
       this.Conversations.items = res.items;
     })
-    
+
   }
-  UpdateReadStatusNotification(id:number, status:boolean){
+  UpdateReadStatusNotification(id: number, status: boolean) {
     this.UpdateNotification.id = id;
     this.UpdateNotification.status = status;
-    this.notificationService.UpdateReadStatus(this.UpdateNotification).subscribe(res =>{
-      if(res.success == true){
+    this.notificationService.UpdateReadStatus(this.UpdateNotification).subscribe(res => {
+      if (res.success == true) {
         for (let element of this.Notifications.items) {
           if (element.id == this.UpdateNotification.id) {
             element.isSeen = this.UpdateNotification.status;
@@ -315,7 +329,7 @@ export class HeaderComponent {
       }
     })
   }
-  ngOnDestroy(){
-    this.signalRService.stopConnection();
+  ngOnDestroy() {
+    this.presenceService.stopConnection();
   }
 }

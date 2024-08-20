@@ -13,7 +13,7 @@ import { CommentService } from 'src/app/services/comment.service';
 import { FriendShipService } from 'src/app/services/friend-ship.service';
 import { InteractionsService } from 'src/app/services/interactions.service';
 import { PostService } from 'src/app/services/post.service';
-import { SignalRService } from 'src/app/services/signal-rservice.service';
+
 
 @Component({
   selector: 'app-post',
@@ -27,7 +27,7 @@ export class PostComponent {
     private readonly InteractionService: InteractionsService,
     private readonly CommentService: CommentService,
     private readonly UserService:UserService,
-    private readonly signalRService:SignalRService,
+    private readonly commentService:CommentService,
     private readonly friendService:FriendShipService,
   
     private clipboard:ClipboardService
@@ -110,7 +110,7 @@ export class PostComponent {
   LoadPostDetail(idPost:number){
     if(idPost != null){
       this.showModal = true;
-      this.signalRService.joinRoom(`Post_${idPost}`);
+      this.commentService.joinPost(`Post_${idPost}`);
       this.postService.getById(idPost).subscribe(res =>{
         this.postDetail = res;
         this.postDetail.pageIndexComment = 1;
@@ -151,7 +151,7 @@ export class PostComponent {
       }
     }
     this.showModal = false;
-    this.signalRService.LeaveRoom(`Post_${this.postDetail.id}`)
+    this.commentService.LeavePost(`Post_${this.postDetail.id}`)
   }
   LoadMoreComment(postId: number) {
     this.Posts.items.forEach(element => {

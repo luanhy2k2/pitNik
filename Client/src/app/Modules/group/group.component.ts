@@ -11,7 +11,6 @@ import { CommentService } from 'src/app/services/comment.service';
 import { GroupService } from 'src/app/services/group.service';
 import { InteractionsService } from 'src/app/services/interactions.service';
 import { PostService } from 'src/app/services/post.service';
-import { SignalRService } from 'src/app/services/signal-rservice.service';
 
 @Component({
   selector: 'app-group',
@@ -22,7 +21,7 @@ export class GroupComponent {
   constructor(
      private readonly groupService:GroupService,
      private readonly postService:PostService, 
-     private readonly signalRService:SignalRService,
+     private readonly commentService:CommentService,
      private readonly InteractionService:InteractionsService,
      private readonly CommentService:CommentService,
      private readonly UserService:UserService,
@@ -87,17 +86,17 @@ export class GroupComponent {
     this.route.queryParams.subscribe(params => {
       this.idGroup = params['id'];
     })
-    this.signalRService.commentAdded$.subscribe(res =>{
+    this.commentService.commentAdded$.subscribe(res =>{
       this.postDetail.comment.push(res);
       console.log(res);
     })
-    this.signalRService.reactAdded$.subscribe(res =>{
-      console.log(res);
-      this.loadPost();
-    })
-    this.signalRService.postAdded$.subscribe(res =>{
-      this.loadPost();
-    })
+    // this.signalRService.reactAdded$.subscribe(res =>{
+    //   console.log(res);
+    //   this.loadPost();
+    // })
+    // this.signalRService.postAdded$.subscribe(res =>{
+    //   this.loadPost();
+    // })
     this.loadGroupData();
     this.loadPost();
     this.LoadCurrentUser();
@@ -114,7 +113,7 @@ export class GroupComponent {
   }
   LoadPostDetail(idPost:number){
     this.showModal = true;
-    this.signalRService.joinRoom(`Post_${idPost}`);
+    this.commentService.joinPost(`Post_${idPost}`);
     this.postService.getById(idPost).subscribe(res =>{
       this.postDetail = res;
       this.postDetail.pageIndexComment = 1;
@@ -132,7 +131,7 @@ export class GroupComponent {
       }
     }
     this.showModal = false;
-    this.signalRService.LeaveRoom(`Post_${this.postDetail.id}`)
+    this.commentService.LeavePost(`Post_${this.postDetail.id}`)
   }
   AddComment(postId: number) {
     this.CreateComment.postId = postId;

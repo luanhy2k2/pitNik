@@ -1,7 +1,7 @@
 import { Component, HostListener, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs';
-import { SignalRService } from './services/signal-rservice.service';
+import { PresenceService } from './services/presence.service';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +11,7 @@ import { SignalRService } from './services/signal-rservice.service';
 export class AppComponent {
   showHeader = true;
   constructor(private router: Router,
-    private readonly signalRService:SignalRService,
+    private readonly presenceService:PresenceService,
     private activatedRoute: ActivatedRoute) {}
   ngOnInit() {
     this.router.events.pipe(
@@ -24,7 +24,7 @@ export class AppComponent {
   }
   @HostListener('window:beforeunload', ['$event'])
   unloadHandler(event: Event): void {
-    this.signalRService.stopConnection();
+    this.presenceService.stopConnection();
   }
   
 }

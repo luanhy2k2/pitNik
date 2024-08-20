@@ -58,16 +58,16 @@ namespace Application.Features.Interactions.Handlers.Commands
                 await _notificationService.SendToGroup($"Post_{request.CreateInteractionDto.PostId}" , "addReact", reactRes);
                 if(post.UserId != request.CreateInteractionDto.UserId)
                 {
-                    var notification = new CreateNotificationDto
-                    {
-                        Content = "Đã tương tác với bài viết của bạn",
-                        SenderId = request.CreateInteractionDto.UserId,
-                        PostId = request.CreateInteractionDto.PostId,
-                        ReceiverId = post.UserId,
-                        IsSeen = false,
-                        Created = DateTime.Now
-                    };
-                    await _mediator.Send(new CreateNotificationCommand { CreateDto = notification });
+                    //var notification = new CreateNotificationDto
+                    //{
+                    //    Content = "Đã tương tác với bài viết của bạn",
+                    //    SenderId = request.CreateInteractionDto.UserId,
+                    //    PostId = request.CreateInteractionDto.PostId,
+                    //    ReceiverId = post.UserId,
+                    //    IsSeen = false,
+                    //    Created = DateTime.Now
+                    //};
+                    //await _mediator.Send(new CreateNotificationCommand { CreateDto = notification });
                 } 
                 return new BaseCommandResponse<ReactResponseDto>("Tương tác thành công!", reactRes);
             }

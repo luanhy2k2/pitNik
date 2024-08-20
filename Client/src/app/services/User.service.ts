@@ -2,22 +2,17 @@ import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable, map } from "rxjs";
 import { BaseQueriesResponse } from "../Models/Common/BaseQueriesResponse.entity";
-import { Post } from "../Models/Post/Post.entity";
 import { Account, GeneralInfo, } from "../Models/Account/Account.entity";
-import { UpdateGenerallInfor, UpdatePersionalInfor } from "../Models/Account/UpdateAccount.entity";
+import { UpdatePersionalInfor } from "../Models/Account/UpdateAccount.entity";
 import { BaseCommandResponse } from "../Models/Common/BaseCommandResponse.entity";
 import { Register } from "../Models/Account/Register.entity";
-const host = "https://localhost:7261"
+import { apiUrl } from "../Environments/env";
+import { UserCredentials } from "../Models/Account/user-credentials";
 @Injectable({
     providedIn: 'root'
 })
 export class UserService {
-    private currentUserSubject: BehaviorSubject<any>;
-    public currentUser: Observable<any>;
     constructor(private httpClient: HttpClient) {
-        const user = JSON.parse(localStorage.getItem('user') ?? '{}');
-        this.currentUserSubject = new BehaviorSubject<any>(user);
-        this.currentUser = this.currentUserSubject.asObservable();
     }
     register(user: Register): Observable<BaseCommandResponse<string>> {
         const formData: FormData = new FormData();
@@ -31,7 +26,7 @@ export class UserService {
         formData.append('ConfirmPassword', user.confirmPassword);
         formData.append('Birthday', user.birthday.toString());
         // formData.append('Image', user.image);
-        return this.httpClient.post<BaseCommandResponse<string>>(`${host}/api/Account/register`, formData)
+        return this.httpClient.post<BaseCommandResponse<string>>(`${apiUrl}/api/Account/register`, formData)
     }
     ResetPassword(email: string, code: string, password: string): Observable<any> {
         const request = {
@@ -39,26 +34,29 @@ export class UserService {
             code: code,
             newPassword: password
         }
-        return this.httpClient.post(`${host}/api/Account/resetPassword`, request, { responseType: 'text' });
+        return this.httpClient.post(`${apiUrl}/api/Account/resetPassword`, request, { responseType: 'text' });
     }
     GenerateTokenConfirmEmail(email: string): Observable<boolean> {
-        return this.httpClient.get<boolean>(`${host}/api/Account/generateConfirmTokenEmail/${email}`);
+        return this.httpClient.get<boolean>(`${apiUrl}/api/Account/generateConfirmTokenEmail/${email}`);
     }
     GenerateTokenResetPassword(email: string) {
-        return this.httpClient.post(`${host}/api/Account/GenerateTokenConfirmEmail/${email}`, {}, { responseType: 'text' });
+        return this.httpClient.post(`${apiUrl}/api/Account/GenerateTokenConfirmEmail/${email}`, {}, { responseType: 'text' });
     }
     login(userName: string, password: string) {
-        return this.httpClient.post<any>(`${host}/api/Account/Login`, { userName, password })
-            .pipe(map(user => {
-                // Lưu trữ chi tiết người dùng và token trong local storage để giữ người dùng đăng nhập giữa các lần refresh
-                localStorage.setItem('user', JSON.stringify(user));
-                this.currentUserSubject.next(user);
-                return user;
-            }));
+        return this.httpClient.post<any>(`${apiUrl}/api/Account/Login`, { userName, password })
     }
-
-    getUser(): any {
-        return this.currentUserSubject.value;
+    getUser(): UserCredentials {
+        const userString = localStorage.getItem('user');
+        if (userString) {
+            return JSON.parse(userString) as UserCredentials;
+        } else {
+            // Trả về một đối tượng mặc định nếu không có dữ liệu trong localStorage
+            return {
+                token: '',
+                id: '',
+                name: ''
+            };
+        }
     }
     getPagedData(pageIndex: number, pageSize: number, keyword: string): Observable<BaseQueriesResponse<Account>> {
         let params = new HttpParams()
@@ -67,13 +65,13 @@ export class UserService {
         if (keyword) {
             params = params.set('Keyword', keyword);
         }
-        return this.httpClient.get<BaseQueriesResponse<Account>>(`${host}/api/Account/GetAll`, { params, headers: this.addHeaderToken() });
+        return this.httpClient.get<BaseQueriesResponse<Account>>(`${apiUrl}/api/Account/GetAll`, { params});
     }
     getGeneralInfor(userId: string): Observable<GeneralInfo> {
-        return this.httpClient.get<GeneralInfo>(`${host}/api/Account/GetUserInfor/${userId}`)
+        return this.httpClient.get<GeneralInfo>(`${apiUrl}/api/Account/GetUserInfor/${userId}`)
     }
     updateGeneralInfor(request: GeneralInfo): Observable<BaseCommandResponse<GeneralInfo>> {
-        return this.httpClient.post<BaseCommandResponse<GeneralInfo>>(`${host}/api/Account/UpdateGeneralInfor`, request, { headers: this.addHeaderToken() })
+        return this.httpClient.post<BaseCommandResponse<GeneralInfo>>(`${apiUrl}/api/Account/UpdateGeneralInfor`, request)
     }
     updatePersionalInfor(request: UpdatePersionalInfor): Observable<BaseCommandResponse<UpdatePersionalInfor>> {
         const formData: FormData = new FormData();
@@ -86,20 +84,13 @@ export class UserService {
         formData.append('UserName', request.userName);
         formData.append('Birthday', request.birthDay.toString());
         formData.append('Image', request.image, request.image.name);
-        return this.httpClient.post<BaseCommandResponse<UpdatePersionalInfor>>(`${host}/api/Account/UpdatePersionalInfor`, formData, { headers: this.addHeaderToken() })
+        return this.httpClient.post<BaseCommandResponse<UpdatePersionalInfor>>(`${apiUrl}/api/Account/UpdatePersionalInfor`, formData)
     }
     getPersionalInfor(userId: string): Observable<Account> {
-        return this.httpClient.get<Account>(`${host}/api/Account/GetById/${userId}`)
+        return this.httpClient.get<Account>(`${apiUrl}/api/Account/GetById/${userId}`)
     }
     deleteAccountById(id: number): Observable<any> {
-        return this.httpClient.delete<any>(`${host}/api/Account/delete/${id}`)
-    }
-    addHeaderToken() {
-        const user = this.getUser();
-        const headers = new HttpHeaders({
-            'Authorization': `Bearer ${this.getUser().token}`
-        });
-        return headers;
+        return this.httpClient.delete<any>(`${apiUrl}/api/Account/delete/${id}`)
     }
     getImagesOfUser(userId: string, pageIndex: number, pageSize: number, keyword: string): Observable<BaseQueriesResponse<string>> {
         let params = new HttpParams()
@@ -109,6 +100,6 @@ export class UserService {
         if (keyword) {
             params = params.set('Keyword', keyword);
         }
-        return this.httpClient.get<BaseQueriesResponse<string>>(`${host}/api/Account/GetImageOfUser`,{params})
+        return this.httpClient.get<BaseQueriesResponse<string>>(`${apiUrl}/api/Account/GetImageOfUser`,{params})
     }
 }

@@ -44,18 +44,20 @@ namespace Application.Features.Comment.Handlers.Commands
                 Created = DateTime.Now
             };
             var result = await _pitNikRepo.ReplyComment.Create(reply);
-            if(result == true)
-            {
-                var notification = new CreateNotificationDto
-                {
-                    Content = "Đã phản hồi bình luận của bạn",
-                    SenderId = request.ResponderId,
-                    ReceiverId = request.CreateCommentDto.CommenterId,
-                    Created = DateTime.Now,
-                    IsSeen = false
-                };
-                await _mediator.Send(new CreateNotificationCommand { CreateDto = notification});
-            }
+            //if(result == true)
+            //{
+            //    var notification = new CreateNotificationDto
+            //    {
+            //        Content = "Đã phản hồi bình luận của bạn",
+            //        SenderId = request.ResponderId,
+            //        ReceiverId = request.CreateCommentDto.CommenterId,
+            //        Created = DateTime.Now,
+            //        IsSeen = false
+            //    };
+            //    await _mediator.Send(new CreateNotificationCommand { CreateDto = notification});
+            //}
+            var postId = await _pitNikRepo.Comment.GetAllQueryable().AsNoTracking().Where(x =>x.Id == request.CreateCommentDto.CommentId)
+                .Select(x =>x.PostId).FirstOrDefaultAsync();
             var replyDto = new ReplyCommentDto
             {
                 CommenterId = reply.CommenterId,
@@ -65,6 +67,7 @@ namespace Application.Features.Comment.Handlers.Commands
                 ResponderId = reply.ResponderId,
                 ResponderImage = responder.Image,
                 ResponderName = responder.Name,
+                PostId = postId
             };
             return new BaseCommandResponse<ReplyCommentDto>("Phản hồi bình luận thành công!", replyDto);
         }

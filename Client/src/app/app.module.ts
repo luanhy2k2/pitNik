@@ -11,9 +11,8 @@ import { FriendComponent } from './Modules/friend/friend.component';
 import { UserProfileComponent } from './Partial/user-profile/user-profile.component';
 import { LoginComponent } from './Modules/login/login.component';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { SearchComponent } from './Modules/search/search.component';
-import { SignalRService } from './services/signal-rservice.service';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { TimelineGroupComponent } from './Modules/timeline-group/timeline-group.component';
 import { GroupComponent } from './Modules/group/group.component';
@@ -26,9 +25,11 @@ import { RegisterComponent } from './Modules/register/register.component';
 import { ImagesComponent } from './Modules/about/images/images.component';
 import { PostComponent } from './Modules/about/post/post.component';
 import { VideoComponent } from './Modules/video/video.component';
+import { AuthInterceptor } from './Interceptor/auth-interceptor.service';
+import { PresenceService } from './services/presence.service';
 
-export function initializeApp(signalrService: SignalRService) {
-  return () => signalrService.startConnection();
+export function initializeApp(presenceService: PresenceService) {
+  return () => presenceService.startConnection();
 }
 @NgModule({
   declarations: [
@@ -66,8 +67,9 @@ export function initializeApp(signalrService: SignalRService) {
       provide: APP_INITIALIZER,
       useFactory: initializeApp,
       multi: true,
-      deps: [SignalRService]
-    }
+      deps: [PresenceService]
+    },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

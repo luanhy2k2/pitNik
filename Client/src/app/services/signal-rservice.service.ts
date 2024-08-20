@@ -1,24 +1,19 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import * as signalR from '@microsoft/signalr';
 import { UserService } from './User.service';
-import { CreateComment } from '../Models/Comment/create-comment.entity';
 import { Comment } from '../Models/Comment/comment.entity';
 import { CreateFriendShip } from '../Models/FriendShip/CreateFriendShip.entity';
-import { UpdateStatusFriend } from '../Models/FriendShip/UpdateStatusFriend.entity';
 import { Notification } from '../Models/Notification/Notification.entity';
 import { Message } from '../Models/Message/Message.entity';
-import { FriendShip } from '../Models/FriendShip/FriendShip.entity';
-import { CreateInteraction } from '../Models/Interaction/CreateInteraction.entity';
-import { Post } from '../Models/Post/Post.entity';
 import { CreatePost } from '../Models/Post/CreatePost.entity';
 import { ReactRes } from '../Models/Interaction/ReactRes.entity';
+import { apiUrl } from '../Environments/env';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SignalRService {
+export class aignalRService {
   private connection: signalR.HubConnection;
 
   private profileAddedSource = new Subject<any>();
@@ -44,7 +39,7 @@ export class SignalRService {
   listFriendIdConnected$ = this.listFriendIdConnectedSource.asObservable();
   constructor(private userService: UserService) {
     this.connection = new signalR.HubConnectionBuilder()
-      .withUrl('https://localhost:7261/chatHub', {
+      .withUrl(`${apiUrl}/chatHub`, {
         accessTokenFactory: () => {
           const user = this.userService.getUser();
           return user ? user.token : '';

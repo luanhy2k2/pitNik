@@ -11,7 +11,7 @@ import { UserService } from 'src/app/services/User.service';
 import { ConversationService } from 'src/app/services/conversation.service';
 import { FriendShipService } from 'src/app/services/friend-ship.service';
 import { MessageService } from 'src/app/services/message.service';
-import { SignalRService } from 'src/app/services/signal-rservice.service';
+import { PresenceService } from 'src/app/services/presence.service';
 
 @Component({
   selector: 'app-sidebar-left',
@@ -19,7 +19,7 @@ import { SignalRService } from 'src/app/services/signal-rservice.service';
   styleUrls: ['./sidebar-left.component.css']
 })
 export class SidebarLeftComponent {
-  constructor(private readonly signalRService: SignalRService,
+  constructor(private readonly PresenceService: PresenceService,
     private readonly friendShervice: FriendShipService,
     private readonly messageService:MessageService,
     private readonly Router: Router) { }
@@ -33,7 +33,7 @@ export class SidebarLeftComponent {
   logOut() {
     localStorage.removeItem('user');
     alert("Đăng xuất thành công");
-    this.signalRService.stopConnection();
+    this.PresenceService.stopConnection();
     this.Router.navigate(['/login']);
   }
 
@@ -44,7 +44,7 @@ export class SidebarLeftComponent {
   
   ngOnInit() {
     this.loadMyFriend();
-    this.signalRService.listFriendIdConnected$.subscribe(res => {
+    this.PresenceService.listFriendIdConnected$.subscribe(res => {
       console.log("ListFriendConnected", res);
       for (let userId of res) {
         for (let item of this.friends.items) {
@@ -54,7 +54,7 @@ export class SidebarLeftComponent {
         }
       }
     });
-    this.signalRService.userOnDisconnected$.subscribe(res => {
+    this.PresenceService.userOnDisconnected$.subscribe(res => {
       console.log(res);
       for (let item of this.friends.items) {
         if (item.userId === res) {
@@ -63,7 +63,7 @@ export class SidebarLeftComponent {
         }
       }
     })
-    this.signalRService.userConnectedAdd$.subscribe(res => {
+    this.PresenceService.userConnectedAdd$.subscribe(res => {
       console.log("add friend connected:", res);
       console.log(this.friends.items)
       for (let item of this.friends.items) {

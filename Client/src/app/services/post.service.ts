@@ -8,12 +8,12 @@ import { BaseQueriesResponse } from '../Models/Common/BaseQueriesResponse.entity
 import { Post } from '../Models/Post/Post.entity';
 import { BaseCommandResponse } from '../Models/Common/BaseCommandResponse.entity';
 import { UpdatePost } from '../Models/Post/update-post';
+import { apiUrl } from '../Environments/env';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostService {
-  private apiUrl = "https://localhost:7261";
   constructor(private readonly httpClient: HttpClient,private readonly userService:UserService) { }
   Search(pageIndex:number,pageSize:number,keyword:string): Observable<BaseQueriesResponse<Post>> {
     let params = new HttpParams()
@@ -22,7 +22,7 @@ export class PostService {
     if (keyword) {
       params = params.set('Keyword', keyword);
     }
-    return this.httpClient.get<BaseQueriesResponse<Post>>(`${this.apiUrl}/api/Post/Search`, { params,headers: this.userService.addHeaderToken()});
+    return this.httpClient.get<BaseQueriesResponse<Post>>(`${apiUrl}/api/Post/Search`, { params});
   }
   getPost(pageIndex:number,pageSize:number,keyword:string): Observable<BaseQueriesResponse<Post>> {
     let params = new HttpParams()
@@ -31,7 +31,7 @@ export class PostService {
     if (keyword) {
       params = params.set('Keyword', keyword);
     }
-    return this.httpClient.get<BaseQueriesResponse<Post>>(`${this.apiUrl}/api/Post/GetPost`, { params,headers: this.userService.addHeaderToken()});
+    return this.httpClient.get<BaseQueriesResponse<Post>>(`${apiUrl}/api/Post/GetPost`, {params});
   }
   getPostOfGroup(groupId:number,pageIndex:number,pageSize:number,keyword:string): Observable<BaseQueriesResponse<Post>> {
     let params = new HttpParams()
@@ -41,7 +41,7 @@ export class PostService {
     if (keyword) {
       params = params.set('Keyword', keyword);
     }
-    return this.httpClient.get<BaseQueriesResponse<Post>>(`${this.apiUrl}/api/Post/GetPostOfGroup`, { params,headers: this.userService.addHeaderToken()});
+    return this.httpClient.get<BaseQueriesResponse<Post>>(`${apiUrl}/api/Post/GetPostOfGroup`, { params});
   }
   getPostOfUser(userId:string,pageIndex:number,pageSize:number,keyword:string): Observable<BaseQueriesResponse<Post>> {
     let params = new HttpParams()
@@ -51,7 +51,7 @@ export class PostService {
     if (keyword) {
       params = params.set('Keyword', keyword);
     }
-    return this.httpClient.get<BaseQueriesResponse<Post>>(`${this.apiUrl}/api/Post/GetPostOfUser`, { params,headers: this.userService.addHeaderToken()});
+    return this.httpClient.get<BaseQueriesResponse<Post>>(`${apiUrl}/api/Post/GetPostOfUser`, { params});
   }
   createPost(post: CreatePost): Observable<BaseCommandResponse<Post>> {
     const formData: FormData = new FormData();
@@ -63,7 +63,7 @@ export class PostService {
       formData.append('GroupId',post.groupId.toString())
     post.files.forEach(file => formData.append('Files', file, file.name));
 
-    return this.httpClient.post<BaseCommandResponse<Post>>(`${this.apiUrl}/api/Post/Create`, formData,{headers: this.userService.addHeaderToken()});
+    return this.httpClient.post<BaseCommandResponse<Post>>(`${apiUrl}/api/Post/Create`, formData);
   }
   updatePost(post: UpdatePost): Observable<BaseCommandResponse<Post>> {
     const formData: FormData = new FormData();
@@ -71,9 +71,9 @@ export class PostService {
     formData.append('Content', post.content);
     post.files.forEach(file => formData.append('Files', file, file.name));
     post.imageNameDelete.forEach(image => formData.append('ImageNameDelete', image));
-    return this.httpClient.post<BaseCommandResponse<Post>>(`${this.apiUrl}/api/Post/Update`, formData,{headers: this.userService.addHeaderToken()});
+    return this.httpClient.post<BaseCommandResponse<Post>>(`${apiUrl}/api/Post/Update`, formData);
   }
   getById(postId:number): Observable<Post> {
-    return this.httpClient.get<Post>(`${this.apiUrl}/api/Post/GetById/${postId}`, {headers: this.userService.addHeaderToken()});
+    return this.httpClient.get<Post>(`${apiUrl}/api/Post/GetById/${postId}`);
   }
 }

@@ -15,5 +15,6 @@ namespace Application.DTOs.Comment
         public string ResponderName { get;set;}
         public string ResponderImage { get; set; }
         public string Content {  get; set; }
+        public int PostId {  get; set; }
     }
 }

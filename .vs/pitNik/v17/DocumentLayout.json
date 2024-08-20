@@ -3,8 +3,20 @@
   "WorkspaceRootPath": "C:\\Project.net\\pitNik\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|c:\\project.net\\pitnik\\application\\features\\post\\handles\\commands\\createpostcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|solutionrelative:application\\features\\post\\handles\\commands\\createpostcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E58E86E4-4674-4EA6-9AD8-E9278AE07C74}|API\\API.csproj|c:\\project.net\\pitnik\\api\\hubs\\hubpresence.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E58E86E4-4674-4EA6-9AD8-E9278AE07C74}|API\\API.csproj|solutionrelative:api\\hubs\\hubpresence.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|c:\\project.net\\pitnik\\application\\features\\comment\\handlers\\commands\\createcommentcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|solutionrelative:application\\features\\comment\\handlers\\commands\\createcommentcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|c:\\project.net\\pitnik\\application\\features\\notification\\handlers\\commands\\createnotificationcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|solutionrelative:application\\features\\notification\\handlers\\commands\\createnotificationcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|c:\\project.net\\pitnik\\application\\features\\group\\handlers\\commands\\joingroupcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|solutionrelative:application\\features\\group\\handlers\\commands\\joingroupcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,19 +26,58 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "CreatePostCommandHandler.cs",
-              "DocumentMoniker": "C:\\Project.net\\pitNik\\Application\\Features\\Post\\Handles\\Commands\\CreatePostCommandHandler.cs",
-              "RelativeDocumentMoniker": "Application\\Features\\Post\\Handles\\Commands\\CreatePostCommandHandler.cs",
-              "ToolTip": "C:\\Project.net\\pitNik\\Application\\Features\\Post\\Handles\\Commands\\CreatePostCommandHandler.cs",
-              "RelativeToolTip": "Application\\Features\\Post\\Handles\\Commands\\CreatePostCommandHandler.cs",
-              "ViewState": "AQIAADkAAAAAAAAAAAAowEQAAAAAAAAA",
+              "DocumentIndex": 1,
+              "Title": "CreateCommentCommandHandler.cs",
+              "DocumentMoniker": "C:\\Project.net\\pitNik\\Application\\Features\\Comment\\Handlers\\Commands\\CreateCommentCommandHandler.cs",
+              "RelativeDocumentMoniker": "Application\\Features\\Comment\\Handlers\\Commands\\CreateCommentCommandHandler.cs",
+              "ToolTip": "C:\\Project.net\\pitNik\\Application\\Features\\Comment\\Handlers\\Commands\\CreateCommentCommandHandler.cs",
+              "RelativeToolTip": "Application\\Features\\Comment\\Handlers\\Commands\\CreateCommentCommandHandler.cs",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-30T04:52:58.603Z",
+              "WhenOpened": "2024-08-20T03:58:40.278Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "CreateNotificationCommandHandler.cs",
+              "DocumentMoniker": "C:\\Project.net\\pitNik\\Application\\Features\\Notification\\Handlers\\Commands\\CreateNotificationCommandHandler.cs",
+              "RelativeDocumentMoniker": "Application\\Features\\Notification\\Handlers\\Commands\\CreateNotificationCommandHandler.cs",
+              "ToolTip": "C:\\Project.net\\pitNik\\Application\\Features\\Notification\\Handlers\\Commands\\CreateNotificationCommandHandler.cs",
+              "RelativeToolTip": "Application\\Features\\Notification\\Handlers\\Commands\\CreateNotificationCommandHandler.cs",
+              "ViewState": "AQIAABYAAAAAAAAAAAA1wCQAAABBAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-20T03:55:11.424Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "JoinGroupCommandHandler.cs",
+              "DocumentMoniker": "C:\\Project.net\\pitNik\\Application\\Features\\Group\\Handlers\\Commands\\JoinGroupCommandHandler.cs",
+              "RelativeDocumentMoniker": "Application\\Features\\Group\\Handlers\\Commands\\JoinGroupCommandHandler.cs",
+              "ToolTip": "C:\\Project.net\\pitNik\\Application\\Features\\Group\\Handlers\\Commands\\JoinGroupCommandHandler.cs",
+              "RelativeToolTip": "Application\\Features\\Group\\Handlers\\Commands\\JoinGroupCommandHandler.cs",
+              "ViewState": "AQIAAC0AAAAAAAAAAAAWwEMAAAAjAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-20T03:51:19.671Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "HubPresence.cs",
+              "DocumentMoniker": "C:\\Project.net\\pitNik\\API\\Hubs\\HubPresence.cs",
+              "RelativeDocumentMoniker": "API\\Hubs\\HubPresence.cs",
+              "ToolTip": "C:\\Project.net\\pitNik\\API\\Hubs\\HubPresence.cs",
+              "RelativeToolTip": "API\\Hubs\\HubPresence.cs",
+              "ViewState": "AQIAAGkAAAAAAAAAAAAIwHIAAABbAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-20T02:20:14.188Z",
               "EditorCaption": ""
             }
           ]

@@ -44,19 +44,19 @@ namespace Application.Features.FriendShip.Handlers.Commands
                 {
                     return new BaseCommandResponse<UpdateFriendShipDto>("Người gửi hoặc người nhận không tồn tại!", false);
                 }
-                var notification = new CreateNotificationDto
-                {
-                    Content = $"{receiver.Name} đã chấp thuận lời mời kết bạn của bạn",
-                    Created = DateTime.Now,
-                    SenderId = receiver.Id,
-                    ReceiverId = sender.Id,
-                    IsSeen = false,
-                    PostId = null
-                };
+                //var notification = new CreateNotificationDto
+                //{
+                //    Content = $"{receiver.Name} đã chấp thuận lời mời kết bạn của bạn",
+                //    Created = DateTime.Now,
+                //    SenderId = receiver.Id,
+                //    ReceiverId = sender.Id,
+                //    IsSeen = false,
+                //    PostId = null
+                //};
                 await _pitNikRepo.FriendShip.Update(data);
                 if (request.UpdateFriendShipDto.Status == FriendshipStatus.Accepted)
                 {
-                    await _mediator.Send(new CreateNotificationCommand { CreateDto = notification });
+                    //await _mediator.Send(new CreateNotificationCommand { CreateDto = notification });
                     var conversation = new Core.Entities.Conversation
                     {
                         Created = DateTime.Now,
@@ -89,8 +89,8 @@ namespace Application.Features.FriendShip.Handlers.Commands
 
                 else if (request.UpdateFriendShipDto?.Status == FriendshipStatus.Rejected)
                 {
-                    notification.Content = $"{receiver.Name} đã từ chối lời mời kết bạn của bạn";
-                    await _mediator.Send(new CreateNotificationCommand { CreateDto = notification });
+                    //notification.Content = $"{receiver.Name} đã từ chối lời mời kết bạn của bạn";
+                    //await _mediator.Send(new CreateNotificationCommand { CreateDto = notification });
                     return new BaseCommandResponse<UpdateFriendShipDto>("Từ chối kết bạn thành công!");
                 }
                 else

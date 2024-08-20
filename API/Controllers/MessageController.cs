@@ -27,6 +27,12 @@ namespace API.Controllers
             var result = await _mediator.Send(new CreateMessageCommand { CreateMessageDto = message,SenderUserName = senderUserName});
             return Ok(result);
         }
+        [HttpPost("UploadFile")]
+        public async Task<ActionResult> UploadFile([FromForm] List<IFormFile> Files)
+        {
+            var result = await _mediator.Send(new UploadFileMessageCommand { Files = Files });
+            return Ok(result);
+        }
         [HttpPost("UpdateStatusRead/{conversionId}/{status}")]
         public async Task<ActionResult> UpdateStatusRead(int conversionId, bool status)
         {

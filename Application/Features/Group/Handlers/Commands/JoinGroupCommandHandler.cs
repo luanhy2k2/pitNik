@@ -58,16 +58,16 @@ namespace Application.Features.Group.Handlers.Commands
                 memberDto.Address = userApplying.Address;
                 memberDto.Image = userApplying.Image;
                 memberDto.Name = userApplying.Name;
-                var notification = new CreateNotificationDto
-                {
-                    Content = $"{memberDto.Name} xin tham gia vào nhóm {group.Name}",
-                    Created = DateTime.Now,
-                    IsSeen = false,
-                    ReceiverId = CreatorGroup.UserId,
-                    SenderId = request.JoinGroupDto.UserId,
-                    PostId = null
-                };
-                await _mediator.Send(new CreateNotificationCommand { CreateDto = notification});
+                //var notification = new CreateNotificationDto
+                //{
+                //    Content = $"{memberDto.Name} xin tham gia vào nhóm {group.Name}",
+                //    Created = DateTime.Now,
+                //    IsSeen = false,
+                //    ReceiverId = CreatorGroup.UserId,
+                //    SenderId = request.JoinGroupDto.UserId,
+                //    PostId = null
+                //};
+                //await _mediator.Send(new CreateNotificationCommand { CreateDto = notification});
                 return new BaseCommandResponse<JoinGroupDto>("Gửi đơn thành công!");
             }
             catch(Exception ex)
