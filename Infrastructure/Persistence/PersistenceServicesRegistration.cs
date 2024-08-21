@@ -47,7 +47,7 @@ namespace Infrastructure.Persistence
             });
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IPitNikRepositoryWrapper, PitNikRepositoryWrapper>();
-            services.AddScoped(typeof(ISignalRNotificationService<>), typeof(SignalRNotificationService<>));
+            //services.AddScoped(typeof(ISignalRNotificationService<>), typeof(SignalRNotificationService<>));
             services.AddTransient<ISendEmailService, SendEmailService>();
             //services.AddScoped<IPostRepository, PostRepository>();
             //services.AddScoped<IImagePostRepository, ImagePostRepository>();

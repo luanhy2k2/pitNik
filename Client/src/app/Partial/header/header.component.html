@@ -34,7 +34,7 @@
                   <div>
                     <figure>
                       <img *ngIf="x.senderImage; else nullUserImage;" class="image" style="max-height: 30px; width: 100%;"
-                        src="https://localhost:7261/Users/{{x.senderImage}}" alt="">
+                        src="{{userImageUrl}}/{{x.senderImage}}" alt="">
                       <ng-template #nullUserImage>
                         <img alt="" class="image" style="max-height: 30px; width: 100%;"
                           src="./assets/images/userDefault.png">
@@ -67,7 +67,7 @@
                   <a (click)="UpdateReadStatusNotification(no.id, true)" title="">
                     <figure>
                       <img *ngIf="no.sender.image; else nullUserImage;" style="height: 45px; width: 45px;" alt="author"
-                        src="https://localhost:7261/Users/{{no.sender.image}}">
+                        src="{{userImageUrl}}/{{no.sender.image}}">
                       <ng-template #nullUserImage>
                         <img style="height: 45px; width: 45px;" src="./assets/images/userDefault.png">
                       </ng-template>
@@ -97,7 +97,7 @@
                       <a (click)="LoadMessageConverstion(cvt.id)" class="show-mesg" href="#" title="">
                         <figure>
                           <img *ngIf="member.image; else nullImageConversation;" style="height: 45px; width: 45px;"
-                            alt="author" src="https://localhost:7261/Users/{{member.image}}">
+                            alt="author" src="{{userImageUrl}}/{{member.image}}">
                           <ng-template #nullImageConversation>
                             <img style="height: 45px; width: 45px;" alt="author" src="./assets/images/userDefault.png">
                           </ng-template>
@@ -128,7 +128,7 @@
       <span class="mh-btns-right">
         <div class="user-img">
           <img [routerLink]="['/about']" *ngIf="user"
-          [src]="user.image ? 'https://localhost:7261/Users/' + user.image : './assets/images/userDefault.png'"
+          [src]="user.image ? userImageUrl + '/' + user.image : './assets/images/userDefault.png'"
           style="width: 45px; height: 40px; border-radius: 100%;" alt="">
         </div>
         
@@ -172,7 +172,7 @@
                 <div>
                   <figure>
                     <img *ngIf="x.senderImage; else nullUserImage;" class="image" style="max-height: 30px; width: 100%;"
-                      src="https://localhost:7261/Users/{{x.senderImage}}" alt="">
+                      src="{{userImageUrl}}/{{x.senderImage}}" alt="">
                     <ng-template #nullUserImage>
                       <img alt="" class="image" style="max-height: 30px; width: 100%;"
                         src="./assets/images/userDefault.png">
@@ -205,7 +205,7 @@
                 <a (click)="UpdateReadStatusNotification(no.id, true)" title="">
                   <figure>
                     <img *ngIf="no.sender.image; else nullUserImage;" style="height: 45px; width: 45px;" alt="author"
-                      src="https://localhost:7261/Users/{{no.sender.image}}">
+                      src="{{userImageUrl}}/{{no.sender.image}}">
                     <ng-template #nullUserImage>
                       <img style="height: 45px; width: 45px;" src="./assets/images/userDefault.png">
                     </ng-template>
@@ -235,7 +235,7 @@
                     <a (click)="LoadMessageConverstion(cvt.id)" class="show-mesg" href="#" title="">
                       <figure>
                         <img *ngIf="member.image; else nullImageConversation;" style="height: 45px; width: 45px;"
-                          alt="author" src="https://localhost:7261/Users/{{member.image}}">
+                          alt="author" src="{{userImageUrl}}/{{member.image}}">
                         <ng-template #nullImageConversation>
                           <img style="height: 45px; width: 45px;" alt="author" src="./assets/images/userDefault.png">
                         </ng-template>
@@ -281,7 +281,8 @@
       <div class="user-img">
         <h5>{{user.name}}</h5>
         <img *ngIf="user"
-          [src]="user.image ? 'https://localhost:7261/Users/' + user.image : './assets/images/userDefault.png'"
+          [src]="user.image ?  
+          userImageUrl + '/' + user.image : './assets/images/userDefault.png'"
           style="width: 45px; height: 45px;" alt="">
         <span class="status f-online"></span>
         <div class="user-setting">
@@ -318,7 +319,7 @@
         <li *ngFor="let x of Messages.items" [ngClass]="{'me':x.isSentByCurrentUser, 'you':!x.isSentByCurrentUser}">
           <div class="chat-thumb">
             <img *ngIf="x.sender.image; else nullImageConversation;" style="height: 30px; width: 30px;" alt="author"
-              src="https://localhost:7261/Users/{{x.sender.image}}">
+              src="{{userImageUrl}}/{{x.sender.image}}">
             <ng-template #nullImageConversation>
               <img style="height: 39px; width: 30px;" alt="author" src="./assets/images/userDefault.png">
             </ng-template>

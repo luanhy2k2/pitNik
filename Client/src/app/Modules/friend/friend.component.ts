@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { userImageUrl } from 'src/app/Environments/env';
 import { BaseQueriesResponse } from 'src/app/Models/Common/BaseQueriesResponse.entity';
 import { MyFriend } from 'src/app/Models/FriendShip/Myfriend.entity';
 import { UserService } from 'src/app/services/User.service';
@@ -11,6 +12,7 @@ import { FriendShipService } from 'src/app/services/friend-ship.service';
   styleUrls: ['./friend.component.scss']
 })
 export class FriendComponent {
+  public userImageUrl = userImageUrl;
   constructor(private readonly friendService:FriendShipService,
      private readonly route:ActivatedRoute,
      private readonly userService:UserService

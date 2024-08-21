@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { groupImageUrl } from 'src/app/Environments/env';
 import { BaseQueriesResponse } from 'src/app/Models/Common/BaseQueriesResponse.entity';
 import { GroupMemberStatus } from 'src/app/Models/Group/AddGroupMember.entity';
 import { CreateGroup } from 'src/app/Models/Group/CreateGroup.entity';
@@ -12,6 +13,7 @@ import { GroupService } from 'src/app/services/group.service';
   styleUrls: ['./timeline-group.component.css']
 })
 export class TimelineGroupComponent {
+  public groupImageUrl = groupImageUrl;
   constructor(private readonly groupService:GroupService){}
   myGroups:BaseQueriesResponse<Group> = {
     pageIndex: 1,

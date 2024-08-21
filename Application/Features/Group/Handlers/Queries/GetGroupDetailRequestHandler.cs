@@ -26,9 +26,9 @@ namespace Application.Features.Group.Handlers.Queries
             {
                 var data = await _pitNikRepo.Group.getById(request.GroupId);
                 var groupDto = _mapper.Map<GroupDto>(data);
-                groupDto.TotalMember = await _pitNikRepo.Group.GetAllQueryable()
+                groupDto.TotalMember = await _pitNikRepo.Group.GetAllQueryable().AsNoTracking()
                                     .Where(x => x.Id == request.GroupId).Select(x => x.Members.Count()).FirstOrDefaultAsync();
-                groupDto.IsJoined = await _pitNikRepo.GroupMember.GetAllQueryable()
+                groupDto.IsJoined = await _pitNikRepo.GroupMember.GetAllQueryable().AsNoTracking()
                                     .AnyAsync(x => x.GroupId == request.GroupId && x.UserId == request.CurrentUserId);
                 return groupDto;
             }

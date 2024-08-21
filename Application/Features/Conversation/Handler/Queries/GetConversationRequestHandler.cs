@@ -23,14 +23,14 @@ namespace Application.Features.Conversation.Handler.Queries
             try
             {
                 var currentUserName = request.CurrentUserName;
-                var query =  _pitNikRepo.Conversation.GetAllQueryable()
+                var query =  _pitNikRepo.Conversation.GetAllQueryable().AsNoTracking()
                                     .Include(c => c.Members)
                                     .Where(c => c.Members.Any(m => m.User.UserName == request.CurrentUserName))
                                     .Select(c => new ConversationDto
                                     {
                                         Id = c.Id,
                                         Message = c.Messages.OrderByDescending(x => x.Created).Select(x => x.Content).FirstOrDefault(),
-                                        IsSeen = c.Messages.OrderByDescending(x => x.Created).Select(m => _pitNikRepo.MessageReadStatus.GetAllQueryable()
+                                        IsSeen = c.Messages.OrderByDescending(x => x.Created).Select(m => _pitNikRepo.MessageReadStatus.GetAllQueryable().AsNoTracking()
                                                             .Where(mrs => mrs.MessageId == m.Id && mrs.User.UserName == currentUserName)
                                                             .Select(mrs => mrs.IsSeen)
                                                             .FirstOrDefault())

@@ -17,10 +17,8 @@ namespace Application.Features.Group.Handlers.Commands
 {
     public class UpdateStatusInvitationCommandHandler : BaseFeatures, IRequestHandler<UpdateStatusInvitationCommand, BaseCommandResponse<UpdateStatusInvitationDto>>
     {
-        private readonly IMediator _mediator;
-        public UpdateStatusInvitationCommandHandler(IPitNikRepositoryWrapper pitNikRepo, IMediator mediator) : base(pitNikRepo)
+        public UpdateStatusInvitationCommandHandler(IPitNikRepositoryWrapper pitNikRepo) : base(pitNikRepo)
         {
-            _mediator = mediator;
         }
 
         public async Task<BaseCommandResponse<UpdateStatusInvitationDto>> Handle(UpdateStatusInvitationCommand request, CancellationToken cancellationToken)
@@ -37,15 +35,6 @@ namespace Application.Features.Group.Handlers.Commands
                   
                 data.Status = request.StatusMember.MemberStatus;
                 await _pitNikRepo.GroupMember.Update(data);
-                //var notification = new CreateNotificationDto
-                //{
-                //    Content = $"{CreatorGroup.Name} đã chấp thuận lời mời tham gia của bạn",
-                //    Created = DateTime.Now,
-                //    SenderId = CreatorGroup.Id,
-                //    ReceiverId = data.UserId,
-                //    IsSeen = false,
-                //    PostId = null
-                //};
                 if(request.StatusMember.MemberStatus == Core.Entities.GroupMemberStatus.Rejected)
                 {
                     //notification.Content = "Yêu cầu tham gia của bạn đã bị từ chối";

@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ClipboardService } from 'ngx-clipboard';
+import { postImageUrl, userImageUrl } from 'src/app/Environments/env';
 import { commentRequest } from 'src/app/Models/Comment/commentRequest.entity';
 import { CreateComment } from 'src/app/Models/Comment/create-comment.entity';
 import { CreateReplyComment } from 'src/app/Models/Comment/create-reply-comment';
 import { BaseQueriesResponse } from 'src/app/Models/Common/BaseQueriesResponse.entity';
 import { CreateInteraction } from 'src/app/Models/Interaction/CreateInteraction.entity';
 import { CreateNotification } from 'src/app/Models/Notification/CreateNotification';
+import { Notification } from 'src/app/Models/Notification/Notification.entity';
 import { CreatePost } from 'src/app/Models/Post/CreatePost.entity';
 import { Post } from 'src/app/Models/Post/Post.entity';
 import { UserService } from 'src/app/services/User.service';
@@ -23,6 +25,8 @@ import { PresenceService } from 'src/app/services/presence.service';
   styleUrls: ['./index.component.scss']
 })
 export class IndexComponent {
+  public postImageUrl = postImageUrl;
+  public userImageUrl = userImageUrl
   constructor(
     private readonly postService: PostService,
     private readonly route: ActivatedRoute,
@@ -80,11 +84,9 @@ export class IndexComponent {
     created: new Date
   }
   createNotificationReq:CreateNotification = {
-    senderId:"",
     receiverId:"",
     content:"",
     postId:0,
-    isSeen: false
   }
   showModal: boolean = false;
   maxPageReply: boolean = false;
@@ -105,19 +107,15 @@ export class IndexComponent {
       this.postDetail.comment.push(res);
       this.postDetail.totalComment++;
     })
-    // this.signalRService.reactAdded$.subscribe(res => {
-    //   if (this.postDetail.id == res.postId) {
-    //     if (res.isReact == false) {
-    //       this.postDetail.isReact = false
-    //       this.postDetail.totalReactions--;
-    //     }
-    //     else {
-    //       this.postDetail.isReact = true;
-    //       this.postDetail.totalReactions++
-    //     }
-    //   }
-    // })
-
+    this.CommentService.replyCommentAdded$.subscribe(res => {
+      for(let i = 0; i<=this.postDetail.comment.length; i++){
+        if(this.postDetail.comment[i].id == res.commentId){
+          this.postDetail.comment[i].Reply.push(res);
+          break;
+        }
+      }
+      this.postDetail.totalComment++;
+    })
     this.LoadCurrentUser();
   };
   LoadPost() {
@@ -210,15 +208,15 @@ export class IndexComponent {
         for(let item of this.CreateReplyCommentReq){
           if(item.commentId == commentId){
             item.content = textarea.value;
-            this.CommentService.createReplyComment(item).subscribe(res =>{
+            this.CommentService.sendReplyComment(item).then(res =>{
               item.content = "";
               textarea.value = "";
-              for(let comment of this.postDetail.comment){
-                if(comment.id == commentId){
-                  comment.Reply.push(res.object);
-                  break;
-                }
-              }
+              this.createNotificationReq.content = "Đã phản hồi bình luận của bạn";
+              this.createNotificationReq.receiverId = item.commenterId;
+              this.createNotificationReq.postId = this.postDetail.id;
+              this.presenceService.sendNotification(this.createNotificationReq).then(noti =>{
+                console.log(noti);
+              });
             })
           }
         }
@@ -246,12 +244,12 @@ export class IndexComponent {
     this.CommentService.sendComment(this.CreateCommentReq).then(res => {
       this.CreateCommentReq.postId = 0;
       this.CreateCommentReq.content = "";
-      this.createNotificationReq.content = "Đã bình luận bài viết của bạn";
-      this.createNotificationReq.receiverId = this.postDetail.userId;
-      this.createNotificationReq.postId = this.postDetail.id;
-      this.presenceService.sendNotification(this.createNotificationReq).then(Notification =>{
-        console.log(Notification)
-      });
+      if(this.postDetail.userId != this.UserService.getUser().id){
+        this.createNotificationReq.content = "Đã bình luận bài viết của bạn";
+        this.createNotificationReq.receiverId = this.postDetail.userId;
+        this.createNotificationReq.postId = this.postDetail.id;
+        this.presenceService.sendNotification(this.createNotificationReq);
+      } 
     })
   }
   onFilesSelected(event: Event): void {
@@ -270,7 +268,6 @@ export class IndexComponent {
         }
       });
     }
-    console.log(this.imageSrcs);
   }
   AddPost(): void {
     this.postService.createPost(this.CreatePostReq).subscribe(
@@ -280,10 +277,18 @@ export class IndexComponent {
           this.CreatePostReq.content = "";
           this.CreatePostReq.files = [];
           this.imageSrcs = [];
+          this.presenceService.GetFriendIdOfCurrentUser().then(res =>{
+            res.forEach((frienId:string) =>{
+              var notification:CreateNotification = {
+                content: "Vừa đăng bài viết",
+                receiverId: frienId,
+                postId: response.object.id
+              }
+              this.presenceService.sendNotification(notification)
+            })
+          })
         }
-        if (response.success == false) {
-          alert(response.message);
-        }
+        alert(response.message);
       },
       error => {
         console.error('Error creating post', error);
@@ -295,20 +300,43 @@ export class IndexComponent {
     this.CreateReactReq.emojiId = emojiId;
     this.InteractionService.React(this.CreateReactReq).subscribe(
       response => {
+        // if (response.success == true) {
+        //   if (this.postDetail.id != postId) {
+        //     for (let post of this.Posts.items) {
+        //       if (post.id == postId) {
+        //         if (response.object.isReact == false) {
+        //           post.isReact = false
+        //           post.totalReactions--;
+        //         }
+        //         else {
+        //           post.isReact = true;
+        //           post.totalReactions++
+        //         } 
+        //         break;
+        //       }
+        //     }
+        //   }
+        // }
         if (response.success == true) {
-          if (this.postDetail.id != postId) {
-            for (let post of this.Posts.items) {
-              if (post.id == postId) {
-                if (response.object.isReact == false) {
-                  post.isReact = false
-                  post.totalReactions--;
-                }
-                else {
-                  post.isReact = true;
-                  post.totalReactions++
-                }
-                break;
+          for (let post of this.Posts.items) {
+            if (post.id == postId) {
+              if (response.object.isReact == false) {
+                post.isReact = false
+                post.totalReactions--;
               }
+              else {
+                post.isReact = true;
+                post.totalReactions++
+              } 
+              if(post.userId != this.UserService.getUser().id){
+                var notification:CreateNotification = {
+                  receiverId: post.userId,
+                  content:"Vừa tuong tác với bài viết của bạn",
+                  postId: post.id
+                };
+                this.presenceService.sendNotification(notification);
+              } 
+              break;
             }
           }
         }

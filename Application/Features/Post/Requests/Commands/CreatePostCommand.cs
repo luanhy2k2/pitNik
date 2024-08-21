@@ -12,5 +12,6 @@ namespace Application.Features.Post.Requests.Commands
     public class CreatePostCommand: IRequest<BaseCommandResponse<PostDto>>
     {
         public CreatePostDto CreatePostDto { get; set; }
+        
     }
 }

@@ -24,8 +24,8 @@ namespace Application.Features.Message.Handlers.Queries
         {
             try
             {
-                var messages = from msg in _pitNikRepo.Message.GetAllQueryable() 
-                               join sender in _pitNikRepo.Account.GetAllQueryable() 
+                var messages = from msg in _pitNikRepo.Message.GetAllQueryable().AsNoTracking() 
+                               join sender in _pitNikRepo.Account.GetAllQueryable().AsNoTracking() 
                                on msg.SenderId equals sender.Id
                                where msg.ConversationId == request.ConversionId && (string.IsNullOrEmpty(request.Keyword) || msg.Content.Contains(request.Keyword))
                                orderby msg.Created 

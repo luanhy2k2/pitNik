@@ -1,5 +1,6 @@
 export interface ReplyComment {
     id:number,
+    commentId:number,
     commenterId:string,
     commenterName:string,
     responderId:string,

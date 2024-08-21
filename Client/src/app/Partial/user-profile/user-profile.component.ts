@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { userImageUrl } from 'src/app/Environments/env';
 import { Account } from 'src/app/Models/Account/Account.entity';
 import { CreateFriendShip } from 'src/app/Models/FriendShip/CreateFriendShip.entity';
 import { FriendshipStatus } from 'src/app/Models/FriendShip/FriendShip.entity';
@@ -12,6 +13,7 @@ import { FriendShipService } from 'src/app/services/friend-ship.service';
   styleUrls: ['./user-profile.component.scss']
 })
 export class UserProfileComponent {
+  public userImageUrl = userImageUrl;
   constructor(private readonly userService:UserService, 
     private readonly FriendService:FriendShipService,
     private route:ActivatedRoute){}

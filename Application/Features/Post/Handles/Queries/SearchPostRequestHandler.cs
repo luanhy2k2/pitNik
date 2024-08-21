@@ -25,8 +25,8 @@ namespace Application.Features.Post.Handles.Queries
         }
         public async Task<BaseQuerieResponse<PostDto>> Handle(SearchPostRequest request, CancellationToken cancellationToken)
         {
-            var query = from p in _pitNikRepo.Post.GetAllQueryable() orderby p.Created descending
-                        join us in _pitNikRepo.Account.GetAllQueryable()
+            var query = from p in _pitNikRepo.Post.GetAllQueryable().AsNoTracking() orderby p.Created descending
+                        join us in _pitNikRepo.Account.GetAllQueryable().AsNoTracking()
                         on p.UserId equals us.Id
                         select new PostDto
                         {
@@ -36,10 +36,10 @@ namespace Application.Features.Post.Handles.Queries
                             NameUser = us.Name,
                             Content = p.Content,
                             Created = TimeHelper.GetRelativeTime(p.Created),
-                            Image = _pitNikRepo.ImagePost.GetAllQueryable().Where(x=>x.PostId == p.Id).Select(x=>x.Image).ToList(),
-                            TotalReactions = _pitNikRepo.Interactions.GetAllQueryable().Where(x=>x.PostId == p.Id).Count(),
-                            TotalComment = _pitNikRepo.Comment.GetAllQueryable().Where(x=>x.PostId == p.Id).Count(),
-                            IsReact = _pitNikRepo.Interactions.GetAllQueryable().Any(x=>x.User.UserName == request.UserName && x.PostId == p.Id)
+                            Image = p.ImagePosts.Select(x => x.Image).ToList(),
+                            TotalReactions = p.Interactions.Count(),
+                            TotalComment = p.Comments.Count(),
+                            IsReact = p.Interactions.Any(x => x.User.UserName == request.UserName && x.PostId == p.Id)
                         };
             if (!string.IsNullOrEmpty(request.Keyword))
             {

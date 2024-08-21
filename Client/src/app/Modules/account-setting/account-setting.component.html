@@ -58,7 +58,7 @@
                                                 <div class="setting-meta">
                                                     <div class="change-photo">
                                                         <figure>
-                                                            <img *ngIf="displayImage; else nullDisplayImage;" style="width: 45px; height: 45px;" src="http://pitnik.somee.com/Users/{{displayImage}}" alt="">
+                                                            <img *ngIf="displayImage; else nullDisplayImage;" style="width: 45px; height: 45px;" src="{{userImageUrl}}/{{displayImage}}" alt="">
                                                             <ng-template #nullDisplayImage>
                                                                 <img  style="width: 45px; height: 45px;" src="./assets/images/userDefault.png" alt="">
                                                             </ng-template>

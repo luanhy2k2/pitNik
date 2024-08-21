@@ -12,5 +12,6 @@ namespace Application.Features.FriendShip.Request.Commands
     public class CreateFriendShipCommand:IRequest<BaseCommandResponse<CreateFriendShipDto>>
     {
         public CreateFriendShipDto CreateFriendShipDto { get; set; }
+        public string SenderId { get; set; }
     }
 }

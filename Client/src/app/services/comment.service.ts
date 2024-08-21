@@ -78,6 +78,10 @@ export class CommentService {
       console.log("Comment:", comment)
       this.commentAddedSource.next(comment);
     });
+    this.hubConnection.on('addReplyComment', (comment) => {
+      console.log("Comment:", comment)
+      this.replyCommentAddedSource.next(comment);
+    });
   }
   getPagedData(pageIndex:number, pageSize:number,postId:number): Observable<BaseQueriesResponse<Comment>> {
     let params = new HttpParams()

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { postImageUrl, userImageUrl } from 'src/app/Environments/env';
 import { CreateComment } from 'src/app/Models/Comment/create-comment.entity';
 import { BaseQueriesResponse } from 'src/app/Models/Common/BaseQueriesResponse.entity';
 import { Group } from 'src/app/Models/Group/Group.entity';
@@ -18,6 +19,8 @@ import { PostService } from 'src/app/services/post.service';
   styleUrls: ['./group.component.scss']
 })
 export class GroupComponent {
+  public postImageUrl = postImageUrl;
+  public userImageUrl = userImageUrl;
   constructor(
      private readonly groupService:GroupService,
      private readonly postService:PostService, 
@@ -34,6 +37,7 @@ export class GroupComponent {
     created:new Date,
     isJoined:false,
     background:"",
+    creatorId:"",
     totalMember:0
   };
   Posts: BaseQueriesResponse<Post> = {

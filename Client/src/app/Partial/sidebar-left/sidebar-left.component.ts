@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Route, Router } from '@angular/router';
+import { userImageUrl } from 'src/app/Environments/env';
 import { Account, Gender } from 'src/app/Models/Account/Account.entity';
 import { BaseQueriesResponse } from 'src/app/Models/Common/BaseQueriesResponse.entity';
 import { Conversation } from 'src/app/Models/Conversation/Conversation.entity';
@@ -19,6 +20,7 @@ import { PresenceService } from 'src/app/services/presence.service';
   styleUrls: ['./sidebar-left.component.css']
 })
 export class SidebarLeftComponent {
+  public userImageUrl = userImageUrl;
   constructor(private readonly PresenceService: PresenceService,
     private readonly friendShervice: FriendShipService,
     private readonly messageService:MessageService,

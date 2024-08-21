@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { userImageUrl } from 'src/app/Environments/env';
 import { BaseQueriesResponse } from 'src/app/Models/Common/BaseQueriesResponse.entity';
 import { GroupMember } from 'src/app/Models/Group/GroupMember.entity';
 import { GroupService } from 'src/app/services/group.service';
@@ -10,6 +11,7 @@ import { GroupService } from 'src/app/services/group.service';
   styleUrls: ['./member.component.css']
 })
 export class MemberComponent {
+  public userImageUrl = userImageUrl;
   constructor(private readonly groupService:GroupService, private readonly route:ActivatedRoute){}
   idGroup:number = 0;
   members:BaseQueriesResponse<GroupMember> = {

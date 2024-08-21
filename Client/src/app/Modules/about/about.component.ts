@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { userImageUrl } from 'src/app/Environments/env';
 import { Account, Gender, GeneralInfo } from 'src/app/Models/Account/Account.entity';
 import { BaseQueriesResponse } from 'src/app/Models/Common/BaseQueriesResponse.entity';
-import { CreateFriendShip } from 'src/app/Models/FriendShip/CreateFriendShip.entity';
-import { FriendshipStatus } from 'src/app/Models/FriendShip/FriendShip.entity';
 import { MyFriend } from 'src/app/Models/FriendShip/Myfriend.entity';
-import { HeaderComponent } from 'src/app/Partial/header/header.component';
 import { UserService } from 'src/app/services/User.service';
 import { FriendShipService } from 'src/app/services/friend-ship.service';
 
@@ -15,6 +13,7 @@ import { FriendShipService } from 'src/app/services/friend-ship.service';
   styleUrls: ['./about.component.scss']
 })
 export class AboutComponent {
+  public userImageUrl = userImageUrl;
   constructor(private readonly UserService:UserService, 
      private readonly FriendService:FriendShipService, 
      private readonly FriendShipService:FriendShipService,

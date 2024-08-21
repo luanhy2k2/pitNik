@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Group.Requests.Commands
 {
-    public class JoinGroupCommand:IRequest<BaseCommandResponse<JoinGroupDto>>
+    public class JoinGroupCommand:IRequest<BaseCommandResponse<GroupDto>>
     {
         public JoinGroupDto JoinGroupDto { get; set; }
     }

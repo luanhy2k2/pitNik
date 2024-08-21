@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { userImageUrl } from 'src/app/Environments/env';
 import { BaseQueriesResponse } from 'src/app/Models/Common/BaseQueriesResponse.entity';
 import { GroupMemberStatus } from 'src/app/Models/Group/AddGroupMember.entity';
 import { Invitation } from 'src/app/Models/Group/JoinGroup.entity';
@@ -11,6 +12,7 @@ import { GroupService } from 'src/app/services/group.service';
   styleUrls: ['./invitation.component.css']
 })
 export class InvitationComponent {
+  public userImageUrl = userImageUrl;
   constructor(private readonly groupService:GroupService, private readonly route:ActivatedRoute){}
   invitations:BaseQueriesResponse<Invitation> = {
     items:[],

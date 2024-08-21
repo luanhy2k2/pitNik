@@ -67,7 +67,8 @@ namespace Application.Features.Comment.Handlers.Commands
                 ResponderId = reply.ResponderId,
                 ResponderImage = responder.Image,
                 ResponderName = responder.Name,
-                PostId = postId
+                PostId = postId,
+                CommentId = reply.CommentId
             };
             return new BaseCommandResponse<ReplyCommentDto>("Phản hồi bình luận thành công!", replyDto);
         }

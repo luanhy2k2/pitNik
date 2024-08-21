@@ -25,9 +25,9 @@ namespace Application.Features.Group.Handlers.Queries
         {
             try
             {
-                var query = from gr in _pitNikRepo.Group.GetAllQueryable().Where(x => x.Id == request.GroupId)
-                           join mb in _pitNikRepo.GroupMember.GetAllQueryable() on gr.Id equals mb.GroupId where mb.GroupId == request.GroupId && mb.Status == Core.Entities.GroupMemberStatus.Accepted
-                           join us in _pitNikRepo.Account.GetAllQueryable() on mb.UserId equals us.Id
+                var query = from gr in _pitNikRepo.Group.GetAllQueryable().AsNoTracking().Where(x => x.Id == request.GroupId)
+                           join mb in _pitNikRepo.GroupMember.GetAllQueryable().AsNoTracking() on gr.Id equals mb.GroupId where mb.GroupId == request.GroupId && mb.Status == Core.Entities.GroupMemberStatus.Accepted
+                           join us in _pitNikRepo.Account.GetAllQueryable().AsNoTracking() on mb.UserId equals us.Id
                            select new GroupMemberDto
                            {
                                UserId = mb.UserId,

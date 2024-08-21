@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "AkiYItjeia6Zd8RstQAybHj6hG/LWufmxyz//og2oks=",
+  "Hash": "KYvYaggKpU+bQc/uG6SDgvoLcHu7clTUVdboiDnMkck=",
   "Source": "API",
   "BasePath": "_content/API",
   "Mode": "Default",
@@ -395,6 +395,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\13_tải xuống (5).jfif"
+    },
+    {
+      "Identity": "C:\\Project.net\\pitNik\\API\\wwwroot\\uploads\\14_tải xuống.png",
+      "SourceId": "API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Project.net\\pitNik\\API\\wwwroot\\",
+      "BasePath": "_content/API",
+      "RelativePath": "uploads/14_tải xuống.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\14_tải xuống.png"
     },
     {
       "Identity": "C:\\Project.net\\pitNik\\API\\wwwroot\\uploads\\5_album11.jpg",

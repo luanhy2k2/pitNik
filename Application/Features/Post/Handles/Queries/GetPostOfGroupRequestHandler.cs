@@ -23,10 +23,12 @@ namespace Application.Features.Post.Handles.Queries
         {
             try
             {
-                var query = from p in _pitNikRepo.Post.GetAllQueryable() where(p.GroupId == request.GroupId)
+                var query = from p in _pitNikRepo.Post.GetAllQueryable().AsNoTracking()
                             orderby p.Created descending
-                            join us in _pitNikRepo.Account.GetAllQueryable()
+                            join us in _pitNikRepo.Account.GetAllQueryable().AsNoTracking()
                             on p.UserId equals us.Id
+                            where (p.GroupId == request.GroupId)
+                            orderby p.Created descending
                             select new PostDto
                             {
                                 Id = p.Id,
@@ -35,10 +37,11 @@ namespace Application.Features.Post.Handles.Queries
                                 NameUser = us.Name,
                                 Content = p.Content,
                                 Created = p.Created.ToString(),
-                                Image = p.ImagePosts.Select(x =>x.Image).ToList(), 
-                                TotalReactions = _pitNikRepo.Interactions.GetAllQueryable().Where(x => x.PostId == p.Id).Count(),
-                                TotalComment = _pitNikRepo.Comment.GetAllQueryable().Where(x => x.PostId == p.Id).Count(),
-                                IsReact = _pitNikRepo.Interactions.GetAllQueryable().Any(x => x.UserId == request.CurrentUserId && x.PostId == p.Id)
+                                Image = p.ImagePosts.Select(x =>x.Image).ToList(),
+                                TotalReactions = p.Interactions.Count(),
+                                TotalComment = p.Comments.Count(),
+                                IsReact = p.Interactions.Any(x => x.UserId == request.CurrentUserId && x.PostId == p.Id)
+
                             };
                 var result = await query.Skip((request.PageIndex - 1) * request.PageSize).Take(request.PageSize).ToListAsync();
                 var total = await query.CountAsync();

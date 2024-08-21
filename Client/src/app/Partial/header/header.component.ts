@@ -1,5 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
+import { userImageUrl } from 'src/app/Environments/env';
 import { Account, Gender } from 'src/app/Models/Account/Account.entity';
 import { BaseQueriesResponse } from 'src/app/Models/Common/BaseQueriesResponse.entity';
 import { Conversation } from 'src/app/Models/Conversation/Conversation.entity';
@@ -9,6 +10,7 @@ import { UpdateStatusFriend } from 'src/app/Models/FriendShip/UpdateStatusFriend
 import { CreateMessage } from 'src/app/Models/Message/CreateMessage.entity';
 import { Message } from 'src/app/Models/Message/Message.entity';
 import { UpdateMessageReadStatus } from 'src/app/Models/Message/UpdateMessageReadStatus.entuty';
+import { CreateNotification } from 'src/app/Models/Notification/CreateNotification';
 import { Notification } from 'src/app/Models/Notification/Notification.entity';
 import { UpdateStatusReadNotification } from 'src/app/Models/Notification/UpdateStatusReadNotification.entity';
 import { UserService } from 'src/app/services/User.service';
@@ -24,6 +26,7 @@ import { PresenceService } from 'src/app/services/presence.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
+  public userImageUrl = userImageUrl;
   constructor(private readonly FriendService: FriendShipService,
     private readonly presenceService: PresenceService,
     private readonly userService: UserService,
@@ -276,6 +279,13 @@ export class HeaderComponent {
         for (let i = 0; i < this.FriendPending.items.length; i++) {
           if (this.FriendPending.items[i].id === id) {
             this.FriendPending.items.splice(i, 1);
+            var notification:CreateNotification = {
+              content:"Đã chấp nhận lời mời kết bạn của bạn",
+              receiverId: this.FriendPending.items[i].receiverId
+            }
+            if(status == FriendshipStatus.Rejected)
+              notification.content = "Đã từ chối lời mời kết bạn của bạn"
+            this.presenceService.sendNotification(notification);
             break;
           }
         }

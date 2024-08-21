@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ClipboardService } from 'ngx-clipboard';
+import { postImageUrl, userImageUrl } from 'src/app/Environments/env';
 import { CreateComment } from 'src/app/Models/Comment/create-comment.entity';
 import { BaseQueriesResponse } from 'src/app/Models/Common/BaseQueriesResponse.entity';
 import { CreateInteraction } from 'src/app/Models/Interaction/CreateInteraction.entity';
@@ -21,6 +22,8 @@ import { PostService } from 'src/app/services/post.service';
   styleUrls: ['./post.component.scss']
 })
 export class PostComponent {
+  public postImageUrl = postImageUrl;
+  public userImageUrl = userImageUrl;
   constructor(
     private readonly postService: PostService,
     private readonly route:ActivatedRoute,
@@ -29,7 +32,6 @@ export class PostComponent {
     private readonly UserService:UserService,
     private readonly commentService:CommentService,
     private readonly friendService:FriendShipService,
-  
     private clipboard:ClipboardService
   ) {}
   Posts: BaseQueriesResponse<Post> = {

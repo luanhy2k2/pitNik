@@ -37,7 +37,7 @@ namespace Application.Features.Notification.Handlers.Commands
                 var notification = new Core.Entities.Notification
                 {
                     Content = request.CreateDto.Content,
-                    SenderId = request.CreateDto.SenderId,
+                    SenderId = request.SenderId,
                     ReceiverId = request.CreateDto.ReceiverId,
                     Created = DateTime.Now,
                     IsSeen = false,
@@ -47,7 +47,7 @@ namespace Application.Features.Notification.Handlers.Commands
                 await _pitNikRepo.Notification.Create(notification);
                 var notificationDto = _mapper.Map<NotificationDto>(notification);
                 notificationDto.Created = TimeHelper.GetRelativeTime(notification.Created);
-                var sender = await _pitNikRepo.Account.GetAllQueryable().FirstOrDefaultAsync(x =>x.Id == request.CreateDto.SenderId);
+                var sender = await _pitNikRepo.Account.GetAllQueryable().FirstOrDefaultAsync(x =>x.Id == request.SenderId);
                 var senderDto = _mapper.Map<AccountDto>(sender);
                 notificationDto.Sender = senderDto;
                 

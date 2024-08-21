@@ -14,5 +14,6 @@ namespace Application.DTOs.Group
         public string Background { get; set; }
         public int TotalMember {  get; set; }
         public Boolean IsJoined {  get; set; }
+        public string CreatorId { get; set; }
     }
 }

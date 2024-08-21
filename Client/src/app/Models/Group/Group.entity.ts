@@ -5,5 +5,6 @@ export interface Group{
     background:string,
     totalMember:number,
     isJoined:boolean,
-    created:Date
+    created:Date,
+    creatorId:string
 }

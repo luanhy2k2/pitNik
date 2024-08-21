@@ -32,7 +32,7 @@ export class GroupService {
     if (keyword) {
       params = params.set('Keyword', keyword);
     }
-    return this.httpClient.get<BaseQueriesResponse<Group>>(`${apiUrl}/api/Group/GetGroup`);
+    return this.httpClient.get<BaseQueriesResponse<Group>>(`${apiUrl}/api/Group/GetGroup`, {params});
   }
   getGroupDetail(groupId:number): Observable<Group> {
     return this.httpClient.get<Group>(`${apiUrl}/api/Group/GetGroup/${groupId}`);
@@ -45,7 +45,7 @@ export class GroupService {
     if (keyword) {
       params = params.set('Keyword', keyword);
     }
-    return this.httpClient.get<BaseQueriesResponse<GroupMember>>(`${apiUrl}/api/Group/GetMemberOfGroup`);
+    return this.httpClient.get<BaseQueriesResponse<GroupMember>>(`${apiUrl}/api/Group/GetMemberOfGroup`, {params});
   }
   create(group: CreateGroup): Observable<BaseCommandResponse<Group>> {
     const formData: FormData = new FormData();
@@ -72,6 +72,6 @@ export class GroupService {
     if (keyword) {
       params = params.set('Keyword', keyword);
     }
-    return this.httpClient.get<BaseQueriesResponse<Invitation>>(`${apiUrl}/api/Group/GetInvitation`);
+    return this.httpClient.get<BaseQueriesResponse<Invitation>>(`${apiUrl}/api/Group/GetInvitation`, {params});
   }
 }

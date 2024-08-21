@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { userImageUrl } from 'src/app/Environments/env';
 import { GeneralInfo, Account, Gender } from 'src/app/Models/Account/Account.entity';
 import { UpdatePersionalInfor } from 'src/app/Models/Account/UpdateAccount.entity';
 import { UserService } from 'src/app/services/User.service';
@@ -9,6 +10,7 @@ import { UserService } from 'src/app/services/User.service';
   styleUrls: ['./account-setting.component.scss']
 })
 export class AccountSettingComponent {
+  public userImageUrl = userImageUrl;
   constructor(private readonly UserService:UserService){}
   GeneralInfo:GeneralInfo = {
     id: 0,

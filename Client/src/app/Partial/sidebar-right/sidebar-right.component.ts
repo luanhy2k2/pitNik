@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { groupImageUrl } from 'src/app/Environments/env';
 import { GeneralInfo } from 'src/app/Models/Account/Account.entity';
 import { BaseQueriesResponse } from 'src/app/Models/Common/BaseQueriesResponse.entity';
 import { Group } from 'src/app/Models/Group/Group.entity';
@@ -11,6 +12,7 @@ import { GroupService } from 'src/app/services/group.service';
   styleUrls: ['./sidebar-right.component.css']
 })
 export class SidebarRightComponent {
+  public groupImageUrl = groupImageUrl;
   constructor(private readonly UserService:UserService,private readonly groupService:GroupService){}
   GeneralInfo:GeneralInfo = {
     aboutMe: "",

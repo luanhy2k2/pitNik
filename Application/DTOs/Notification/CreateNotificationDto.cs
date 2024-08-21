@@ -10,8 +10,6 @@ namespace Application.DTOs.Notification
     {
         public string Content { get; set; }
         public int ?PostId { get; set; }
-        public bool IsSeen { get; set; }
-        public string SenderId { get; set; }
         public string ReceiverId { get; set; }
     }
 }

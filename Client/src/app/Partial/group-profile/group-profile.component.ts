@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { groupImageUrl } from 'src/app/Environments/env';
 import { Group } from 'src/app/Models/Group/Group.entity';
 import { GroupService } from 'src/app/services/group.service';
 
@@ -9,6 +10,7 @@ import { GroupService } from 'src/app/services/group.service';
   styleUrls: ['./group-profile.component.css']
 })
 export class GroupProfileComponent {
+  public groupImageUrl = groupImageUrl;
   constructor(private readonly groupService:GroupService, private route:ActivatedRoute){}
   idGroup:number = 0;
   group:Group = {
@@ -18,7 +20,8 @@ export class GroupProfileComponent {
     created:new Date,
     isJoined:false,
     background:"",
-    totalMember:0
+    totalMember:0,
+    creatorId:""
   }
   ngOnInit(){
     this.loadGroupData();

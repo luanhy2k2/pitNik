@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { postImageUrl } from 'src/app/Environments/env';
 import { BaseQueriesResponse } from 'src/app/Models/Common/BaseQueriesResponse.entity';
 import { UserService } from 'src/app/services/User.service';
 
@@ -9,6 +10,7 @@ import { UserService } from 'src/app/services/User.service';
   styleUrls: ['./images.component.css']
 })
 export class ImagesComponent {
+  public postImageUrl = postImageUrl;
   constructor(private readonly UserService:UserService, private readonly Route:ActivatedRoute){}
   userId:string = "";
   Images:BaseQueriesResponse<string> = {

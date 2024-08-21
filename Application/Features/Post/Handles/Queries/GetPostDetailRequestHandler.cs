@@ -22,9 +22,9 @@ namespace Application.Features.Post.Handles.Queries
         {
             try
             {
-                var data = await (from p in _pitNikRepo.Post.GetAllQueryable()
+                var data = await (from p in _pitNikRepo.Post.GetAllQueryable().AsNoTracking()
                                   where p.Id == request.PostId
-                                  join us in _pitNikRepo.Account.GetAllQueryable() on p.UserId equals us.Id
+                                  join us in _pitNikRepo.Account.GetAllQueryable().AsNoTracking() on p.UserId equals us.Id
                                   select new PostDto
                                   {
                                       Id = p.Id,
@@ -34,9 +34,9 @@ namespace Application.Features.Post.Handles.Queries
                                       ImageUser = us.Image,
                                       Content = p.Content,
                                       Created = TimeHelper.GetRelativeTime(p.Created),
-                                      TotalReactions = _pitNikRepo.Interactions.GetAllQueryable().Count(x => x.PostId == p.Id),
-                                      TotalComment = _pitNikRepo.Comment.GetAllQueryable().Count(x => x.PostId == p.Id),
-                                      IsReact = _pitNikRepo.Interactions.GetAllQueryable().Any(x => x.User.UserName == request.UserName && x.PostId == p.Id)
+                                      TotalReactions = p.Interactions.Count(),
+                                      TotalComment = p.Comments.Count(),
+                                      IsReact = p.Interactions.Any(x => x.User.UserName == request.UserName && x.PostId == p.Id)
                                   }).FirstOrDefaultAsync(cancellationToken);
 
                 if (data == null)

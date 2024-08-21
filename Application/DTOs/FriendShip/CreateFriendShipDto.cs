@@ -9,7 +9,7 @@ namespace Application.DTOs.FriendShip
 {
     public class CreateFriendShipDto
     {
-        public string SenderId { get; set; }
+        
 
         public string ReceiverId { get; set; }
 

@@ -99,27 +99,27 @@ namespace Application.Features.Post.Handles.Commands
                     IsReact = false,
                     TotalReactions = 0,
                 };
-                var friendId = await _pitNikRepo.FriendShip.GetAllQueryable().
-                    Where(x => (x.SenderId == request.CreatePostDto.UserId || x.ReceiverId == request.CreatePostDto.UserId)
-                    && x.Status == FriendshipStatus.Accepted).Select(x => x.SenderId == request.CreatePostDto.UserId ? x.ReceiverId : x.SenderId).ToListAsync();
-                if(request.CreatePostDto.GroupId != null)
-                {
-                    var members = await _pitNikRepo.GroupMember.GetAllQueryable().Where(x => x.GroupId == request.CreatePostDto.GroupId && friendId.Contains(x.UserId)).Select(x => x.UserId).ToListAsync();
-                    friendId = members;
-                }
-                foreach(var item in friendId)
-                {
-                    //var notification = new CreateNotificationDto
-                    //{
-                    //    Content = "Vừa đăng 1 bài viết",
-                    //    Created = DateTime.Now,
-                    //    SenderId = request.CreatePostDto.UserId,
-                    //    ReceiverId = item,
-                    //    IsSeen = false,
-                    //};
+                //var friendId = await _pitNikRepo.FriendShip.GetAllQueryable().
+                //    Where(x => (x.SenderId == request.CreatePostDto.UserId || x.ReceiverId == request.CreatePostDto.UserId)
+                //    && x.Status == FriendshipStatus.Accepted).Select(x => x.SenderId == request.CreatePostDto.UserId ? x.ReceiverId : x.SenderId).ToListAsync();
+                //if(request.CreatePostDto.GroupId != null)
+                //{
+                //    var members = await _pitNikRepo.GroupMember.GetAllQueryable().Where(x => x.GroupId == request.CreatePostDto.GroupId && friendId.Contains(x.UserId)).Select(x => x.UserId).ToListAsync();
+                //    friendId = members;
+                //}
+                //foreach(var item in friendId)
+                //{
+                //    //var notification = new CreateNotificationDto
+                //    //{
+                //    //    Content = "Vừa đăng 1 bài viết",
+                //    //    Created = DateTime.Now,
+                //    //    SenderId = request.CreatePostDto.UserId,
+                //    //    ReceiverId = item,
+                //    //    IsSeen = false,
+                //    //};
 
-                    // _jobClient.Enqueue(() => CreateNotificationJob(notification));
-                }
+                //    // _jobClient.Enqueue(() => CreateNotificationJob(notification));
+                //}
                 return new BaseCommandResponse<PostDto>("Tạo bài viết thành công!",postDto);
             }
             catch (Exception ex)

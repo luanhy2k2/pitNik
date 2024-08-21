@@ -64,7 +64,7 @@
                                         <figure>
                                             <img *ngIf="member.image; else nullImageConversation;"
                                                 style="height: 79px; width: 79px;" alt="author"
-                                                src="http://pitnik.somee.com/Users/{{member.image}}">
+                                                src="{{userImageUrl}}/{{member.image}}">
                                             <ng-template #nullImageConversation>
                                                 <img style="height: 79px; width: 79px;" alt="author"
                                                     src="./assets/images/userDefault.png">

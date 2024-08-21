@@ -25,7 +25,7 @@ namespace Application.Features.Group.Handlers.Queries
         {
             try
             {
-                var query = _pitNikRepo.Group.GetAllQueryable().Include(x => x.Members)
+                var query = _pitNikRepo.Group.GetAllQueryable().AsNoTracking().Include(x => x.Members)
                             .Where(x => x.Members.Any(mb => mb.UserId == request.CurrentUserId && mb.Status == Core.Entities.GroupMemberStatus.Accepted));
                 var data = await query.Skip((request.PageIndex - 1) * request.PageIndex).Take(request.PageSize).ToListAsync();
                 var total =await query.CountAsync();

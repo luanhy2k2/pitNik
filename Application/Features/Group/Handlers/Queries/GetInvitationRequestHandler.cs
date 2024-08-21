@@ -22,7 +22,7 @@ namespace Application.Features.Group.Handlers.Queries
         {
             try
             {
-                var query = from iv in _pitNikRepo.GroupMember.GetAllQueryable() join us in _pitNikRepo.Account.GetAllQueryable()
+                var query = from iv in _pitNikRepo.GroupMember.GetAllQueryable().AsNoTracking() join us in _pitNikRepo.Account.GetAllQueryable().AsNoTracking()
                            on iv.UserId equals us.Id where (iv.GroupId == request.GroupId && iv.Status == Core.Entities.GroupMemberStatus.Pending)
                            select new InvitationDto
                            {

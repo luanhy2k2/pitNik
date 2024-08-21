@@ -63,7 +63,7 @@
                                     </div>
                                     <div *ngFor="let group of myGroups.items" class="col-lg-2 col-md-4 col-sm-4">
                                         <div  class="group-box">
-                                            <figure><img [routerLink]="['/group']" [queryParams]="{ id: group.id }" style="width: 120px; height: 120px;" src="http://pitnik.somee.com/Groups/{{group.background}}" alt=""></figure>
+                                            <figure><img [routerLink]="['/group']" [queryParams]="{ id: group.id }" style="width: 120px; height: 120px;" src="{{groupImageUrl}}/{{group.background}}" alt=""></figure>
                                             <a [routerLink]="['/group']" [queryParams]="{ id: group.id }" title="">{{group.name}}</a>
                                             <span>{{group.totalMember}} thành viên</span>
                                             <button *ngIf="group.isJoined == false"><span (click)="JoinGroup(group.id)">Tham gia</span></button>
@@ -85,7 +85,7 @@
                                 <ul class="related-groups">
                                     <li *ngFor="let group of groups.items">
                                         <div class="group-box">
-                                            <figure><img [routerLink]="['/group']" [queryParams]="{ id: group.id }" style="width: 120px; height: 120px;" src="http://pitnik.somee.com/Groups/{{group.background}}" alt=""></figure>
+                                            <figure><img [routerLink]="['/group']" [queryParams]="{ id: group.id }" style="width: 120px; height: 120px;" src="{{groupImageUrl}}/{{group.background}}" alt=""></figure>
                                             <a [routerLink]="['/group']" [queryParams]="{ id: group.id }" title="">{{group.name}}</a>
                                             <span>{{group.totalMember}} thành viên</span>
                                             <p *ngIf="group.isJoined == false" (click)="JoinGroup(group.id)" style="background-color:#9a9fbf; color: aliceblue; cursor: pointer;">Tham gia</p>

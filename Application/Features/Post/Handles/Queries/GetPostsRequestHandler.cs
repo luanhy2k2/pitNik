@@ -20,15 +20,15 @@ namespace Application.Features.Post.Handles.Queries
         }
         public async Task<BaseQuerieResponse<PostDto>> Handle(GetPostsRequest request, CancellationToken cancellationToken)
         {
-            var groupIds = await _pitNikRepo.GroupMember.GetAllQueryable()
+            var groupIds = await _pitNikRepo.GroupMember.GetAllQueryable().AsNoTracking()
                 .Where(x => x.User.UserName == request.UserName).Select(x => x.GroupId).ToListAsync();
-            var friendIds = await _pitNikRepo.FriendShip.GetAllQueryable()
+            var friendIds = await _pitNikRepo.FriendShip.GetAllQueryable().AsNoTracking()
                 .Where(x => (x.Sender.UserName == request.UserName || x.Receiver.UserName == request.UserName) && x.Status == Core.Entities.FriendshipStatus.Accepted)
                 .Select(x => x.Sender.UserName == request.UserName ? x.ReceiverId : x.SenderId).ToListAsync();
-            var query = from p in _pitNikRepo.Post.GetAllQueryable()
+            var query = from p in _pitNikRepo.Post.GetAllQueryable().AsNoTracking()
                         where((p.User.UserName == request.UserName || friendIds.Contains(p.UserId)) || (p.GroupId.HasValue && groupIds.Contains(p.GroupId.Value)))
                         orderby p.Created descending
-                        join us in _pitNikRepo.Account.GetAllQueryable()
+                        join us in _pitNikRepo.Account.GetAllQueryable().AsNoTracking()
                         on p.UserId equals us.Id
                         select new PostDto
                         {
@@ -38,10 +38,10 @@ namespace Application.Features.Post.Handles.Queries
                             NameUser = us.Name,
                             Content = p.Content,
                             Created = TimeHelper.GetRelativeTime(p.Created),
-                            Image = _pitNikRepo.ImagePost.GetAllQueryable().Where(x => x.PostId == p.Id).Select(x => x.Image).ToList(),
-                            TotalReactions = _pitNikRepo.Interactions.GetAllQueryable().Where(x => x.PostId == p.Id).Count(),
-                            TotalComment = _pitNikRepo.Comment.GetAllQueryable().Where(x => x.PostId == p.Id).Count(),
-                            IsReact = _pitNikRepo.Interactions.GetAllQueryable().Any(x => x.User.UserName == request.UserName && x.PostId == p.Id)
+                            Image =p.ImagePosts.Select(x => x.Image).ToList(),
+                            TotalReactions = p.Interactions.Count(),
+                            TotalComment = p.Comments.Count(),
+                            IsReact = p.Interactions.Any(x => x.User.UserName == request.UserName && x.PostId == p.Id)
                         };
 
             if (!string.IsNullOrEmpty(request.Keyword))

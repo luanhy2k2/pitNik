@@ -21,7 +21,7 @@ namespace Application.Features.Account.Handlers.Queries
         {
             try
             {
-                var query =  _pitNikRepo.ImagePost.GetAllQueryable().Where(x => x.Post.UserId == request.UserId).Select(x =>x.Image);
+                var query =  _pitNikRepo.ImagePost.GetAllQueryable().AsNoTracking().Where(x => x.Post.UserId == request.UserId).Select(x =>x.Image);
                 var result = await query.Skip((request.PageIndex-1)*request.PageSize).Take(request.PageSize).ToListAsync();
                 var total = await query.CountAsync();
                 return new BaseQuerieResponse<string>

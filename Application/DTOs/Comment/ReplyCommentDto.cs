@@ -9,6 +9,7 @@ namespace Application.DTOs.Comment
 {
     public class ReplyCommentDto:BaseDto
     {
+        public int CommentId { get; set; }
         public string CommenterId { get; set; }
         public string CommenterName { get; set;}
         public string ResponderId { get; set; }

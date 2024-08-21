@@ -1,5 +1,7 @@
 ﻿using Application.DTOs.Account;
+using Application.DTOs.FriendShip;
 using Application.DTOs.Notification;
+using Application.Features.FriendShip.Request.Commands;
 using Application.Features.Notification.Request.Commands;
 using AutoMapper;
 using Core.Model;
@@ -24,7 +26,7 @@ namespace API.Hubs
         {
             _context = context;
             _mapper = mapper;
-            _context = context;
+            _mediator = mediator;
         }
         private string IdentityName
         {
@@ -35,11 +37,8 @@ namespace API.Hubs
         {
             try
             {
-                // Lấy thông tin người dùng dựa trên IdentityName
                 var user = await _context.Users
                             .FirstOrDefaultAsync(u => u.UserName == IdentityName);
-
-                // Nếu người dùng không tồn tại, kết thúc kết nối
                 if (user == null)
                 {
                     await Clients.Caller.SendAsync("onError", "User not found.");
@@ -55,8 +54,6 @@ namespace API.Hubs
                 _connections.Add(userDTo);
                 _connectionMap[IdentityName] = Context.ConnectionId;
                 await Clients.Caller.SendAsync("getProfileInfo", userDTo);
-
-                // Lấy danh sách bạn bè của người dùng (bao gồm ID và UserName)
                 var friends = await _context.Friendships
                     .Where(s => (s.SenderId == user.Id || s.ReceiverId == user.Id) && s.Status == Core.Entities.FriendshipStatus.Accepted)
                     .Select(s => new
@@ -65,11 +62,8 @@ namespace API.Hubs
                         UserName = s.SenderId == user.Id ? s.Receiver.UserName : s.Sender.UserName
                     })
                     .ToListAsync();
-                // Lọc danh sách bạn bè để chỉ bao gồm những người đang kết nối
                 var connectedFriends = friends.Where(f => _connectionMap.ContainsKey(f.UserName)).ToList();
-                // Gửi danh sách ID bạn bè đang kết nối cho người gọi
                 await Clients.Caller.SendAsync("FriendIdOfCurrentUser", connectedFriends.Select(f => f.Id).ToList());
-                // Thêm người dùng vào nhóm bạn bè và thông báo bạn bè rằng người dùng đã kết nối
                 foreach (var friend in connectedFriends)
                 {
                     if (_connectionMap.TryGetValue(friend.UserName, out var friendConnectionId))
@@ -81,7 +75,6 @@ namespace API.Hubs
             }
             catch (Exception ex)
             {
-                // Xử lý lỗi và gửi thông báo lỗi cho người gọi
                 await Clients.Caller.SendAsync("onError", "OnConnected: " + ex.Message);
             }
             await base.OnConnectedAsync();
@@ -128,17 +121,36 @@ namespace API.Hubs
         {
             return _connections.Where(x => x.Name.Contains(name)).Select(x => x.Id).ToList();
         }
+        public async Task MakeFriend(CreateFriendShipDto request)
+        {
+            var result = await _mediator.Send(new CreateFriendShipCommand
+            {
+                CreateFriendShipDto = request,
+                SenderId = Context.User.FindFirst(ClaimTypes.NameIdentifier).Value
+            });
+            var receiverr = _connections.Where(x => x.Id == request.ReceiverId).FirstOrDefault();
+            if (receiverr != null)
+            {
+                if(_connectionMap.TryGetValue(receiverr.UserName, out var connectId))
+                {
+                    await Clients.Client(connectId).SendAsync("addFriendship", result.Object);
+                }
+            }
+        }
         public async Task SenNotification(CreateNotificationDto notification)
         {
-            notification.SenderId = Context.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var result = await _mediator.Send(new CreateNotificationCommand
-            { 
+            {
                 CreateDto = notification,
+                SenderId = Context.User.FindFirst(ClaimTypes.NameIdentifier).Value
             });
             var receiverOnline = _connections.Where(x => x.Id == notification.ReceiverId).FirstOrDefault();
-            if (result.Success != true && receiverOnline != null)
+            if (result.Success == true && receiverOnline != null)
             {
-                await Clients.Client(receiverOnline.Id).SendAsync("createNotification", result.Object);
+                if(_connectionMap.TryGetValue(receiverOnline.UserName, out var connectionId))
+                {
+                    await Clients.Client(connectionId).SendAsync("createNotification", result.Object);
+                } 
             }
         }
     }

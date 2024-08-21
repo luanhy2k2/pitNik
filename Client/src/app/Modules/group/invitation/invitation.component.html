@@ -42,7 +42,7 @@
                                                 <figure>
                                                     <img *ngIf="x.image; else nullUserImage;"
                                                         style="height: 45px; width: 45px;" alt="author"
-                                                        src="http://pitnik.somee.com/Users/{{x.image}}">
+                                                        src="{{userImageUrl}}/{{x.image}}">
                                                     <ng-template #nullUserImage>
                                                         <img style="height: 45px; width: 45px;" alt="author"
                                                             src="./assets/images/userDefault.png">

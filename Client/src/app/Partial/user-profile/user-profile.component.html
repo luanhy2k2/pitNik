@@ -26,7 +26,7 @@
             <div class="col-lg-2 col-md-3">
                 <div class="profile-author">
                     <div class="profile-author-thumb">
-                        <img *ngIf="userImage; else nullUserImage;" style="height: 151px; width: 151px;" alt="author" src="https://localhost:7261/Users/{{userImage}}">
+                        <img *ngIf="userImage; else nullUserImage;" style="height: 151px; width: 151px;" alt="author" src="{{userImageUrl}}/{{userImage}}">
                         <ng-template #nullUserImage>
                             <img style="height: 151px; width: 151px;" alt="author" src="./assets/images/userDefault.png">
                         </ng-template>

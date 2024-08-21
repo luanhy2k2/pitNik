@@ -62,6 +62,14 @@ export class PresenceService {
     return this.connection.invoke('SenNotification', notification)
       .catch(error => console.log(error));
   }
+  async makeFriend(request: CreateFriendShip) {
+    return this.connection.invoke('MakeFriend', request)
+      .catch(error => console.log(error));
+  }
+  async GetFriendIdOfCurrentUser() {
+    return this.connection.invoke('GetFriendIdOfCurrentUser')
+      .catch(error => console.log(error));
+  }
   private registerSignalREvents() {
     this.connection.on('getProfileInfo', (user) => {
       this.profileAddedSource.next(user);
@@ -78,6 +86,8 @@ export class PresenceService {
     this.connection.on('createNotification', (notification) => {
       this.notificationAddedSource.next(notification);
     });
-    
+    this.connection.on('addFriendship', (friend) => {
+      this.friendInvitationAddedSource.next(friend);
+    });
   }
 }

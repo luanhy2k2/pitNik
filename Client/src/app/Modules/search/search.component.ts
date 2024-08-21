@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { ClipboardService } from 'ngx-clipboard';
+import { groupImageUrl, postImageUrl, userImageUrl } from 'src/app/Environments/env';
 import { Account } from 'src/app/Models/Account/Account.entity';
 import { CreateComment } from 'src/app/Models/Comment/create-comment.entity';
 import { BaseQueriesResponse } from 'src/app/Models/Common/BaseQueriesResponse.entity';
@@ -10,6 +11,7 @@ import { GroupMemberStatus } from 'src/app/Models/Group/AddGroupMember.entity';
 import { Group } from 'src/app/Models/Group/Group.entity';
 import { JoinGroup } from 'src/app/Models/Group/JoinGroup.entity';
 import { CreateInteraction } from 'src/app/Models/Interaction/CreateInteraction.entity';
+import { CreateNotification } from 'src/app/Models/Notification/CreateNotification';
 import { Post } from 'src/app/Models/Post/Post.entity';
 import { UserService } from 'src/app/services/User.service';
 import { CommentService } from 'src/app/services/comment.service';
@@ -17,6 +19,7 @@ import { FriendShipService } from 'src/app/services/friend-ship.service';
 import { GroupService } from 'src/app/services/group.service';
 import { InteractionsService } from 'src/app/services/interactions.service';
 import { PostService } from 'src/app/services/post.service';
+import { PresenceService } from 'src/app/services/presence.service';
 
 
 @Component({
@@ -25,13 +28,16 @@ import { PostService } from 'src/app/services/post.service';
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent {
+  public postImageUrl = postImageUrl;
+  public userImageUrl = userImageUrl;
+  public groupImageUrl = groupImageUrl;
   constructor(
+    private readonly presenceService:PresenceService,
     private router:Router,
     private readonly UserService:UserService,
     private readonly postService:PostService,
     private groupService:GroupService,
     private clipboard:ClipboardService,
-    private readonly FriendService:FriendShipService,
     private readonly InteractionService:InteractionsService,
     private readonly CommentService:CommentService,
     private readonly commentService:CommentService
@@ -145,10 +151,13 @@ export class SearchComponent {
   }
   CreateFriendShip(receiverId:string){
     this.CreateFriend.receiverId = receiverId;
-    this.FriendService.create(this.CreateFriend).subscribe(res =>{
-      if(res.success == true){
-        alert(res.message)
+    this.presenceService.makeFriend(this.CreateFriend).then(res =>{
+      alert("Gửi lời mời kết bạn thành công!");
+      var notification:CreateNotification = {
+        content:"Vừa gửi lời mời kết bạn",
+        receiverId: receiverId
       }
+      this.presenceService.sendNotification(notification);
     })
   }
   React(postId: number, emojiId: number): void {
@@ -212,8 +221,17 @@ export class SearchComponent {
   JoinGroup(id:number){
     this.joinGroupRequest.groupId = id;
     this.groupService.JoinGroup(this.joinGroupRequest).subscribe(res =>{
+      alert(res.message);
       if(res.success == true){
-        alert("Gửi yêu cầu tham gia thành công!");
+        for(var group of this.Groups.items){
+          if(group.id == id){
+            var notification:CreateNotification = {
+              content:`Xin tham gia vào nhóm ${group.name}`,
+              receiverId: group.creatorId
+            }
+            this.presenceService.sendNotification(notification);
+          }
+        }
       }
     })
   }

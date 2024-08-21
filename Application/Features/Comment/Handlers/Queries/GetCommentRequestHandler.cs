@@ -22,8 +22,8 @@ namespace Application.Features.Comment.Handlers.Queries
         }
         public async Task<BaseQuerieResponse<CommentDto>> Handle(GetCommentRequest request, CancellationToken cancellationToken)
         {
-            var query = from cm in _pitNikRepo.Comment.GetAllQueryable()
-                        join us in _pitNikRepo.Account.GetAllQueryable() on cm.UserId equals us.Id
+            var query = from cm in _pitNikRepo.Comment.GetAllQueryable().AsNoTracking()
+                        join us in _pitNikRepo.Account.GetAllQueryable().AsNoTracking() on cm.UserId equals us.Id
                         select new CommentDto
                         {
                             Content = cm.Content,

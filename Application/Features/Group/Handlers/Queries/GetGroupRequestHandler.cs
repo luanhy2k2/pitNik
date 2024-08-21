@@ -23,7 +23,7 @@ namespace Application.Features.Group.Handlers.Queries
         {
             try
             {
-                var data = await _pitNikRepo.Group.GetAllQueryable()
+                var data = await _pitNikRepo.Group.GetAllQueryable().AsNoTracking()
                             .Where(x => string.IsNullOrEmpty(request.Keyword) || x.Name.Contains(request.Keyword))
                             .Select(g => new
                             {
@@ -43,7 +43,9 @@ namespace Application.Features.Group.Handlers.Queries
                     Background = item.Group.Background,
                     Description = item.Group.Description,
                     TotalMember = item.TotalMember,
-                    IsJoined = item.IsJoined
+                    IsJoined = item.IsJoined,
+                    CreatorId =  _pitNikRepo.GroupMember
+                    .GetAllQueryable().AsNoTracking().Where(x => x.GroupId == item.Group.Id && x.IsCreate == true).Select(x => x.UserId).FirstOrDefault()
                 }).ToList();
 
                 var total = await _pitNikRepo.Group.GetAllQueryable()

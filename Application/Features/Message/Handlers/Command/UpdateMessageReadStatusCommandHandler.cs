@@ -16,7 +16,7 @@ namespace Application.Features.Message.Handlers.Command
 {
     public class UpdateMessageReadStatusCommandHandler : BaseFeatures, IRequestHandler<UpdateMessageReadStatusCommand, BaseCommandResponse<MessageReadStatus>>
     {
-        public UpdateMessageReadStatusCommandHandler(IPitNikRepositoryWrapper pitNikRepo, ISignalRNotificationService<MessageReadStatus> signalRNotification) : base(pitNikRepo)
+        public UpdateMessageReadStatusCommandHandler(IPitNikRepositoryWrapper pitNikRepo) : base(pitNikRepo)
         {
         }
 

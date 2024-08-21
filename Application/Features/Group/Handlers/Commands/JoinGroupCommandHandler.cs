@@ -17,26 +17,21 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Group.Handlers.Commands
 {
-    public class JoinGroupCommandHandler : BaseFeatures, IRequestHandler<JoinGroupCommand, BaseCommandResponse<JoinGroupDto>>
+    public class JoinGroupCommandHandler : BaseFeatures, IRequestHandler<JoinGroupCommand, BaseCommandResponse<GroupDto>>
     {
 
-        private readonly IMapper _mapper;
-        private readonly IMediator _mediator;
-        public JoinGroupCommandHandler(IPitNikRepositoryWrapper pitNikRepo, IMediator mediator, IMapper mapper) : base(pitNikRepo)
+        public JoinGroupCommandHandler(IPitNikRepositoryWrapper pitNikRepo) : base(pitNikRepo)
         {
-
-            _mediator = mediator;   
-            _mapper = mapper;
         }
 
-        public async Task<BaseCommandResponse<JoinGroupDto>> Handle(JoinGroupCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse<GroupDto>> Handle(JoinGroupCommand request, CancellationToken cancellationToken)
         {
             try
             {
                 var userApplying = await _pitNikRepo.Account.GetAllQueryable().FirstOrDefaultAsync(x => x.Id == request.JoinGroupDto.UserId);
                 if(userApplying == null)
                 {
-                    return new BaseCommandResponse<JoinGroupDto>("Người xin tham gia không tồn tại!");
+                    return new BaseCommandResponse<GroupDto>("Người xin tham gia không tồn tại!");
                 }
                 var newMember = new GroupMember
                 {
@@ -49,30 +44,16 @@ namespace Application.Features.Group.Handlers.Commands
                 var group = await _pitNikRepo.Group.getById(request.JoinGroupDto.GroupId);
                 if(group == null)
                 {
-                    return new BaseCommandResponse<JoinGroupDto>("Nhóm không tồn tại không tồn tại!");
+                    return new BaseCommandResponse<GroupDto>("Nhóm không tồn tại không tồn tại!");
                 }
                 var query = await _pitNikRepo.GroupMember.Create(newMember);
                 var CreatorGroup = await _pitNikRepo.Group.GetAllQueryable().Where(x => x.Id == request.JoinGroupDto.GroupId)
                                 .Select(x => x.Members.FirstOrDefault(x => x.IsCreate == true)).FirstOrDefaultAsync();
-                var memberDto = _mapper.Map<GroupMemberDto>(newMember);
-                memberDto.Address = userApplying.Address;
-                memberDto.Image = userApplying.Image;
-                memberDto.Name = userApplying.Name;
-                //var notification = new CreateNotificationDto
-                //{
-                //    Content = $"{memberDto.Name} xin tham gia vào nhóm {group.Name}",
-                //    Created = DateTime.Now,
-                //    IsSeen = false,
-                //    ReceiverId = CreatorGroup.UserId,
-                //    SenderId = request.JoinGroupDto.UserId,
-                //    PostId = null
-                //};
-                //await _mediator.Send(new CreateNotificationCommand { CreateDto = notification});
-                return new BaseCommandResponse<JoinGroupDto>("Gửi đơn thành công!");
+                return new BaseCommandResponse<GroupDto>("Gửi đơn thành công!");
             }
             catch(Exception ex)
             {
-                return new BaseCommandResponse<JoinGroupDto>(ex.Message, false);
+                return new BaseCommandResponse<GroupDto>(ex.Message, false);
             }
         }
     }

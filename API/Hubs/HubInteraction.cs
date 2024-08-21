@@ -54,7 +54,7 @@ namespace API.Hubs
             });
             if (result.Success == true)
             {
-                await Clients.Group($"Post_{result.Object.PostId}").SendAsync("addComment", result.Object);
+                await Clients.Group($"Post_{result.Object.PostId}").SendAsync("addReplyComment", result.Object);
             }
                 
         }

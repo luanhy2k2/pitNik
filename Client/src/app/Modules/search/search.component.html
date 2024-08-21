@@ -15,7 +15,7 @@
                                     <div *ngFor="let user of Users.items" class="pit-friends">
                                         <figure>
                                             <a href="#" title="">
-                                            <img *ngIf="user.image; else nullUserImage;" style="width: 45px; height: 45px;" alt="author" src="http://pitnik.somee.com/Users/{{user.image}}">
+                                            <img *ngIf="user.image; else nullUserImage;" style="width: 45px; height: 45px;" alt="author" src="{{userImageUrl}}/{{user.image}}">
                                         <ng-template #nullUserImage>
                                             <img style="height: 45px; width: 45px;" alt="author" src="./assets/images/userDefault.png">
                                         </ng-template>
@@ -40,7 +40,7 @@
                                             All</a></span>
                                     <div *ngFor="let group of Groups.items" class="pit-groups">
                                         <figure><a  title=""><img style="width: 45px; height: 45px;"
-                                                    src="http://pitnik.somee.com/Groups/{{group.background}}" alt=""></a>
+                                                    src="{{groupImageUrl}}/{{group.background}}" alt=""></a>
                                         </figure>
                                         <div class="pit-groups-meta">
                                             <a [routerLink]="['/group']" [queryParams]="{ id: group.id }" title="">{{group.name}}</a>
@@ -64,7 +64,7 @@
                                                 <div class="user-post">
                                                     <div class="friend-info">
                                                         <figure>
-                                                            <img src="http://pitnik.somee.com/Users/{{post.imageUser}}" alt="">
+                                                            <img src="{{userImageUrl}}/{{post.imageUser}}" alt="">
                                                         </figure>
                                                         <div [routerLink]="['/about']" [queryParams]="{id:post.userId}"
                                                             class="friend-name">
@@ -98,7 +98,7 @@
                                                                             <figure *ngFor=" let x of post.image">
                                                                                 <a href="#" title="" data-toggle="modal"
                                                                                     data-target="#img-comt">
-                                                                                    <img src="http://pitnik.somee.com/Uploads/{{x}}"
+                                                                                    <img src="{{postImageUrl}}/{{x}}"
                                                                                         alt="">
                                                                                 </a>
                                                                             </figure>
@@ -191,7 +191,7 @@
                     <div class="user-post">
                         <div  class="friend-info">
                             <figure>
-                                <img [src]="" src="http://pitnik.somee.com/Users/{{postDetail.imageUser}}" alt="">
+                                <img [src]="" src="{{userImageUrl}}/{{postDetail.imageUser}}" alt="">
                             </figure>
                             <div [routerLink]="['/about']" [queryParams]="{id:postDetail.userId}" class="friend-name">
                                 <div class="more">
@@ -217,7 +217,7 @@
                                             <div style="display: flex; width: 100%;">
                                                 <figure *ngFor=" let x of postDetail.image">
                                                     <a href="#" title="" data-toggle="modal" data-target="#img-comt">
-                                                    <img src="http://pitnik.somee.com/Uploads/{{x}}" alt="">
+                                                    <img src="{{postImageUrl}}/{{x}}" alt="">
                                                     </a>
                                                 </figure> 
                                             </div>
@@ -261,7 +261,7 @@
                                     <li *ngFor="let comment of postDetail.comment">
                                         <div class="comet-avatar">
                                             <img *ngIf="displayImageUser != ''" 
-                                            [src]="displayImageUser ? 'http://pitnik.somee.com/Users/' + displayImageUser : './assets/images/userDefault.png'" 
+                                            [src]="displayImageUser ? '{{userImageUrl}}/' + displayImageUser : './assets/images/userDefault.png'" 
                                             style="width: 45px; height: 45px;" 
                                             alt="">
                                         </div>
@@ -282,7 +282,7 @@
                                     <li class="post-comment">
                                         <div class="comet-avatar">
                                             <img *ngIf="displayImageUser != ''" 
-                                            [src]="displayImageUser ? 'http://pitnik.somee.com/Users/' + displayImageUser : './assets/images/userDefault.png'" 
+                                            [src]="displayImageUser ? '{{userImageUrl}}/' + displayImageUser : './assets/images/userDefault.png'" 
                                             style="width: 45px; height: 45px;" 
                                             alt="">
                                         </div>

@@ -20,8 +20,8 @@ namespace Application.Features.Post.Handles.Queries
 
         public async Task<BaseQuerieResponse<PostDto>> Handle(GetPostOfUserRequest request, CancellationToken cancellationToken)
         {
-            var query = from p in _pitNikRepo.Post.GetAllQueryable().Where(x => x.UserId == request.UserId)
-                              join us in _pitNikRepo.Account.GetAllQueryable() on p.UserId equals us.Id
+            var query = from p in _pitNikRepo.Post.GetAllQueryable().AsNoTracking().Where(x => x.UserId == request.UserId)
+                              join us in _pitNikRepo.Account.GetAllQueryable().AsNoTracking() on p.UserId equals us.Id
                               select new PostDto
                               {
                                   UserId = request.UserId,
@@ -30,11 +30,11 @@ namespace Application.Features.Post.Handles.Queries
                                   NameUser = us.Name,
                                   Created = TimeHelper.GetRelativeTime(p.Created),
                                   GroupId = p.GroupId,
-                                  IsReact = request.UserId == _pitNikRepo.Interactions.GetAllQueryable().Where(x => x.UserId == request.UserId && x.PostId == p.Id).Select(x => x.UserId).FirstOrDefault(),
-                                  TotalComment = _pitNikRepo.Comment.GetAllQueryable().Where(x => x.PostId == p.Id).Count(),
-                                  TotalReactions = _pitNikRepo.Interactions.GetAllQueryable().Where(x => x.PostId == p.Id).Count(),
+                                  IsReact = p.Interactions.Any(x =>x.UserId == request.UserId && x.PostId == p.Id),
+                                  TotalComment = p.Comments.Count(),
+                                  TotalReactions = p.Interactions.Count(),
                                   ImageUser = us.Image,
-                                  Image = _pitNikRepo.ImagePost.GetAllQueryable().Where(x => x.PostId == p.Id).Select(x => x.Image).ToList()
+                                  Image = p.ImagePosts.Select(x =>x.Image).ToList()
                               };
             var postDto = await query.Skip((request.PageIndex - 1)*request.PageSize).Take(request.PageSize).ToListAsync();
             var total = await query.CountAsync();

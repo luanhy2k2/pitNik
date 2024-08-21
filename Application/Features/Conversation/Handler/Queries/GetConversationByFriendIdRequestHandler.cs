@@ -23,7 +23,7 @@ namespace Application.Features.Conversation.Handler.Queries
             var currentUserId = request.CurrentUserId;
             var friendId = request.FriendId;
 
-            var data = await _pitNikRepo.Conversation.GetAllQueryable()
+            var data = await _pitNikRepo.Conversation.GetAllQueryable().AsNoTracking()
                 .Include(c => c.Members)
                 .Where(c => c.Members.Any(m => m.UserId == currentUserId) &&
                             c.Members.Any(m => m.UserId == friendId))
@@ -31,7 +31,7 @@ namespace Application.Features.Conversation.Handler.Queries
                 {
                     Id = c.Id,
                     Message = c.Messages.OrderByDescending(x => x.Created).Select(x => x.Content).FirstOrDefault(),
-                    IsSeen = c.Messages.OrderByDescending(x => x.Created).Select(m => _pitNikRepo.MessageReadStatus.GetAllQueryable()
+                    IsSeen = c.Messages.OrderByDescending(x => x.Created).Select(m => _pitNikRepo.MessageReadStatus.GetAllQueryable().AsNoTracking()
                                         .Where(mrs => mrs.MessageId == m.Id && mrs.UserId == currentUserId)
                                         .Select(mrs => mrs.IsSeen)
                                         .FirstOrDefault())
