@@ -106,6 +106,7 @@ export class SearchComponent {
   }
   displayImageUser:string = "";
   ngOnInit(){
+    // this.presenceService.startConnection();
     this.loadKeyword();
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd && this.router.url.includes('/search')) {

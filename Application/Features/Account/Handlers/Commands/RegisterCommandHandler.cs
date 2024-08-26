@@ -56,7 +56,8 @@ namespace Application.Features.Account.Handles.Commands
                 Name = request.Register.Name,
                 Address = request.Register.Address,
                 Gender = request.Register.Gender,
-                Birthday = request.Register.Birthday
+                Birthday = request.Register.Birthday,
+                Image = "userDefault.png"
             };
             if (request.Register.Image != null)
             {

@@ -64,7 +64,8 @@
 	.container {
 	    max-width: 1000px;
 	}
-	.top-area > ul > li > a{width: 40px;}
+	.top-area > ul > li > a{width: 50px;}
+	.top-area > ul > li > a i{font-size: 30px;}
 	.fixed-sidebar {
 		display: none;
 	}
@@ -454,7 +455,10 @@
 	footer .row > div:nth-child(3) .widget{
 		margin-top: 0;
 	}
-	.sidebar > .widget,
+	.sidebar.left{
+		display: none;
+	}
+	/* .sidebar > .widget,
 	.sidebar > .advertisment-box,
 	.sidebar > div {
 	    float: left;
@@ -467,7 +471,7 @@
 	}
 	.sidebar .widget:last-child{
 		margin-right: 0;
-	}
+	} */
 	.salary-area {
 	    text-align: left;
 	}
@@ -771,8 +775,8 @@
 	width: 48%;
 }
 .sidebar > .widget, .sidebar > .advertisment-box, .sidebar > div{
-	width: 48.5%;
-	margin-right: 15px;
+	/* width: 48.5%; */
+	/* margin-right: 15px; */
 }
 .container-fluid.ext-50 {
     padding: 0 15px;
@@ -856,7 +860,7 @@
 
 
 
-@media screen and (max-width: 768px) {
+/* @media screen and (max-width: 768px) {
 	.gap{padding: 40px 0;}
     p{font-size: 13px; line-height: 20px;}
 	.page-header {
@@ -930,7 +934,7 @@
 
 
 
-}
+} */
 
 
 
@@ -2214,7 +2218,7 @@
 
 }
 
-@media screen and (max-width: 420px) {
+ @media screen and (max-width: 420px) {
 
 	.profile-author-thumb > img {
 	    max-width: 80px;
@@ -2465,7 +2469,7 @@
 	.fc-header-right{margin-top: -110px;}
 
 
-}
+} 
 
 
 
@@ -2635,7 +2639,7 @@ a.addnewforum {
     width: 43%;
 }
 
-}
+} 
 
 
 @media screen and (max-width: 360px) {
@@ -2697,7 +2701,7 @@ a.addnewforum {
 
 
 
-}
+} 
 
 @media screen and (max-width: 320px) {
     .error-page {
@@ -2878,4 +2882,4 @@ a.addnewforum {
     width: 67px;
 }
 
-}
+} 

@@ -22,13 +22,12 @@ namespace Application.Features.Notification.Handlers.Commands
         {
             try
             {
-                var notification = await _pitNikRepo.Notification.getById(request.UpdateStatusReadDto.Id);
-                if (notification == null)
+                var notification = await _pitNikRepo.Notification.GetAllQueryable().Where(x => x.IsSeen == false).ToListAsync();
+                foreach(var item in notification)
                 {
-                    return new BaseCommandResponse<NotificationDto>("Thông báo không tồn tại", false);
+                    item.IsSeen = true;
+                    await _pitNikRepo.Notification.Update(item);
                 }
-                notification.IsSeen = request.UpdateStatusReadDto.Status;
-                await _pitNikRepo.Notification.Update(notification);
                 return new BaseCommandResponse<NotificationDto>("Cập nhật trạng thái đã xem thành công!");
             }
             catch(Exception ex)

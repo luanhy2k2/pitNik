@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "KYvYaggKpU+bQc/uG6SDgvoLcHu7clTUVdboiDnMkck=",
+  "Hash": "gOHWJKVI9sBpDcgrob2ZC8Hlh2wQ1ERFxxqHAzLC2FU=",
   "Source": "API",
   "BasePath": "_content/API",
   "Mode": "Default",
@@ -16,6 +16,25 @@
     }
   ],
   "Assets": [
+    {
+      "Identity": "C:\\Project.net\\pitNik\\API\\wwwroot\\Comments\\20240824234854_tải xuống (1).png",
+      "SourceId": "API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Project.net\\pitNik\\API\\wwwroot\\",
+      "BasePath": "_content/API",
+      "RelativePath": "Comments/20240824234854_tải xuống (1).png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Comments\\20240824234854_tải xuống (1).png"
+    },
     {
       "Identity": "C:\\Project.net\\pitNik\\API\\wwwroot\\Groups\\0_10847189_458439227652952_7159736634825005371_o.jpg",
       "SourceId": "API",
@@ -606,6 +625,25 @@
       "OriginalItemSpec": "wwwroot\\Users\\3567fe0c-5855-4257-ac54-8a67a4b336d4_tải xuống (1).jfif"
     },
     {
+      "Identity": "C:\\Project.net\\pitNik\\API\\wwwroot\\Users\\5934638f-0911-46b3-aff0-7469bb058fe5_tải xuống.jfif",
+      "SourceId": "API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Project.net\\pitNik\\API\\wwwroot\\",
+      "BasePath": "_content/API",
+      "RelativePath": "Users/5934638f-0911-46b3-aff0-7469bb058fe5_tải xuống.jfif",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Users\\5934638f-0911-46b3-aff0-7469bb058fe5_tải xuống.jfif"
+    },
+    {
       "Identity": "C:\\Project.net\\pitNik\\API\\wwwroot\\Users\\7bcfc07f-a837-43e1-9de9-68db9dea5a65_images.jfif",
       "SourceId": "API",
       "SourceType": "Discovered",
@@ -699,6 +737,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Users\\tải xuống.jfif"
+    },
+    {
+      "Identity": "C:\\Project.net\\pitNik\\API\\wwwroot\\Users\\userDefault.png",
+      "SourceId": "API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Project.net\\pitNik\\API\\wwwroot\\",
+      "BasePath": "_content/API",
+      "RelativePath": "Users/userDefault.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Users\\userDefault.png"
     }
   ]
 }

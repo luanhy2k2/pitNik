@@ -1,0 +1,41 @@
+.ResetPasswrdform {
+    max-width: 400px; 
+   
+    background-color: #f9f9f9; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+}
+
+.ResetPasswrdform input {
+    width: 100%; 
+    padding: 10px;
+    margin-bottom: 15px; 
+    border: 1px solid #ccc; 
+    border-radius: 5px;
+    font-size: 16px; 
+    box-sizing: border-box;
+    background-color: #cfe3f3 none repeat scroll 0 0;
+}
+
+.ResetPasswrdform input:focus {
+    border-color: #007bff;
+    outline: none; 
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.ResetPasswrdform button {
+    width: 100%; 
+    padding: 10px; 
+    background-color: #fa6342; 
+    color: #fff; 
+    border: none; 
+    border-radius: 30px;
+    font-size: 16px; 
+    cursor: pointer; 
+    transition: background-color 0.3s ease; 
+}
+
+.ResetPasswrdform button:focus {
+    outline: none; /* Loại bỏ viền outline mặc định */
+    box-shadow: 0 0 5px rgba(255, 94, 0, 0.5); /* Đổ bóng khi focus */
+}

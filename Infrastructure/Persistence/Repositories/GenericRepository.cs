@@ -20,17 +20,9 @@ namespace Infrastructure.Persistence.Repositories
         }
         public async Task<bool> Create(T entity)
         {
-            try
-            {
-                await _context.Set<T>().AddAsync(entity);
-                await _context.SaveChangesAsync();
-                return true;
-            }
-            catch(Exception ex)
-            {
-                return false;
-            }
-            
+            await _context.Set<T>().AddAsync(entity);
+            await _context.SaveChangesAsync();
+            return true;
         }
         public async Task<T> Delete(int id)
         {

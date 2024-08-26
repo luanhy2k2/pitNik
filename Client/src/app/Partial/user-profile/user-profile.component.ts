@@ -27,12 +27,16 @@ export class UserProfileComponent {
     status: FriendshipStatus.Pending,
     requestedAt:new Date()
   }
+  isCurrentUser:boolean = true;
   ngOnInit(){
     this.loadUserInfo();
   }
   loadUserInfo(){
     this.route.queryParams.subscribe(params => {
       this.userId = params['id'] || this.userService.getUser().id;
+      if(this.userId != this.userService.getUser().id){
+        this.isCurrentUser = false;
+      }
     });
     this.userService.getPersionalInfor(this.userId).subscribe(res =>{
       this.userImage = res.image;

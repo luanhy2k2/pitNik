@@ -38,11 +38,9 @@
             <ul class="followers">
                 <li *ngFor="let item of friends.items">
                     <figure>
-                        <img *ngIf="item.image; else nullImageUser;" style="height: 40px; width: 40px;"
+                        <img  style="height: 40px; width: 40px;"
                           alt="author" src="{{userImageUrl}}/{{item.image}}">
-                        <ng-template #nullImageUser>
-                          <img style="height: 40px; width: 40px;" alt="author" src="./assets/images/userDefault.png">
-                        </ng-template>
+                       
                         <span *ngIf="item.isOnline" class="status f-online"></span>
                     </figure>
                     <div class="friend-meta">

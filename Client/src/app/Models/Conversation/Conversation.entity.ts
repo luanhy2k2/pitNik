@@ -12,3 +12,7 @@ export interface UserConversation{
     image:string,
     isCurrentUser:false
 }
+export interface StatusConversation{
+    conversationNane:string,
+    isOnline:boolean
+}

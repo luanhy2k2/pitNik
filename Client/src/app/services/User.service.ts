@@ -8,6 +8,7 @@ import { BaseCommandResponse } from "../Models/Common/BaseCommandResponse.entity
 import { Register } from "../Models/Account/Register.entity";
 import { apiUrl } from "../Environments/env";
 import { UserCredentials } from "../Models/Account/user-credentials";
+import { ResetPassword } from "../Models/Account/ResetPassword";
 @Injectable({
     providedIn: 'root'
 })
@@ -28,13 +29,8 @@ export class UserService {
         // formData.append('Image', user.image);
         return this.httpClient.post<BaseCommandResponse<string>>(`${apiUrl}/api/Account/register`, formData)
     }
-    ResetPassword(email: string, code: string, password: string): Observable<any> {
-        const request = {
-            email: email,
-            code: code,
-            newPassword: password
-        }
-        return this.httpClient.post(`${apiUrl}/api/Account/resetPassword`, request, { responseType: 'text' });
+    ResetPassword(resetPassword:ResetPassword): Observable<BaseCommandResponse<string>> {
+        return this.httpClient.post<BaseCommandResponse<string>>(`${apiUrl}/api/Account/ResetPassword`, resetPassword);
     }
     GenerateTokenConfirmEmail(email: string): Observable<boolean> {
         return this.httpClient.get<boolean>(`${apiUrl}/api/Account/generateConfirmTokenEmail/${email}`);

@@ -26,11 +26,8 @@ import { ImagesComponent } from './Modules/about/images/images.component';
 import { PostComponent } from './Modules/about/post/post.component';
 import { VideoComponent } from './Modules/video/video.component';
 import { AuthInterceptor } from './Interceptor/auth-interceptor.service';
-import { PresenceService } from './services/presence.service';
+import { LayoutComponent } from './Layout/layout/layout.component';
 
-export function initializeApp(presenceService: PresenceService) {
-  return () => presenceService.startConnection();
-}
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,7 +50,8 @@ export function initializeApp(presenceService: PresenceService) {
     RegisterComponent,
     ImagesComponent,
     PostComponent,
-    VideoComponent
+    VideoComponent,
+    LayoutComponent
   ],
   imports: [
     BrowserModule,
@@ -63,12 +61,6 @@ export function initializeApp(presenceService: PresenceService) {
     PickerModule
   ],
   providers: [
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initializeApp,
-      multi: true,
-      deps: [PresenceService]
-    },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]

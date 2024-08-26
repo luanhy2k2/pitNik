@@ -14,25 +14,77 @@ import { RegisterComponent } from './Modules/register/register.component';
 import { ImagesComponent } from './Modules/about/images/images.component';
 import { PostComponent } from './Modules/about/post/post.component';
 import { VideoComponent } from './Modules/video/video.component';
+import { AuthGuard } from './services/auth-guard.service';
+import { LayoutComponent } from './Layout/layout/layout.component';
+
 
 const routes: Routes = [
   {
     path: '',
-    component: IndexComponent,
-    title: 'Pinik'
-  },
-  { path: 'post/:id', component: IndexComponent },
-  {
-    path: 'setting',
-    component: AccountSettingComponent,
-  },
-  {
-    path: 'about',
-    component: AboutComponent,
-  },
-  {
-    path: 'friends',
-    component: FriendComponent,
+    component: LayoutComponent, 
+    canActivate:[AuthGuard],
+    children: [
+      {
+        path: '',
+        component: IndexComponent,
+       
+        title: 'Pinik'
+      },
+      { path: 'post/:id', component: IndexComponent,canActivate:[AuthGuard], },
+      {
+        path: 'setting',
+        component: AccountSettingComponent,
+       
+      },
+      {
+        path: 'about',
+        component: AboutComponent,
+       
+      },
+      {
+        path: 'friends',
+        component: FriendComponent,
+       
+      },
+      {
+        path: 'search',
+        component: SearchComponent,
+       
+      },
+      {
+        path: 'groups',
+        component: TimelineGroupComponent,
+       
+      },
+      {
+        path: 'group',
+        component: GroupComponent,
+      },
+      {
+        path: 'images',
+        component: ImagesComponent,
+       
+      },
+      {
+        path: 'Post',
+        component: PostComponent,
+       
+      },
+      {
+        path: 'video',
+        component: VideoComponent,
+      },
+      {
+        path: 'groupMember',
+        component: MemberComponent,
+       
+      },
+      {
+        path: 'groupInvitation',
+        component: InvitationComponent,
+       
+      },
+    ]
   },
   {
     path: 'login',
@@ -42,38 +94,7 @@ const routes: Routes = [
     path: 'register',
     component: RegisterComponent,
   },
-  {
-    path: 'search',
-    component: SearchComponent,
-  },
-  {
-    path: 'groups',
-    component: TimelineGroupComponent,
-  },
-  {
-    path: 'group',
-    component: GroupComponent,
-  },
-  {
-    path: 'images',
-    component: ImagesComponent,
-  },
-  {
-    path: 'Post',
-    component: PostComponent,
-  },
-  {
-    path: 'video',
-    component: VideoComponent,
-  },
-  {
-    path: 'groupMember',
-    component: MemberComponent,
-  },
-  {
-    path: 'groupInvitation',
-    component: InvitationComponent,
-  },
+  
 ]
 
 @NgModule({

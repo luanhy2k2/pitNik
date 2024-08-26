@@ -64,6 +64,7 @@ export class IndexComponent {
     postId: 0,
     created: new Date()
   };
+  uploadFileCommentReq:File[] = [];
   CreateReplyCommentReq: CreateReplyComment[] = [];
   imageSrcs: (string | ArrayBuffer | null)[] = [];
   displayImageUser: string = "";
@@ -89,7 +90,6 @@ export class IndexComponent {
     postId:0,
   }
   showModal: boolean = false;
-  maxPageReply: boolean = false;
   ngOnInit() {
     this.CommentService.startConnection();
     this.route.queryParams.subscribe(res => {
@@ -128,7 +128,16 @@ export class IndexComponent {
       }
     );
   }
-
+  addEmoji(emoji: string) {
+    this.CreateCommentReq.content += emoji;
+  }
+  addEmojiReplycomment(emoji:string, commentId:number){
+ 
+    var textarea = document.getElementById(`contentReply_${commentId}`) as HTMLTextAreaElement;
+        if (textarea !== null && textarea !== undefined){
+          textarea.value += emoji;
+        }
+  }
   LoadPostDetail(idPost: number) {
     if (idPost != null) {
       this.showModal = true;
@@ -151,7 +160,16 @@ export class IndexComponent {
       }
     }
     this.showModal = false;
+    this.CreateReplyCommentReq = [];
+    this.uploadFileCommentReq = [];
+    this.imageSrcs = [];
     this.CommentService.LeavePost(`Post_${this.postDetail.id}`)
+  }
+  toggleEmojiReplyComment(commentId:number){
+    var emojiModal = document.getElementById(`emojiReply_${commentId}`)
+    if (emojiModal !== null && emojiModal !== undefined) {
+      emojiModal.style.display = "block";
+    }
   }
   loadReplyComment(commentId: number) {
     for (let i = 0; i < this.postDetail.comment.length; i++) {
@@ -180,7 +198,7 @@ export class IndexComponent {
       }
     }
   }
-  ReplyComment(commentId:number, commenterid:string,commentername:string){
+  openInputReplyComment(commentId:number, commenterid:string,commentername:string){
     var existReq = this.CreateReplyCommentReq.find(e =>e.commentId == commentId);
     if(existReq){
       existReq.commenterId = commenterid;
@@ -214,9 +232,7 @@ export class IndexComponent {
               this.createNotificationReq.content = "Đã phản hồi bình luận của bạn";
               this.createNotificationReq.receiverId = item.commenterId;
               this.createNotificationReq.postId = this.postDetail.id;
-              this.presenceService.sendNotification(this.createNotificationReq).then(noti =>{
-                console.log(noti);
-              });
+              this.presenceService.sendNotification(this.createNotificationReq);
             })
           }
         }
@@ -241,6 +257,17 @@ export class IndexComponent {
   }
   AddComment() {
     this.CreateCommentReq.postId = this.postDetail.id;
+    if(this.uploadFileCommentReq.length > 0){
+      this.CommentService.UploadFile(this.uploadFileCommentReq).subscribe(res =>{
+        this.CreateCommentReq.content += res.object;
+        this.CreateComment();
+      })
+    }
+    else{
+      this.CreateComment();
+    }
+  }
+  CreateComment(){
     this.CommentService.sendComment(this.CreateCommentReq).then(res => {
       this.CreateCommentReq.postId = 0;
       this.CreateCommentReq.content = "";
@@ -252,23 +279,41 @@ export class IndexComponent {
       } 
     })
   }
-  onFilesSelected(event: Event): void {
+  onFilesSelected(event: Event, isPostFile: boolean): void {
     const fileInput = event.target as HTMLInputElement;
-    if (fileInput.files) {
-      Array.from(fileInput.files).forEach(file => {
-        this.CreatePostReq.files.push(file); // Update CreatePost object
-        if (file.type.startsWith('image/')) {
-          const reader = new FileReader();
-          reader.onload = (e: ProgressEvent<FileReader>) => {
-            if (e.target) {
-              this.imageSrcs.push(e.target.result);
-            }
-          };
-          reader.readAsDataURL(file);
+    if (!fileInput.files) {
+      return;
+    }
+    Array.from(fileInput.files).forEach(file => {
+      if (!file.type.startsWith('image/')) {
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = (e: ProgressEvent<FileReader>) => {
+        if (e.target && e.target.result) {
+          this.imageSrcs.push(e.target.result);
+          if (isPostFile) {
+            this.CreatePostReq.files.push(file); // Cập nhật đối tượng CreatePost
+          } else {
+            this.uploadFileCommentReq.push(file); // Cập nhật đối tượng uploadFileCommentReq
+          }
+          
+          console.log("srcImg:", this.imageSrcs);
         }
-      });
+      };
+  
+      reader.readAsDataURL(file);
+    });
+  } 
+  removeFile(index: number, isPostFile: boolean): void {
+    this.imageSrcs.splice(index, 1); // Xóa hình ảnh từ mảng imageSrcs
+    if (isPostFile) {
+      this.CreatePostReq.files.splice(index, 1); // Xóa tệp từ CreatePostReq
+    } else {
+      this.uploadFileCommentReq.splice(index, 1); // Xóa tệp từ uploadFileCommentReq
     }
   }
+  
   AddPost(): void {
     this.postService.createPost(this.CreatePostReq).subscribe(
       response => {

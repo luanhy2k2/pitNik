@@ -1,7 +1,6 @@
 ﻿using API.Hubs;
 using Application;
 using Hangfire;
-using Infrastructure.Hubs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -14,13 +13,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.ConfigureApplicationServices(builder.Configuration);
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("CorsPolicy",
-            builder => builder
-                .WithOrigins("http://localhost:4200", "https://pitnik.vercel.app") // Thêm nguồn gốc của client
-                .AllowAnyMethod()
-                .AllowAnyHeader()
-                .AllowCredentials());
+    options.AddPolicy("AllowSpecificOrigins",
+        policyBuilder =>
+        {
+            policyBuilder.WithOrigins("http://pitnik.s3-website-us-east-1.amazonaws.com", "http://localhost:4200")
+                         .AllowAnyHeader()
+                         .AllowAnyMethod()
+                         .AllowCredentials(); // Phải cho phép credentials
+        });
 });
+
 builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
@@ -47,16 +49,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.UseRouting();
-app.UseCors("CorsPolicy");
+app.UseCors("AllowSpecificOrigins");
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-//app.UseEndpoints(endpoints =>
-//{
-//    endpoints.MapHub<ChatHub>("/chatHub");
-//    endpoints.MapHangfireDashboard();
-//});
-app.MapHub<ChatHub>("chatHub");
 app.MapHub<HubMessage>("HubMessage");
 app.MapHub<HubInteraction>("HubInteraction");
 app.MapHub<HubPresence>("HubPresence");

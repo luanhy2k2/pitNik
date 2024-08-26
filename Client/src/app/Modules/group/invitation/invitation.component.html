@@ -40,13 +40,10 @@
                                             <div [routerLink]="['/about']" [queryParams]="{id:x.userId}"
                                                 class="invite-figure">
                                                 <figure>
-                                                    <img *ngIf="x.image; else nullUserImage;"
+                                                    <img 
                                                         style="height: 45px; width: 45px;" alt="author"
                                                         src="{{userImageUrl}}/{{x.image}}">
-                                                    <ng-template #nullUserImage>
-                                                        <img style="height: 45px; width: 45px;" alt="author"
-                                                            src="./assets/images/userDefault.png">
-                                                    </ng-template>
+                                                   
                                                 </figure>
                                                 <h6><a class="invitor" title="">{{x.name}}</a> Muốn tham gia vào nhóm
                                                     <br> <a title="">{{x.address}}</a></h6>

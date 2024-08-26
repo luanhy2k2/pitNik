@@ -14,8 +14,8 @@
                                 <div class="new-postbox">
                                     <figure>
                                         
-                                            <img *ngIf="displayImageUser != ''" 
-                                            [src]="displayImageUser ? '{{userImageUrl}}/' + displayImageUser : './assets/images/userDefault.png'" 
+                                            <img 
+                                            src="{{userImageUrl}}/{{displayImageUser}}"
                                             style="width: 45px; height: 45px;" 
                                             alt="">
                                     </figure>

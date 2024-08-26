@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\Messages\" />
+    <Folder Include="wwwroot\Comments\" />
     <Folder Include="wwwroot\Users\" />
     <Folder Include="wwwroot\uploads\" />
   </ItemGroup>

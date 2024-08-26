@@ -20,10 +20,8 @@ namespace Application.Features.Message.Handlers.Command
 {
     public class CreateMessageCommandHandler : BaseFeatures, IRequestHandler<CreateMessageCommand, BaseCommandResponse<MessageDto>>
     {
-        private readonly IWebHostEnvironment _environment;
-        public CreateMessageCommandHandler(IPitNikRepositoryWrapper pitNikRepo, IWebHostEnvironment environment) : base(pitNikRepo)
+        public CreateMessageCommandHandler(IPitNikRepositoryWrapper pitNikRepo) : base(pitNikRepo)
         {
-            _environment = environment;
         }
 
         public async Task<BaseCommandResponse<MessageDto>> Handle(CreateMessageCommand request, CancellationToken cancellationToken)
@@ -40,28 +38,6 @@ namespace Application.Features.Message.Handlers.Command
                 {
                 }
                 string Content = request.CreateMessageDto.Content;
-                //if (request.CreateMessageDto.Files != null && request.CreateMessageDto.Files.Count > 0)
-                //{
-                //    foreach(var file in request.CreateMessageDto.Files)
-                //    {
-                //        var timestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
-                //        var folderPath = Path.Combine(_environment.WebRootPath, "Messages");
-                //        var filename = $"{request.CreateMessageDto.ConversationId}_{timestamp}_{file.FileName}";
-                //        var filePath = Path.Combine(folderPath, filename);
-                //        if (!Directory.Exists(folderPath))
-                //        {
-                //            Directory.CreateDirectory(folderPath);
-                //        }
-                //        using (var fileStream = new FileStream(filePath, FileMode.Create))
-                //        {
-                //            await file.CopyToAsync(fileStream);
-                //        }
-                //        Content += string.Format(
-                //         "<img src=\"https://localhost:7261/Messages/{0} \">",filename
-                //        );
-                //    }
-                    
-                //}
                 var sender = await _pitNikRepo.Account.GetAllQueryable()
                     .FirstOrDefaultAsync(x => x.UserName == request.SenderUserName);
                 if (sender == null)
@@ -103,7 +79,6 @@ namespace Application.Features.Message.Handlers.Command
                     Id = message.Id,
                     ConversationId = message.ConversationId,
                 };
-                //await _notificationService.SendToGroup(request.CreateMessageDto.ConversationId.ToString() , "newMessage", messageDto);
 
                 return new BaseCommandResponse<MessageDto>("Gửi tin nhắn thành công!", messageDto);
             }

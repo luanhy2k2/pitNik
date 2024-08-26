@@ -32,9 +32,6 @@ namespace Application
             services.AddHangfireServer();
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.ConfigurePersistenceService(configuration);
-            //services.AddTransient<IRequestHandler<LoginRequest, AuthResponse>, LoginRequestHandler>();
-            //services.AddScoped<IDataDefaultService, DataDefaultService>();
-            //services.Configure<BackupRestoreConfiguration>(configuration.GetSection("BackupRestoreConfiguration"));
             return services;
         }
     }

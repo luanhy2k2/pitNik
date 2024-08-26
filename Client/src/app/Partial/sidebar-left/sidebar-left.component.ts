@@ -47,17 +47,12 @@ export class SidebarLeftComponent {
   ngOnInit() {
     this.loadMyFriend();
     this.PresenceService.listFriendIdConnected$.subscribe(res => {
-      console.log("ListFriendConnected", res);
-      for (let userId of res) {
-        for (let item of this.friends.items) {
-          if (item.userId === userId) {
-            item.isOnline = true;
-          }
-        }
+      const connectedUserIds = new Set(res);
+      for (let i = 0; i<=this.friends.items.length; i++) {
+        this.friends.items[i].isOnline = connectedUserIds.has(this.friends.items[i].userId);
       }
     });
     this.PresenceService.userOnDisconnected$.subscribe(res => {
-      console.log(res);
       for (let item of this.friends.items) {
         if (item.userId === res) {
           item.isOnline = !item.isOnline;
@@ -66,11 +61,10 @@ export class SidebarLeftComponent {
       }
     })
     this.PresenceService.userConnectedAdd$.subscribe(res => {
-      console.log("add friend connected:", res);
-      console.log(this.friends.items)
       for (let item of this.friends.items) {
         if (item.userId == res) {
           item.isOnline = true;
+          break;
         }
       }
     })

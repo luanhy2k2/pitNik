@@ -1,6 +1,10 @@
 {
   "Files": [
     {
+      "Id": "C:\\Project.net\\pitNik\\API\\wwwroot\\Comments\\20240824234854_tải xuống (1).png",
+      "PackagePath": "staticwebassets\\Comments\\20240824234854_tải xuống (1).png"
+    },
+    {
       "Id": "C:\\Project.net\\pitNik\\API\\wwwroot\\Groups\\0_10847189_458439227652952_7159736634825005371_o.jpg",
       "PackagePath": "staticwebassets\\Groups\\0_10847189_458439227652952_7159736634825005371_o.jpg"
     },
@@ -77,6 +81,10 @@
       "PackagePath": "staticwebassets\\Users\\3567fe0c-5855-4257-ac54-8a67a4b336d4_tải xuống (1).jfif"
     },
     {
+      "Id": "C:\\Project.net\\pitNik\\API\\wwwroot\\Users\\5934638f-0911-46b3-aff0-7469bb058fe5_tải xuống.jfif",
+      "PackagePath": "staticwebassets\\Users\\5934638f-0911-46b3-aff0-7469bb058fe5_tải xuống.jfif"
+    },
+    {
       "Id": "C:\\Project.net\\pitNik\\API\\wwwroot\\Users\\7bcfc07f-a837-43e1-9de9-68db9dea5a65_images.jfif",
       "PackagePath": "staticwebassets\\Users\\7bcfc07f-a837-43e1-9de9-68db9dea5a65_images.jfif"
     },
@@ -95,6 +103,10 @@
     {
       "Id": "C:\\Project.net\\pitNik\\API\\wwwroot\\Users\\tải xuống.jfif",
       "PackagePath": "staticwebassets\\Users\\tải xuống.jfif"
+    },
+    {
+      "Id": "C:\\Project.net\\pitNik\\API\\wwwroot\\Users\\userDefault.png",
+      "PackagePath": "staticwebassets\\Users\\userDefault.png"
     },
     {
       "Id": "C:\\Project.net\\pitNik\\API\\wwwroot\\uploads\\10_35356766_711642512344080_5722752001582825472_n.jpg",

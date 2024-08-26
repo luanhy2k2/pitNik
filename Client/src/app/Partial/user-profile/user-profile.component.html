@@ -8,7 +8,7 @@
         </div>
         <img src="./assets/images/resources/profile-image.jpg" alt="">
         <ul class="profile-controls">
-            <li><a (click)="CreateFriendShip()"  title="Add friend" data-toggle="tooltip"><i
+            <li *ngIf="isCurrentUser == false" ><a (click)="CreateFriendShip()"  title="Add friend" data-toggle="tooltip"><i
                         class="fa fa-user-plus"></i></a></li>
         </ul>
         <ol class="pit-rate">
@@ -26,10 +26,8 @@
             <div class="col-lg-2 col-md-3">
                 <div class="profile-author">
                     <div class="profile-author-thumb">
-                        <img *ngIf="userImage; else nullUserImage;" style="height: 151px; width: 151px;" alt="author" src="{{userImageUrl}}/{{userImage}}">
-                        <ng-template #nullUserImage>
-                            <img style="height: 151px; width: 151px;" alt="author" src="./assets/images/userDefault.png">
-                        </ng-template>
+                        <img  style="height: 151px; width: 151px;" alt="author" src="{{userImageUrl}}/{{userImage}}">
+                      
                         <div class="edit-dp">
                             <label class="fileContainer">
                                 <i class="fa fa-camera"></i>
@@ -59,19 +57,7 @@
                         <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" [routerLink]="['/images']" [queryParams]="{id:userId}">Ảnh</a>
                     </li>
                     
-                    <li>
-                        <div class="more">
-                            <i class="fa fa-ellipsis-h"></i>
-                            <ul class="more-dropdown">
-                                <li>
-                                    <a href="timeline-groups.html">Profile Groups</a>
-                                </li>
-                                <li>
-                                    <a href="statistics.html">Profile Analytics</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
+                    
                 </ul>
                 
                 

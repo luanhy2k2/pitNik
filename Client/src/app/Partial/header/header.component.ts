@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { userImageUrl } from 'src/app/Environments/env';
 import { Account, Gender } from 'src/app/Models/Account/Account.entity';
 import { BaseQueriesResponse } from 'src/app/Models/Common/BaseQueriesResponse.entity';
-import { Conversation } from 'src/app/Models/Conversation/Conversation.entity';
+import { Conversation, StatusConversation } from 'src/app/Models/Conversation/Conversation.entity';
 import { CreateConversation } from 'src/app/Models/Conversation/CreateConversation.entity';
 import { FriendShip, FriendshipStatus } from 'src/app/Models/FriendShip/FriendShip.entity';
 import { UpdateStatusFriend } from 'src/app/Models/FriendShip/UpdateStatusFriend.entity';
@@ -29,7 +29,6 @@ export class HeaderComponent {
   public userImageUrl = userImageUrl;
   constructor(private readonly FriendService: FriendShipService,
     private readonly presenceService: PresenceService,
-    private readonly userService: UserService,
     private readonly notificationService: NotificationService,
     private readonly conversationService: ConversationService,
     private readonly messageService: MessageService,
@@ -65,10 +64,6 @@ export class HeaderComponent {
     total: 0,
     keyword: ""
   }
-  UpdateNotification: UpdateStatusReadNotification = {
-    id: 0,
-    status: false
-  }
   Conversations: BaseQueriesResponse<Conversation> = {
     pageIndex: 1,
     pageSize: 20,
@@ -91,7 +86,10 @@ export class HeaderComponent {
     content: "",
     // files: []
   };
-  
+  currentConversationStatus:StatusConversation = {
+    conversationNane: "",
+    isOnline:false
+  }
   toggleEmoji: boolean = false;
   updateMessageReadStatus: UpdateMessageReadStatus = {
     userId: "",
@@ -116,6 +114,7 @@ export class HeaderComponent {
     )
   }
   ngOnInit() {
+    // this.presenceService.startConnection();
     this.messageService.loadConversation$.subscribe(userId => {
       if (userId != "") {
         this.conversationService.getByFriendId(userId).subscribe(res => {
@@ -135,11 +134,9 @@ export class HeaderComponent {
       }
 
     });
-    if (this.userService.getUser().token) {
-      this.LoadNotification();
-      this.LoadConversation();
-      this.LoadFrienPending();
-    }
+    this.LoadNotification();
+    this.LoadConversation();
+    this.LoadFrienPending();
     this.presenceService.friendInvitationAdded$.subscribe(res => {
       this.LoadFrienPending();
     })
@@ -148,27 +145,21 @@ export class HeaderComponent {
     })
     this.presenceService.profileAdded$.subscribe(res => {
       this.user = res;
-      console.log("currentUser:", res);
     })
     this.presenceService.listFriendIdConnected$.subscribe(res => {
-      console.log("ListFriendConnected", res);
       for (let userId of res) {
         for (let item of this.Conversations.items) {
           if (item.member.some(x => x.id === userId)) {
             item.isOnline = true;
-            // this.signalRService.joinRoom(item.id.toString())
             this.messageService.joinRoom(item.id.toString())
           }
         }
       }
     });
     this.presenceService.userConnectedAdd$.subscribe(res => {
-      console.log("add friend connected:", res);
-      console.log(this.Conversations.items)
       for (let item of this.Conversations.items) {
         if (item.member.find(x => x.id == res)) {
           item.isOnline = true;
-          // this.signalRService.joinRoom(item.id.toString())
           this.messageService.joinRoom(item.id.toString());
         }
       }
@@ -186,7 +177,14 @@ export class HeaderComponent {
       message.isSentByCurrentUser = message.sender.id == this.user.id
       message.created = "";
       this.Messages.items.push(message);
-      console.log(message);
+    })
+    this.presenceService.userOnDisconnected$.subscribe(res => {
+      for (let item of this.Conversations.items) {
+        if (item.member.find(x =>x.isCurrentUser == false)?.id === res) {
+          item.isOnline = !item.isOnline;
+          break;
+        }
+      }
     })
   }
 
@@ -213,7 +211,6 @@ export class HeaderComponent {
         }
       });
     }
-    console.log(this.imageMessageSrcs);
   }
   SendMessage() {
     if(this.uploadImageMessage && this.uploadImageMessage.length > 0){
@@ -232,7 +229,6 @@ export class HeaderComponent {
     .then(res => {
       this.CreateMessageRequest.content = "";
       this.imageMessageSrcs = [];
-      console.log(res);
       for (let element of this.Conversations.items) {
         if (element.id == this.CreateMessageRequest.conversationId && element.isOnline != true) {
           element.message = this.CreateMessageRequest.content;
@@ -250,6 +246,10 @@ export class HeaderComponent {
     this.isHidden = false;
     this.CreateMessageRequest.conversationId = conversionId;
     for (let item of this.Conversations.items) {
+      if (item.id == conversionId) {
+        this.currentConversationStatus.conversationNane = item.member.find(x => x.isCurrentUser === false)?.name || '';
+        this.currentConversationStatus.isOnline = item.isOnline
+      }
       if (item.id == conversionId && item.isSeen == false) {
         this.updateMessageReadStatus.conversationId = conversionId;
         this.updateMessageReadStatus.status = true;
@@ -326,18 +326,17 @@ export class HeaderComponent {
     })
 
   }
-  UpdateReadStatusNotification(id: number, status: boolean) {
-    this.UpdateNotification.id = id;
-    this.UpdateNotification.status = status;
-    this.notificationService.UpdateReadStatus(this.UpdateNotification).subscribe(res => {
+  UpdateReadStatusNotification() {
+    this.notificationService.UpdateReadStatus().subscribe(res => {
       if (res.success == true) {
-        for (let element of this.Notifications.items) {
-          if (element.id == this.UpdateNotification.id) {
-            element.isSeen = this.UpdateNotification.status;
-          }
-        }
+        const unreadNotifications = this.Notifications.items.filter(notification => !notification.isSeen);
+        unreadNotifications.forEach(notification => {
+          notification.isSeen = true;
+          this.UnreadNotificationCount();
+        });
       }
-    })
+    });
+    
   }
   ngOnDestroy() {
     this.presenceService.stopConnection();

@@ -8,7 +8,7 @@
 
                         <div class="col-lg-12">
                             <div class="row merged20" id="page-contents">
-                                <div style="height: 100vh; overflow: auto; scrollbar-width: none;" class="col-lg-4">
+                                <div style="height: 100vh; overflow: auto; scrollbar-width: none;" class="col-lg-4 sidebar left" >
                                     <app-sidebar-left></app-sidebar-left>
                                 </div>
                                 <div style="height: 100vh; overflow: auto; scrollbar-width: none;" class="col-lg-8">
@@ -17,8 +17,7 @@
                                         <div class="new-postbox">
                                             <figure>
 
-                                                <img *ngIf="currentUser.image != ''"
-                                                    [src]="currentUser.image ? '{{userImageUrl}}/' + currentUser.image : './assets/images/userDefault.png'"
+                                                <img src="{{userImageUrl}}/{{currentUser.image}}"
                                                     style="width: 45px; height: 45px;" alt="">
                                             </figure>
                                             <div class="newpst-input">
@@ -290,8 +289,7 @@
                                     <ul class="we-comet">
                                         <li *ngFor="let comment of postDetail.comment">
                                             <div class="comet-avatar">
-                                                <img *ngIf="comment.imageUser != ''"
-                                                    [src]="currentUser.image ? '{{userImageUrl}}/' + comment.imageUser : './assets/images/userDefault.png'"
+                                                <img src="{{userImageUrl}}/{{comment.imageUser}}"
                                                     style="width: 45px; height: 45px;" alt="">
                                             </div>
                                             <div class="we-comment">
@@ -312,8 +310,7 @@
                                         </li>
                                         <li class="post-comment">
                                             <div class="comet-avatar">
-                                                <img *ngIf="currentUser.image != ''"
-                                                    [src]="currentUser.image ? '{{userImageUrl}}/' + currentUser.image : './assets/images/userDefault.png'"
+                                                <img src="{{userImageUrl}}/{{currentUser.image}}"
                                                     style="width: 45px; height: 45px;" alt="">
                                             </div>
                                             <div class="post-comt-box">

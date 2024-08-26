@@ -31,7 +31,7 @@ namespace Application.Features.Post.Handles.Queries
                                   Created = TimeHelper.GetRelativeTime(p.Created),
                                   GroupId = p.GroupId,
                                   IsReact = p.Interactions.Any(x =>x.UserId == request.UserId && x.PostId == p.Id),
-                                  TotalComment = p.Comments.Count(),
+                                  TotalComment = p.Comments.Count() + p.Comments.SelectMany(x => x.ReplyComments).Count(),
                                   TotalReactions = p.Interactions.Count(),
                                   ImageUser = us.Image,
                                   Image = p.ImagePosts.Select(x =>x.Image).ToList()

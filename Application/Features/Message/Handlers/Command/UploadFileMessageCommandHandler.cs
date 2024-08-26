@@ -36,7 +36,7 @@ namespace Application.Features.Message.Handlers.Command
                     await file.CopyToAsync(fileStream);
                 }
                 Content += string.Format(
-                 "<img src=\"https://localhost:7261/Messages/{0} \">", filename
+                 "<img src=\"http://pitnik.somee.com/Messages/{0} \">", filename
                 );
             }
             return new BaseCommandResponse<string>("Upload file thành công!", Content);  

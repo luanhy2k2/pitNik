@@ -28,6 +28,7 @@ export class PresenceService {
   constructor(private userService: UserService) {
     this.connection = new signalR.HubConnectionBuilder()
       .withUrl(`${apiUrl}/HubPresence`, {
+        withCredentials:true,
         accessTokenFactory: () => {
           const user = this.userService.getUser();
           return user ? user.token : '';
@@ -39,19 +40,27 @@ export class PresenceService {
       .build();
   }
 
-  startConnection() {
-    try {
-      this.connection.start();
-      console.log('Đã kết nối SignalR');
-      this.registerSignalREvents();
-    } catch (err) {
-      console.error('Lỗi khi bắt đầu kết nối: ', err);
-    }
+  async startConnection() {
+    await this.connection.start()
+      .then(() => {
+        console.log('Đã kết nối presence Hub');
+        this.registerSignalREvents();
+      })
+      .catch((err) => {
+        if (err.statusCode == 401) {
+          console.error('Lỗi 401 khi bắt đầu kết nối presence hub: ', err);       
+        } else {
+          console.error('Lỗi khi bắt đầu kết nối presence hub: ', err);
+        }
+        localStorage.removeItem('user');
+          window.location.href = '/login'; 
+      });
   }
-  stopConnection() {
+  
+  async stopConnection() {
     if (this.connection) {
       try {
-        this.connection.stop();
+        await this.connection.stop();
         console.log('Đã ngắt kết nối SignalR');
       } catch (err) {
         console.error('Lỗi khi dừng kết nối: ', err);
@@ -67,7 +76,7 @@ export class PresenceService {
       .catch(error => console.log(error));
   }
   async GetFriendIdOfCurrentUser() {
-    return this.connection.invoke('GetFriendIdOfCurrentUser')
+    return await this.connection.invoke('GetFriendIdOfCurrentUser')
       .catch(error => console.log(error));
   }
   private registerSignalREvents() {

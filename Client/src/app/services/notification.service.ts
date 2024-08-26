@@ -21,7 +21,7 @@ export class NotificationService {
     }
     return this.httpClient.get<BaseQueriesResponse<Notification>>(`${apiUrl}/api/Notification/GetNotification`, { params});
   }
-  UpdateReadStatus(request:UpdateStatusReadNotification):Observable<BaseCommandResponse<Notification>>{
-    return this.httpClient.post<BaseCommandResponse<Notification>>(`${apiUrl}/api/Notification/UpdateReadStatus`, request);
+  UpdateReadStatus():Observable<BaseCommandResponse<Notification>>{
+    return this.httpClient.post<BaseCommandResponse<Notification>>(`${apiUrl}/api/Notification/UpdateReadStatus`, {});
   }
 }

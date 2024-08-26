@@ -37,6 +37,7 @@ namespace API.Controllers
             var result = await _mediator.Send(new LoginRequest { Password = req.Password, UserName = req.UserName });
             return Ok(result);
         }
+       
         [HttpGet("GetAll")]
         public async Task<ActionResult<BaseQuerieResponse<AccountDto>>> GetAll([FromQuery] BasePagingDto model)
         {
@@ -67,7 +68,7 @@ namespace API.Controllers
             var result = await _mediator.Send(new ConfirmEmailCommand { Email = email, Token = token });
             if(result.Success == true)
             {
-                return Redirect($"https://pitnik.vercel.app/login");
+                return Redirect($"http://pitnik.s3-website-us-east-1.amazonaws.com/login");
             }
             else
             {

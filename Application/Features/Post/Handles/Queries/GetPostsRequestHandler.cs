@@ -40,7 +40,7 @@ namespace Application.Features.Post.Handles.Queries
                             Created = TimeHelper.GetRelativeTime(p.Created),
                             Image =p.ImagePosts.Select(x => x.Image).ToList(),
                             TotalReactions = p.Interactions.Count(),
-                            TotalComment = p.Comments.Count(),
+                            TotalComment = p.Comments.Count() + p.Comments.SelectMany(x =>x.ReplyComments).Count(),
                             IsReact = p.Interactions.Any(x => x.User.UserName == request.UserName && x.PostId == p.Id)
                         };
 

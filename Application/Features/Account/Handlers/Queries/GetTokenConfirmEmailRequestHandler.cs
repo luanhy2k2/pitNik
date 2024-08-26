@@ -36,7 +36,7 @@ namespace Application.Features.Account.Handlers.Queries
                     var tokenEncoded = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
                     var callbackUrl = $"http://pitnik.somee.com/api/Account/ConfirmEmail?email={request.Email}&token={tokenEncoded}";
                     var body = "Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi, vui lòng click vào đây để xác thực tài khoản của bạn:" + callbackUrl;
-                    await _sendEmailService.SendEmail(request.Email, body);
+                    _sendEmailService.SendEmail(request.Email, body);
                     return true;
                 }
                 return false;

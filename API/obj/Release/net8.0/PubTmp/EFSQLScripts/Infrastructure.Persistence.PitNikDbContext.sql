@@ -1374,3 +1374,66 @@ GO
 COMMIT;
 GO
 
+BEGIN TRANSACTION;
+GO
+
+IF NOT EXISTS (
+    SELECT * FROM [__EFMigrationsHistory]
+    WHERE [MigrationId] = N'20240724124952_addReplyComment'
+)
+BEGIN
+    CREATE TABLE [ReplyComments] (
+        [Id] int NOT NULL IDENTITY,
+        [CommentId] int NOT NULL,
+        [CommenterId] nvarchar(450) NOT NULL,
+        [Content] nvarchar(max) NOT NULL,
+        [ResponderId] nvarchar(450) NOT NULL,
+        [Created] datetime2 NOT NULL,
+        CONSTRAINT [PK_ReplyComments] PRIMARY KEY ([Id]),
+        CONSTRAINT [FK_ReplyComments_AspNetUsers_CommenterId] FOREIGN KEY ([CommenterId]) REFERENCES [AspNetUsers] ([Id]),
+        CONSTRAINT [FK_ReplyComments_AspNetUsers_ResponderId] FOREIGN KEY ([ResponderId]) REFERENCES [AspNetUsers] ([Id]),
+        CONSTRAINT [FK_ReplyComments_Comments_CommentId] FOREIGN KEY ([CommentId]) REFERENCES [Comments] ([Id])
+    );
+END;
+GO
+
+IF NOT EXISTS (
+    SELECT * FROM [__EFMigrationsHistory]
+    WHERE [MigrationId] = N'20240724124952_addReplyComment'
+)
+BEGIN
+    CREATE INDEX [IX_ReplyComments_CommenterId] ON [ReplyComments] ([CommenterId]);
+END;
+GO
+
+IF NOT EXISTS (
+    SELECT * FROM [__EFMigrationsHistory]
+    WHERE [MigrationId] = N'20240724124952_addReplyComment'
+)
+BEGIN
+    CREATE INDEX [IX_ReplyComments_CommentId] ON [ReplyComments] ([CommentId]);
+END;
+GO
+
+IF NOT EXISTS (
+    SELECT * FROM [__EFMigrationsHistory]
+    WHERE [MigrationId] = N'20240724124952_addReplyComment'
+)
+BEGIN
+    CREATE INDEX [IX_ReplyComments_ResponderId] ON [ReplyComments] ([ResponderId]);
+END;
+GO
+
+IF NOT EXISTS (
+    SELECT * FROM [__EFMigrationsHistory]
+    WHERE [MigrationId] = N'20240724124952_addReplyComment'
+)
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20240724124952_addReplyComment', N'8.0.3');
+END;
+GO
+
+COMMIT;
+GO
+

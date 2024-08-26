@@ -5,7 +5,6 @@ using Core.Common;
 using Core.Entities;
 using Core.Interface.Infrastructure;
 using Core.Interface.Persistence;
-using Infrastructure.Hubs;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;

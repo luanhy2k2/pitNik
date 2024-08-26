@@ -62,13 +62,10 @@
                                             </ul>
                                         </div>
                                         <figure>
-                                            <img *ngIf="member.image; else nullImageConversation;"
+                                            <img 
                                                 style="height: 79px; width: 79px;" alt="author"
                                                 src="{{userImageUrl}}/{{member.image}}">
-                                            <ng-template #nullImageConversation>
-                                                <img style="height: 79px; width: 79px;" alt="author"
-                                                    src="./assets/images/userDefault.png">
-                                            </ng-template>
+                                           
                                         </figure>
 
                                         <div class="frnd-meta">

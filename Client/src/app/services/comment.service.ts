@@ -103,6 +103,11 @@ export class CommentService {
     return this.hubConnection.invoke('ReplyComment', Comment)
       .catch(error => console.log(error));
   }
+  UploadFile(Files: File[]): Observable<BaseCommandResponse<string>> {
+    const formData: FormData = new FormData();
+    Files.forEach(file => formData.append('Files', file, file.name));
+    return this.httpClient.post<BaseCommandResponse<string>>(`${apiUrl}/api/Comment/UploadFile`, formData);
+  }
   create(comment: CreateComment): Observable<BaseCommandResponse<Comment>> {
     comment.userId = this.userService.getUser().id;
     return this.httpClient.post<BaseCommandResponse<Comment>>(`${apiUrl}/api/Comment/Create`, comment);

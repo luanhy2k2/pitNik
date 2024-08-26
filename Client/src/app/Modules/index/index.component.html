@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="row merged20" id="page-contents">
-                        <div style="height: 100vh; overflow: auto; scrollbar-width: none;" class="col-lg-3">
+                        <div style="height: 100vh; overflow: auto; scrollbar-width: none;" class="col-lg-3 sidebar left">
                             <app-sidebar-left></app-sidebar-left>
                         </div>
                         <div style="height: 100vh; overflow: auto; scrollbar-width: none;" class="col-lg-6">
@@ -12,11 +12,9 @@
                                 <span class="create-post">Create post</span>
                                 <div class="new-postbox">
                                     <figure>
-                                        
-                                            <img *ngIf="displayImageUser != ''" 
-                                            [src]="displayImageUser ? userImageUrl + '/' + displayImageUser : './assets/images/userDefault.png'" 
-                                            style="width: 45px; height: 45px;" 
-                                            alt="">
+
+                                        <img src="{{userImageUrl}}/{{displayImageUser}}"
+                                            style="width: 45px; height: 45px;" alt="">
                                     </figure>
                                     <div class="newpst-input">
                                         <div>
@@ -38,25 +36,29 @@
                                             <li>
                                                 <i class="fa fa-music"></i>
                                                 <label class="fileContainer">
-                                                    <input type="file" (change)="onFilesSelected($event)" multiple>
+                                                    <input type="file" (change)="onFilesSelected($event, true)"
+                                                        multiple>
                                                 </label>
                                             </li>
                                             <li>
                                                 <i class="fa fa-image"></i>
                                                 <label class="fileContainer">
-                                                    <input type="file" (change)="onFilesSelected($event)" multiple>
+                                                    <input type="file" (change)="onFilesSelected($event, true)"
+                                                        multiple>
                                                 </label>
                                             </li>
                                             <li>
                                                 <i class="fa fa-video-camera"></i>
                                                 <label class="fileContainer">
-                                                    <input type="file" (change)="onFilesSelected($event)" multiple>
+                                                    <input type="file" (change)="onFilesSelected($event, true)"
+                                                        multiple>
                                                 </label>
                                             </li>
                                             <li>
                                                 <i class="fa fa-camera"></i>
                                                 <label class="fileContainer">
-                                                    <input type="file" (change)="onFilesSelected($event)" multiple>
+                                                    <input type="file" (change)="onFilesSelected($event, true)"
+                                                        multiple>
                                                 </label>
                                             </li>
 
@@ -71,7 +73,7 @@
                                     </div>
                                 </div>
                             </div><!-- add post new box -->
-                         
+
                             <div class="loadMore">
                                 <div *ngFor="let post of Posts.items" class="central-meta item">
                                     <div class="user-post">
@@ -111,8 +113,7 @@
                                                                 <figure *ngFor=" let x of post.image">
                                                                     <a href="#" title="" data-toggle="modal"
                                                                         data-target="#img-comt">
-                                                                        <img src="{{postImageUrl}}/{{x}}"
-                                                                            alt="">
+                                                                        <img src="{{postImageUrl}}/{{x}}" alt="">
                                                                     </a>
                                                                 </figure>
                                                             </div>
@@ -128,9 +129,10 @@
                                                     </ul>
                                                 </figure>
                                                 <div class="we-video-info">
-                                                    <ul style="width: 100%;" >
-                                                        <li  (click)="React(post.id, 3)">
-                                                            <span [class.isReact]="post.isReact" class="views" title="views">
+                                                    <ul style="width: 100%;">
+                                                        <li (click)="React(post.id, 3)">
+                                                            <span [class.isReact]="post.isReact" class="views"
+                                                                title="views">
                                                                 <i [class.isReact]="post.isReact"
                                                                     class="fa fa-thumbs-up"></i>
                                                                 <ins>{{post.totalReactions}}</ins>
@@ -146,7 +148,8 @@
                                                             </span>
                                                         </li>
 
-                                                        <li (click)="sharePost(post.id)" style="float: right; padding-right: 4%;">
+                                                        <li (click)="sharePost(post.id)"
+                                                            style="float: right; padding-right: 4%;">
                                                             <span>
                                                                 <a class="share-pst" title="Share">
                                                                     <i class="fa fa-share-alt"></i>
@@ -156,12 +159,12 @@
                                                             </span>
                                                         </li>
                                                     </ul>
-                                                  
+
                                                 </div>
                                             </div>
-                                           
+
                                         </div>
-                                    
+
                                     </div>
                                 </div>
                             </div>
@@ -217,225 +220,261 @@
         </div>
     </div>
 </div><!-- send message popup -->
-<div [ngClass]="{'modal fade': true, 'show': showModal}" 
-     [ngStyle]="{'display': showModal ? 'block' : 'none'}" 
-     id="exampleModal" 
-     tabindex="-1" 
-     aria-labelledby="exampleModalLabel" 
-     aria-hidden="true">
+<div [ngClass]="{'modal fade': true, 'show': showModal}" [ngStyle]="{'display': showModal ? 'block' : 'none'}"
+    id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 
     <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">
-            Bài viết của Đinh Thành Luân
-          </h5>
-          <i (click)="ClosePostDetail()" style="font-size: 20px;" class="fa fa-close"></i>
-      </div>
-      <div class="modal-body">
-        </div>
-        <div class="modal-body">
-            <div class="loadMore">
-                <div class="central-meta item">
-                    <div class="user-post">
-                        <div  class="friend-info">
-                            <figure>
-                                <img [src]="" src="{{userImageUrl}}/{{postDetail.imageUser}}" alt="">
-                            </figure>
-                            <div [routerLink]="['/about']" [queryParams]="{id:postDetail.userId}" class="friend-name">
-                                <div class="more">
-                                    <div class="more-post-optns"><i class="ti-more-alt"></i>
-                                        <ul>
-                                            <li><i class="fa fa-pencil-square-o"></i>Edit Post</li>
-                                            <li><i class="fa fa-trash-o"></i>Delete Post</li>
-                                            <li class="bad-report"><i class="fa fa-flag"></i>Report Post</li>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Bài viết của {{postDetail.nameUser}}
+                </h5>
+                <i (click)="ClosePostDetail()" style="font-size: 20px;" class="fa fa-close"></i>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-body">
+                <div class="loadMore">
+                    <div class="central-meta item">
+                        <div class="user-post">
+                            <div class="friend-info">
+                                <figure>
+                                    <img [src]="" src="{{userImageUrl}}/{{postDetail.imageUser}}" alt="">
+                                </figure>
+                                <div [routerLink]="['/about']" [queryParams]="{id:postDetail.userId}"
+                                    class="friend-name">
+                                    <div class="more">
+                                        <div class="more-post-optns"><i class="ti-more-alt"></i>
+                                            <ul>
+                                                <li><i class="fa fa-pencil-square-o"></i>Edit Post</li>
+                                                <li><i class="fa fa-trash-o"></i>Delete Post</li>
+                                                <li class="bad-report"><i class="fa fa-flag"></i>Report Post</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <ins><a title="">{{postDetail.nameUser}}</a> Post Album</ins>
+                                    <span><i class="fa fa-globe"></i> published: {{postDetail.created}} </span>
+                                </div>
+                                <div class="post-meta">
+                                    <p>
+                                        {{postDetail.content}}
+                                    </p>
+                                    <figure>
+                                        <div class="img-bunch">
+                                            <div class="row">
+                                                <!-- <div class="col-lg-6 col-md-6 col-sm-6"> -->
+                                                <div style="display: flex; width: 100%;">
+                                                    <figure *ngFor=" let x of postDetail.image">
+                                                        <a href="#" title="" data-toggle="modal"
+                                                            data-target="#img-comt">
+                                                            <img src="{{postImageUrl}}/{{x}}" alt="">
+                                                        </a>
+                                                    </figure>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <ul class="like-dislike">
+                                            <li><a class="bg-purple" href="#" title="Save to Pin Post"><i
+                                                        class="fa fa-thumb-tack"></i></a></li>
+                                            <li><a class="bg-blue" href="#" title="Like Post"><i
+                                                        class="ti-thumb-up"></i></a></li>
+                                            <li><a class="bg-red" href="#" title="dislike Post"><i
+                                                        class="ti-thumb-down"></i></a></li>
                                         </ul>
+                                    </figure>
+                                    <div class="we-video-info">
+                                        <ul>
+                                            <li (click)="React(postDetail.id, 3)">
+                                                <span class="views" title="views">
+                                                    <i [class.isReact]="postDetail.isReact" class="fa fa-thumbs-up"></i>
+                                                    <ins>{{postDetail.totalReactions}}</ins>
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <span class="comment" title="Comments">
+                                                    <i class="fa fa-commenting"></i>
+                                                    <ins>{{postDetail.totalComment}}</ins>
+                                                </span>
+                                            </li>
+
+                                            <li>
+                                                <span>
+                                                    <a class="share-pst" title="Share">
+                                                        <i class="fa fa-share-alt"></i>
+                                                    </a>
+                                                    <ins>20</ins>
+                                                </span>
+                                            </li>
+                                        </ul>
+
                                     </div>
                                 </div>
-                                <ins><a  title="">{{postDetail.nameUser}}</a> Post Album</ins>
-                                <span><i class="fa fa-globe"></i> published: {{postDetail.created}} </span>
-                            </div>
-                            <div class="post-meta">
-                                <p>
-                                    {{postDetail.content}}
-                                </p>
-                                <figure>
-                                    <div class="img-bunch">
-                                        <div class="row">
-                                            <!-- <div class="col-lg-6 col-md-6 col-sm-6"> -->
-                                            <div style="display: flex; width: 100%;">
-                                                <figure *ngFor=" let x of postDetail.image">
-                                                    <a href="#" title="" data-toggle="modal" data-target="#img-comt">
-                                                    <img src="{{postImageUrl}}/{{x}}" alt="">
-                                                    </a>
-                                                </figure> 
-                                            </div>
-                                        </div>
-                                    </div>	
-                                    <ul class="like-dislike">
-                                        <li><a class="bg-purple" href="#" title="Save to Pin Post"><i class="fa fa-thumb-tack"></i></a></li>
-                                        <li><a class="bg-blue" href="#" title="Like Post"><i class="ti-thumb-up"></i></a></li>
-                                        <li><a class="bg-red" href="#" title="dislike Post"><i class="ti-thumb-down"></i></a></li>
-                                    </ul>
-                                </figure>	
-                                <div class="we-video-info">
-                                    <ul>
-                                        <li (click)="React(postDetail.id, 3)">
-                                            <span class="views" title="views">
-                                                <i [class.isReact]="postDetail.isReact" class="fa fa-thumbs-up"></i>
-                                                <ins>{{postDetail.totalReactions}}</ins>
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span  class="comment" title="Comments">
-                                                <i class="fa fa-commenting"></i>
-                                                <ins>{{postDetail.totalComment}}</ins>
-                                            </span>
-                                        </li>
-
-                                        <li>
-                                            <span>
-                                                <a class="share-pst" title="Share">
-                                                    <i class="fa fa-share-alt"></i>
-                                                </a>
-                                                <ins>20</ins>
-                                            </span>	
-                                        </li>
-                                    </ul>
-                                  
-                                </div>
-                            </div>
-                            <div style="display: block; width: 100%;" class="coment-area">
-                                <ul class="we-comet">
-                                    <li style="border-bottom: 1px solid #ede9e9;" *ngFor="let comment of postDetail.comment">
-                                        <div class="comet-avatar">
-                                            <img *ngIf="comment.imageUser != ''" 
-                                            [src]="displayImageUser ? userImageUrl + '/' + comment.imageUser : './assets/images/userDefault.png'" 
-                                            style="width: 45px; height: 45px;" 
-                                            alt="">
-                                        </div>
-                                        <div class="we-comment">
-                                            <h5><a href="time-line.html" title="">{{comment.nameUser}}</a></h5>
-                                            <br>
-                                            <p>{{comment.content}}</p>
-                                          
-                                            <div class="inline-itms">
-                                                <span>{{comment.created}}</span>
-                                                <a class="we-reply" (click)="ReplyComment(comment.id, comment.userId,comment.nameUser)" title="Reply"><i class="fa fa-reply"></i></a>
-                                                <a href="#" title=""><i class="fa fa-heart"></i><span>20</span></a>
-                                            </div>
-                                        </div> 
-                                        <div *ngFor="let reply of comment.Reply" style="margin-left: 45px; display: flex;">
+                                <div style="display: block; width: 100%;" class="coment-area">
+                                    <ul class="we-comet">
+                                        <li style="border-bottom: 1px solid #ede9e9;"
+                                            *ngFor="let comment of postDetail.comment">
                                             <div class="comet-avatar">
-                                                <img *ngIf="reply.responderImage; else nullUserImage;" style="height: 45px; width: 45px;" alt="author" src="{{userImageUrl}}/{{reply.responderImage}}">
-                                                <ng-template #nullUserImage>
-                                                    <img style="height: 45px; width: 45px;" alt="author" src="./assets/images/userDefault.png">
-                                                </ng-template>
+                                                <img src="{{userImageUrl}}/{{comment.imageUser}}"
+                                                    style="width: 45px; height: 45px;" alt="">
                                             </div>
                                             <div class="we-comment">
-                                                <h5><a href="time-line.html" title="">{{reply.responderName}}</a></h5>
+                                                <h5><a href="time-line.html" title="">{{comment.nameUser}}</a></h5>
                                                 <br>
-                                                <p><a style="color: #515365;" title="">{{reply.commenterName}}</a> {{reply.content}}</p>
-                                        
+                                                <span [innerHTML]="comment.content"></span>
+
                                                 <div class="inline-itms">
-                                                    <span>{{reply.created}}</span>
-                                                    <a (click)="ReplyComment(comment.id, reply.responderId, reply.responderName)" class="we-reply" title="Reply"><i  class="fa fa-reply"></i></a>
-                                                    <!-- <a href="#" title=""><i class="fa fa-heart"></i><span>20</span></a> -->
+                                                    <span>{{comment.created}}</span>
+                                                    <a class="we-reply"
+                                                        (click)="openInputReplyComment(comment.id, comment.userId,comment.nameUser)"
+                                                        title="Reply"><i class="fa fa-reply"></i></a>
+                                                   
                                                 </div>
                                             </div>
-                                            
-                                        </div>
-                                        <a id="commentId_{{comment.id}}" *ngIf="comment.totalReply > 0" style="margin-left: 45px;"><span style="padding-left: 10px;" (click)="loadReplyComment(comment.id)">Hiển thị thêm phản hồi</span></a>
-                                        <div id="formReply_{{comment.id}}" style="margin-left: 50px; display: none;" class="post-comment">
+                                            <div *ngFor="let reply of comment.Reply"
+                                                style="margin-left: 45px; display: flex;">
+                                                <div class="comet-avatar">
+                                                    <img 
+                                                        style="height: 45px; width: 45px;" alt="author"
+                                                        src="{{userImageUrl}}/{{reply.responderImage}}">
+                                                   
+                                                </div>
+                                                <div class="we-comment">
+                                                    <h5><a href="time-line.html" title="">{{reply.responderName}}</a>
+                                                    </h5>
+                                                    <br>
+                                                    <p><a style="color: #515365;" title="">{{reply.commenterName}}</a>
+                                                        {{reply.content}}</p>
+
+                                                    <div class="inline-itms">
+                                                        <span>{{reply.created}}</span>
+                                                        <a (click)="openInputReplyComment(comment.id, reply.responderId, reply.responderName)"
+                                                            class="we-reply" title="Reply"><i
+                                                                class="fa fa-reply"></i></a>
+                                                        <!-- <a href="#" title=""><i class="fa fa-heart"></i><span>20</span></a> -->
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <a id="commentId_{{comment.id}}" *ngIf="comment.totalReply > 0"
+                                                style="margin-left: 45px;"><span style="padding-left: 10px;"
+                                                    (click)="loadReplyComment(comment.id)">Hiển thị thêm phản
+                                                    hồi</span></a>
+                                            <div id="formReply_{{comment.id}}" style="margin-left: 50px; display: none;"
+                                                class="post-comment">
+                                                <div class="comet-avatar">
+                                                    <img src="{{userImageUrl}}/{{displayImageUser}}"
+                                                        style="width: 45px; height: 45px;" alt="">
+                                                </div>
+                                                <div class="post-comt-box">
+                                                    <form #commentForm="ngForm">
+                                                        <textarea id="contentReply_{{comment.id}}"
+                                                            (keydown.enter)="AddReplyComment(comment.id)"
+                                                            name="contentReply"></textarea>
+                                                        <div class="add-smiles">
+                                                            <!-- <div class="uploadimage">
+                                                                <i class="fa fa-image"></i>
+                                                                <label class="fileContainer">
+                                                                    <input type="file" />
+                                                                </label>
+                                                            </div> -->
+                                                            <span (click)="toggleEmojiReplyComment(comment.id)"
+                                                                class="em em-expressionless" title="add icon"></span>
+                                                            <div id="emojiReply_{{comment.id}}" class="smiles-bunch">
+                                                                <i (click)="addEmojiReplycomment('👍', comment.id)"
+                                                                    class="em em---1"></i>
+                                                                <i (click)="addEmojiReplycomment('😃',comment.id)"
+                                                                    class="em em-smiley"></i>
+                                                                <i (click)="addEmojiReplycomment('😧',comment.id)"
+                                                                    class="em em-anguished"></i>
+                                                                <i (click)="addEmojiReplycomment('😂',comment.id)"
+                                                                    class="em em-laughing"></i>
+                                                                <i (click)="addEmojiReplycomment('😡',comment.id)"
+                                                                    class="em em-angry"></i>
+                                                                <i (click)="addEmojiReplycomment('😲',comment.id)"
+                                                                    class="em em-astonished"></i>
+                                                                <i (click)="addEmojiReplycomment('😊',comment.id)"
+                                                                    class="em em-blush"></i>
+                                                                <i (click)="addEmojiReplycomment('😞',comment.id)"
+                                                                    class="em em-disappointed"></i>
+                                                                <i (click)="addEmojiReplycomment('😟',comment.id)"
+                                                                    class="em em-worried"></i>
+                                                                <i (click)="addEmojiReplycomment('😘',comment.id)"
+                                                                    class="em em-kissing_heart"></i>
+                                                                <i (click)="addEmojiReplycomment('😡',comment.id)"
+                                                                    class="em em-rage"></i>
+                                                                <i (click)="addEmojiReplycomment('😛',comment.id)"
+                                                                    class="em em-stuck_out_tongue"></i>
+                                                            </div>
+                                                        </div>
+
+                                                    </form>
+
+                                                </div>
+                                            </div>
+                                            <!-- reply comment -->
+                                        </li>
+                                        <li>
+                                            <a class="showmore underline" title=""
+                                                (click)="LoadMoreComment(postDetail.id)">more comments+</a>
+                                        </li>
+                                        <li class="post-comment">
                                             <div class="comet-avatar">
-                                                <img *ngIf="displayImageUser != ''" 
-                                                [src]="displayImageUser ? '{{userImageUrl}}/' + displayImageUser : './assets/images/userDefault.png'" 
-                                                style="width: 45px; height: 45px;" 
-                                                alt="">
+                                                <img src="{{userImageUrl}}/{{displayImageUser}}"
+                                                    style="width: 45px; height: 45px;" alt="">
                                             </div>
                                             <div class="post-comt-box">
-                                                <form #commentForm="ngForm" (ngSubmit)="AddReplyComment(comment.id)">
-                                                    <textarea id="contentReply_{{comment.id}}" name="contentReply"></textarea>
-                                                    <div class="add-smiles">
-                                                    <div class="uploadimage">
-                                                        <i class="fa fa-image"></i>
-                                                        <label class="fileContainer">
-                                                        <input type="file" />
-                                                        </label>
-                                                    </div>
-                                                    <span class="em em-expressionless" title="add icon"></span>
-                                                    <div class="smiles-bunch">
-                                                        <i class="em em---1"></i>
-                                                        <i class="em em-smiley"></i>
-                                                        <i class="em em-anguished"></i>
-                                                        <i class="em em-laughing"></i>
-                                                        <i class="em em-angry"></i>
-                                                        <i class="em em-astonished"></i>
-                                                        <i class="em em-blush"></i>
-                                                        <i class="em em-disappointed"></i>
-                                                        <i class="em em-worried"></i>
-                                                        <i class="em em-kissing_heart"></i>
-                                                        <i class="em em-rage"></i>
-                                                        <i class="em em-stuck_out_tongue"></i>
-                                                    </div>
-                                                    </div>
-                                                    <button type="submit">Post Comment</button>
-                                                </form>
+                                                <div style="width: 100%;background-color: #f0f0f0; display: flex; border-top-left-radius: 16px; border-top-right-radius: 16px;"
+                                                    class="chat-message-item" *ngIf="this.uploadFileCommentReq.length > 0" >
+                                                    <div style="margin-left: 10px;" *ngFor="let imageSrc of imageSrcs; let i = index">
+                                                        <img [src]="imageSrc"
+                                                        style="width: 60px;height: 60px;" />
+                                                        <button (click)="removeFile(i, false)" class="close-button" >×</button>
+                                                      </div>
                                                     
+                                                </div>
+                                               
+                                                <form #commentForm="ngForm">
+                                                    <textarea name="content" [(ngModel)]="CreateCommentReq.content"
+                                                        (keydown.enter)="AddComment()"
+                                                        placeholder="Post your comment"></textarea>
+                                                    <div class="add-smiles">
+                                                        <div class="uploadimage">
+                                                            <i class="fa fa-image"></i>
+                                                            <label class="fileContainer">
+                                                                <input (change)="onFilesSelected($event, false)" type="file" multiple />
+                                                            </label>
+                                                        </div>
+                                                        <span class="em em-expressionless" title="add icon"></span>
+                                                        <div class="smiles-bunch">
+                                                            <i (click)="addEmoji('👍')" class="em em---1"></i>
+                                                            <i (click)="addEmoji('😃')" class="em em-smiley"></i>
+                                                            <i (click)="addEmoji('😧')" class="em em-anguished"></i>
+                                                            <i (click)="addEmoji('😂')" class="em em-laughing"></i>
+                                                            <i (click)="addEmoji('😡')" class="em em-angry"></i>
+                                                            <i (click)="addEmoji('😲')" class="em em-astonished"></i>
+                                                            <i (click)="addEmoji('😊')" class="em em-blush"></i>
+                                                            <i (click)="addEmoji('😞')" class="em em-disappointed"></i>
+                                                            <i (click)="addEmoji('😟')" class="em em-worried"></i>
+                                                            <i (click)="addEmoji('😘')" class="em em-kissing_heart"></i>
+                                                            <i (click)="addEmoji('😡')" class="em em-rage"></i>
+                                                            <i (click)="addEmoji('😛')"
+                                                                class="em em-stuck_out_tongue"></i>
+                                                        </div>
+                                                    </div>
+
+                                                </form>
+
                                             </div>
-                                        </div>  
-                                        <!-- reply comment -->                    
-                                    </li>
-                                    <li>
-                                        <a class="showmore underline" title="" (click)="LoadMoreComment(postDetail.id)">more comments+</a>
-                                    </li>
-                                    <li class="post-comment">
-                                        <div class="comet-avatar">
-                                            <img *ngIf="displayImageUser != ''" 
-                                            [src]="displayImageUser ? userImageUrl + '/' + displayImageUser : './assets/images/userDefault.png'" 
-                                            style="width: 45px; height: 45px;" 
-                                            alt="">
-                                        </div>
-                                        <div class="post-comt-box">
-                                            <form #commentForm="ngForm" (ngSubmit)="AddComment()">
-                                                <textarea name="content" [(ngModel)]="CreateCommentReq.content" placeholder="Post your comment"></textarea>
-                                                <div class="add-smiles">
-                                                <div class="uploadimage">
-                                                    <i class="fa fa-image"></i>
-                                                    <label class="fileContainer">
-                                                    <input type="file" />
-                                                    </label>
-                                                </div>
-                                                <span class="em em-expressionless" title="add icon"></span>
-                                                <div class="smiles-bunch">
-                                                    <i class="em em---1"></i>
-                                                    <i class="em em-smiley"></i>
-                                                    <i class="em em-anguished"></i>
-                                                    <i class="em em-laughing"></i>
-                                                    <i class="em em-angry"></i>
-                                                    <i class="em em-astonished"></i>
-                                                    <i class="em em-blush"></i>
-                                                    <i class="em em-disappointed"></i>
-                                                    <i class="em em-worried"></i>
-                                                    <i class="em em-kissing_heart"></i>
-                                                    <i class="em em-rage"></i>
-                                                    <i class="em em-stuck_out_tongue"></i>
-                                                </div>
-                                                </div>
-                                                <button type="submit">Post Comment</button>
-                                            </form>
-                                                
-                                        </div>
-                                    </li>
-                                </ul>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
+
                         </div>
-                       
                     </div>
                 </div>
             </div>
+
         </div>
-       
-      </div>
     </div>
 </div>

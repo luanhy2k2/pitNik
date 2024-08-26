@@ -28,9 +28,9 @@ namespace API.Controllers
             return Ok(result);
         }
         [HttpPost("UpdateReadStatus")]
-        public async Task<ActionResult> UpdateReadStatus(UpdateStatusReadNotificationDto dto)
+        public async Task<ActionResult> UpdateReadStatus()
         {
-            var result = await _mediator.Send(new UpdateStatusReadNotificationCommand { UpdateStatusReadDto = dto });
+            var result = await _mediator.Send(new UpdateStatusReadNotificationCommand {});
             return Ok(result);  
         }
     }

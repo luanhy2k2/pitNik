@@ -57,11 +57,7 @@
                                                 <span>Bạn chung:{{friend.mutualFriend}}</span>
                                             </figure>
                                             <div class="frnd-meta">
-                                                <img *ngIf="friend.image; else nullUserImage;" style="width: 84px; height: 84px;" alt="author" src="{{userImageUrl}}/{{friend.image}}">
-                                                <ng-template #nullUserImage>
-                                                    <img style="height: 84px; width: 84px;" alt="author" src="./assets/images/userDefault.png">
-                                                </ng-template>
-
+                                                <img style="width: 84px; height: 84px;" alt="author" src="{{userImageUrl}}/{{friend.image}}">
                                                 <div class="frnd-name">
                                                     <a [routerLink]="['/about']" [queryParams]="{id:friend.userId}" title="">{{friend.name}}</a>
                                                     <span>{{friend.address}}</span>

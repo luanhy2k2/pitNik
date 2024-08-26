@@ -68,8 +68,7 @@ namespace API.Hubs
                 {
                     if (_connectionMap.TryGetValue(friend.UserName, out var friendConnectionId))
                     {
-                        await Groups.AddToGroupAsync(friendConnectionId, friend.UserName);
-                        await Clients.Group(friend.UserName).SendAsync("addUserConnected", user.Id);
+                        await Clients.Client(friendConnectionId).SendAsync("addUserConnected", user.Id);
                     }
                 }
             }
@@ -84,7 +83,7 @@ namespace API.Hubs
             try
             {
                 var user = _connections.Where(u => u.UserName == IdentityName).First();
-                _connections.Remove(user);
+                
                 var friends = await _context.Friendships
                    .Where(s => (s.SenderId == user.Id || s.ReceiverId == user.Id) && s.Status == Core.Entities.FriendshipStatus.Accepted)
                    .Select(s => new
@@ -98,9 +97,10 @@ namespace API.Hubs
                 {
                     if (_connectionMap.TryGetValue(friend.UserName, out var friendConnectionId))
                     {
-                        await Clients.Group(friend.UserName).SendAsync("removeUser", user.Id);
+                        await Clients.Client(friendConnectionId).SendAsync("removeUser", user.Id);
                     }
                 }
+                _connections.Remove(user);
                 _connectionMap.Remove(user.UserName);
             }
             catch (Exception ex)

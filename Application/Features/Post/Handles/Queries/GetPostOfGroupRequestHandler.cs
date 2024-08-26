@@ -39,7 +39,7 @@ namespace Application.Features.Post.Handles.Queries
                                 Created = p.Created.ToString(),
                                 Image = p.ImagePosts.Select(x =>x.Image).ToList(),
                                 TotalReactions = p.Interactions.Count(),
-                                TotalComment = p.Comments.Count(),
+                                TotalComment = p.Comments.Count() + p.Comments.SelectMany(x => x.ReplyComments).Count(),
                                 IsReact = p.Interactions.Any(x => x.UserId == request.CurrentUserId && x.PostId == p.Id)
 
                             };

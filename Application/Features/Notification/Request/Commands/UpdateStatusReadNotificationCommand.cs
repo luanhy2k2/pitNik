@@ -11,6 +11,5 @@ namespace Application.Features.Notification.Request.Commands
 {
     public class UpdateStatusReadNotificationCommand:IRequest<BaseCommandResponse<NotificationDto>>
     {
-        public UpdateStatusReadNotificationDto UpdateStatusReadDto { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using Application.DTOs.Common;
 using Application.Features.Comment.Requests.Commands;
 using Application.Features.Comment.Requests.Queries;
+using Application.Features.Message.Requests.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -34,6 +35,12 @@ namespace API.Controllers
                 CommentId = commentId,
                 PageIndex = PageIndex
             });
+            return Ok(result);
+        }
+        [HttpPost("UploadFile")]
+        public async Task<ActionResult> UploadFile([FromForm] List<IFormFile> Files)
+        {
+            var result = await _mediator.Send(new UploadFileCommentCommand { Files = Files });
             return Ok(result);
         }
         [HttpPost("Create")]

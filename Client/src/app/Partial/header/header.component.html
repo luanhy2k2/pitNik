@@ -64,13 +64,10 @@
               <span>4 New Notifications <a href="#" title="">Mark all as read</a></span>
               <ul class="drops-menu">
                 <li *ngFor=" let no of Notifications.items">
-                  <a (click)="UpdateReadStatusNotification(no.id, true)" title="">
+                  <a (click)="UpdateReadStatusNotification()" title="">
                     <figure>
-                      <img *ngIf="no.sender.image; else nullUserImage;" style="height: 45px; width: 45px;" alt="author"
+                      <img style="height: 45px; width: 45px;" alt="author"
                         src="{{userImageUrl}}/{{no.sender.image}}">
-                      <ng-template #nullUserImage>
-                        <img style="height: 45px; width: 45px;" src="./assets/images/userDefault.png">
-                      </ng-template>
                       <span class="status f-online"></span>
                     </figure>
                     <div class="mesg-meta">
@@ -96,11 +93,9 @@
                     <div *ngIf="member.isCurrentUser == false">
                       <a (click)="LoadMessageConverstion(cvt.id)" class="show-mesg" href="#" title="">
                         <figure>
-                          <img *ngIf="member.image; else nullImageConversation;" style="height: 45px; width: 45px;"
+                          <img style="height: 45px; width: 45px;"
                             alt="author" src="{{userImageUrl}}/{{member.image}}">
-                          <ng-template #nullImageConversation>
-                            <img style="height: 45px; width: 45px;" alt="author" src="./assets/images/userDefault.png">
-                          </ng-template>
+                         
                           <span *ngIf="cvt.isOnline" class="status f-online"></span>
                         </figure>
                         <div class="mesg-meta">
@@ -128,10 +123,16 @@
       <span class="mh-btns-right">
         <div class="user-img">
           <img [routerLink]="['/about']" *ngIf="user"
-          [src]="user.image ? userImageUrl + '/' + user.image : './assets/images/userDefault.png'"
+          src="{{userImageUrl}}/{{user.image}}"
           style="width: 45px; height: 40px; border-radius: 100%;" alt="">
+          <div class="user-setting">
+            <ul class="log-out">
+              <li><a style="color: #515365;" [routerLink]="['/about']" title=""><i class="ti-user"></i>Hồ sơ</a></li>
+              <li><a style="color: #515365;" [routerLink]="['/setting']" title=""><i class="ti-settings"></i>account setting</a></li>
+              <li (click)="logOut()"><a title=""><i class="ti-power-off"></i>log out</a></li>
+            </ul>
+          </div>
         </div>
-        
       </span>
     </div>
    
@@ -199,10 +200,10 @@
             <i class="fa fa-bell"></i><em class="bg-purple">{{UnreadNotificationCount()}}</em>
           </a>
           <div class="dropdowns">
-            <span>4 New Notifications <a href="#" title="">Mark all as read</a></span>
+            <span>4 New Notifications <a (click)="UpdateReadStatusNotification()" title="">Mark all as read</a></span>
             <ul class="drops-menu">
               <li *ngFor=" let no of Notifications.items">
-                <a (click)="UpdateReadStatusNotification(no.id, true)" title="">
+                <a  title="">
                   <figure>
                     <img *ngIf="no.sender.image; else nullUserImage;" style="height: 45px; width: 45px;" alt="author"
                       src="{{userImageUrl}}/{{no.sender.image}}">
@@ -301,8 +302,8 @@
   </div>
   <div [ngClass]="{'hidden': isHidden}" class="chat-box show fixed-corner">
     <div class="chat-head">
-      <span class="status f-online"></span>
-      <h6>Bucky Barnes</h6>
+      <span *ngIf="currentConversationStatus.isOnline" class="status f-online"></span>
+      <h6>{{currentConversationStatus.conversationNane}}</h6>
       <div class="more">
         <div class="more-optns"><i class="ti-more-alt"></i>
           <ul>

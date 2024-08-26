@@ -34,7 +34,7 @@ namespace Application.Features.Comment.Handlers.Queries
                             ResponderName = responder.Name,
                             ResponderImage = responder.Image
                         };
-            var data = await query.Skip((request.PageIndex - 1) * 1).Take(1).ToListAsync();
+            var data = await query.Skip((request.PageIndex - 1) * 10).Take(10).ToListAsync();
             var total = await query.CountAsync();
             return new BaseQuerieResponse<ReplyCommentDto>
             {
