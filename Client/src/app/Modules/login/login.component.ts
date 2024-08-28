@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/services/User.service';
 import { PresenceService } from 'src/app/services/presence.service';
 @Component({
@@ -9,7 +9,7 @@ import { PresenceService } from 'src/app/services/presence.service';
 })
 export class LoginComponent {
   constructor(
-    private readonly UserService:UserService, private readonly presenceService:PresenceService
+    private readonly UserService:UserService, private readonly route:ActivatedRoute
   ){}
   userName:string = "";
   passWord:string = "";

@@ -41,7 +41,7 @@ export class PresenceService {
   }
 
   async startConnection() {
-    await this.connection.start()
+     this.connection.start()
       .then(() => {
         console.log('Đã kết nối presence Hub');
         this.registerSignalREvents();
@@ -60,7 +60,7 @@ export class PresenceService {
   async stopConnection() {
     if (this.connection) {
       try {
-        await this.connection.stop();
+         this.connection.stop();
         console.log('Đã ngắt kết nối SignalR');
       } catch (err) {
         console.error('Lỗi khi dừng kết nối: ', err);

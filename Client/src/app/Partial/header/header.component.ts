@@ -278,14 +278,14 @@ export class HeaderComponent {
         alert(res.message);
         for (let i = 0; i < this.FriendPending.items.length; i++) {
           if (this.FriendPending.items[i].id === id) {
-            this.FriendPending.items.splice(i, 1);
             var notification:CreateNotification = {
               content:"Đã chấp nhận lời mời kết bạn của bạn",
-              receiverId: this.FriendPending.items[i].receiverId
+              receiverId: this.FriendPending.items[i].senderId
             }
             if(status == FriendshipStatus.Rejected)
               notification.content = "Đã từ chối lời mời kết bạn của bạn"
             this.presenceService.sendNotification(notification);
+            this.FriendPending.items.splice(i, 1);
             break;
           }
         }

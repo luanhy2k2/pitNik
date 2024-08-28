@@ -1,12 +1,71 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Project.net\\pitNik\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|c:\\project.net\\pitnik\\application\\features\\friendship\\handlers\\queries\\getfriendshipacceptedrequesthandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|solutionrelative:application\\features\\friendship\\handlers\\queries\\getfriendshipacceptedrequesthandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|c:\\project.net\\pitnik\\application\\features\\friendship\\handlers\\commands\\createfriendshipcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|solutionrelative:application\\features\\friendship\\handlers\\commands\\createfriendshipcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|c:\\project.net\\pitnik\\application\\features\\post\\handles\\queries\\getpostsrequesthandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59B06AC6-3AE5-43C6-8403-03728BD49404}|Application\\Application.csproj|solutionrelative:application\\features\\post\\handles\\queries\\getpostsrequesthandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "GetFriendShipAcceptedRequestHandler.cs",
+              "DocumentMoniker": "C:\\Project.net\\pitNik\\Application\\Features\\FriendShip\\Handlers\\Queries\\GetFriendShipAcceptedRequestHandler.cs",
+              "RelativeDocumentMoniker": "Application\\Features\\FriendShip\\Handlers\\Queries\\GetFriendShipAcceptedRequestHandler.cs",
+              "ToolTip": "C:\\Project.net\\pitNik\\Application\\Features\\FriendShip\\Handlers\\Queries\\GetFriendShipAcceptedRequestHandler.cs",
+              "RelativeToolTip": "Application\\Features\\FriendShip\\Handlers\\Queries\\GetFriendShipAcceptedRequestHandler.cs",
+              "ViewState": "AQIAABEAAAAAAAAAAAAQwB4AAADQAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-28T00:52:58.387Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "CreateFriendShipCommandHandler.cs",
+              "DocumentMoniker": "C:\\Project.net\\pitNik\\Application\\Features\\FriendShip\\Handlers\\Commands\\CreateFriendShipCommandHandler.cs",
+              "RelativeDocumentMoniker": "Application\\Features\\FriendShip\\Handlers\\Commands\\CreateFriendShipCommandHandler.cs",
+              "ToolTip": "C:\\Project.net\\pitNik\\Application\\Features\\FriendShip\\Handlers\\Commands\\CreateFriendShipCommandHandler.cs",
+              "RelativeToolTip": "Application\\Features\\FriendShip\\Handlers\\Commands\\CreateFriendShipCommandHandler.cs",
+              "ViewState": "AQIAAA8AAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-28T00:34:47.55Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "GetPostsRequestHandler.cs",
+              "DocumentMoniker": "C:\\Project.net\\pitNik\\Application\\Features\\Post\\Handles\\Queries\\GetPostsRequestHandler.cs",
+              "RelativeDocumentMoniker": "Application\\Features\\Post\\Handles\\Queries\\GetPostsRequestHandler.cs",
+              "ToolTip": "C:\\Project.net\\pitNik\\Application\\Features\\Post\\Handles\\Queries\\GetPostsRequestHandler.cs",
+              "RelativeToolTip": "Application\\Features\\Post\\Handles\\Queries\\GetPostsRequestHandler.cs",
+              "ViewState": "AQIAAC4AAAAAAAAAAAAmwEEAAAAzAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-28T00:31:02.062Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }

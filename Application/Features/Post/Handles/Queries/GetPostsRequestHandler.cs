@@ -20,13 +20,23 @@ namespace Application.Features.Post.Handles.Queries
         }
         public async Task<BaseQuerieResponse<PostDto>> Handle(GetPostsRequest request, CancellationToken cancellationToken)
         {
+            // Lấy danh sách GroupId mà user đã tham gia
             var groupIds = await _pitNikRepo.GroupMember.GetAllQueryable().AsNoTracking()
-                .Where(x => x.User.UserName == request.UserName).Select(x => x.GroupId).ToListAsync();
+                .Where(x => x.User.UserName == request.UserName)
+                .Select(x => x.GroupId)
+                .ToListAsync();
+
+            // Lấy danh sách bạn bè đã chấp nhận
             var friendIds = await _pitNikRepo.FriendShip.GetAllQueryable().AsNoTracking()
-                .Where(x => (x.Sender.UserName == request.UserName || x.Receiver.UserName == request.UserName) && x.Status == Core.Entities.FriendshipStatus.Accepted)
-                .Select(x => x.Sender.UserName == request.UserName ? x.ReceiverId : x.SenderId).ToListAsync();
+                .Where(x => (x.Sender.UserName == request.UserName || x.Receiver.UserName == request.UserName)
+                            && x.Status == Core.Entities.FriendshipStatus.Accepted)
+                .Select(x => x.Sender.UserName == request.UserName ? x.ReceiverId : x.SenderId)
+                .ToListAsync();
+
             var query = from p in _pitNikRepo.Post.GetAllQueryable().AsNoTracking()
-                        where((p.User.UserName == request.UserName || friendIds.Contains(p.UserId)) || (p.GroupId.HasValue && groupIds.Contains(p.GroupId.Value)))
+                            // Lọc các bài viết
+                        where ((p.User.UserName == request.UserName || friendIds.Contains(p.UserId))
+                               && (!p.GroupId.HasValue || groupIds.Contains(p.GroupId.Value)))
                         orderby p.Created descending
                         join us in _pitNikRepo.Account.GetAllQueryable().AsNoTracking()
                         on p.UserId equals us.Id
@@ -38,19 +48,27 @@ namespace Application.Features.Post.Handles.Queries
                             NameUser = us.Name,
                             Content = p.Content,
                             Created = TimeHelper.GetRelativeTime(p.Created),
-                            Image =p.ImagePosts.Select(x => x.Image).ToList(),
+                            Image = p.ImagePosts.Select(x => x.Image).ToList(),
                             TotalReactions = p.Interactions.Count(),
-                            TotalComment = p.Comments.Count() + p.Comments.SelectMany(x =>x.ReplyComments).Count(),
+                            TotalComment = p.Comments.Count() + p.Comments.SelectMany(x => x.ReplyComments).Count(),
                             IsReact = p.Interactions.Any(x => x.User.UserName == request.UserName && x.PostId == p.Id)
                         };
 
+            // Áp dụng tìm kiếm nếu có từ khóa
             if (!string.IsNullOrEmpty(request.Keyword))
             {
                 query = query.Where(x => x.Content.Contains(request.Keyword));
             }
-            var result = await query.Skip((request.PageIndex - 1) * request.PageSize).Take(request.PageSize)
-                .ToListAsync();
+
+            // Phân trang
+            var result = await query.Skip((request.PageIndex - 1) * request.PageSize)
+                                    .Take(request.PageSize)
+                                    .ToListAsync();
+
+            // Tính tổng số kết quả
             var total = await query.CountAsync();
+
+            // Trả về kết quả
             return new BaseQuerieResponse<PostDto>
             {
                 Items = result,
@@ -59,5 +77,6 @@ namespace Application.Features.Post.Handles.Queries
                 Total = total
             };
         }
+
     }
 }

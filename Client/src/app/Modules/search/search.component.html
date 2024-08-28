@@ -26,7 +26,7 @@
                                             <i>{{user.address}}</i>
                                             <ul class="add-remove-frnd">
                                                 <li class="add-tofrndlist">
-                                                    <a title="Add friend" (click)="CreateFriendShip(user.id)"><i
+                                                    <a *ngIf="user.id != currentUser.id" title="Add friend" (click)="CreateFriendShip(user.id)"><i
                                                             class="fa fa-user-plus"></i></a>
                                                 </li>
                                                 

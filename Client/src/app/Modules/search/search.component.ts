@@ -3,6 +3,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { ClipboardService } from 'ngx-clipboard';
 import { groupImageUrl, postImageUrl, userImageUrl } from 'src/app/Environments/env';
 import { Account } from 'src/app/Models/Account/Account.entity';
+import { UserCredentials } from 'src/app/Models/Account/user-credentials';
 import { CreateComment } from 'src/app/Models/Comment/create-comment.entity';
 import { BaseQueriesResponse } from 'src/app/Models/Common/BaseQueriesResponse.entity';
 import { CreateFriendShip } from 'src/app/Models/FriendShip/CreateFriendShip.entity';
@@ -105,6 +106,7 @@ export class SearchComponent {
     groupMemberStatus:GroupMemberStatus.Pending
   }
   displayImageUser:string = "";
+  currentUser:UserCredentials = this.UserService.getUser();
   ngOnInit(){
     // this.presenceService.startConnection();
     this.loadKeyword();
